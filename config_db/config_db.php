@@ -1,8 +1,8 @@
 <?php
    $DB_server = 'localhost';
    $DB_username = 'root';
-   $DB_password = 'root';
-   $DB_databasename = 'elearning';
+   $DB_password = '';
+   $DB_databasename = 'trading_web';
    
    try{
 		$db = new PDO("mysql:host=".$DB_server.";"."dbname=".$DB_databasename.";charset=utf8", $DB_username, $DB_password);
