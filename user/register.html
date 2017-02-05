@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset = "UTF-8">
+		<title>Computer E-Learning Platform</title>
+		<link href="login_reg_style.css" rel="stylesheet" type="text/css" />
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+	</head>
+	
+	<body>
+		<div id="login-page">
+		  <div>
+			<p class="title">Welcome to Computer E-Learning Platform</p>
+		  </div>	  
+		  <div id="register" class="form">
+			<form action="register.php" method="post" accept-charset="utf-8">
+				<h1>Register</h1>
+				<input type="text" name='Username' placeholder="Username" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,45}"
+					    autocomplete="off" title="Username should only contain at least 10(MAX:45) characters that are of at least one number, one uppercase and lowercase letter." required />
+				<input type="password" name='Password' placeholder="Password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}" 
+					    autocomplete="off" title="Password should only contain at least 10 characters that are of at least one number, one uppercase and lowercase letter." required />
+				<input type="password" name='Retype_Password' placeholder="Re-type Password"  pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{10,}" 
+					    autocomplete="off" title="Password should only contain at least 10 characters that are of at least one number, one uppercase and lowercase letter." required />
+				
+				<input type="text" name='Full_name' placeholder="Full_name" pattern="[a-zA-Z]{2,40}$"
+					    autocomplete="off" title="Full name should only contain at least 2(MAX:45) letters." required />
+				
+				<label>Gender:</label>
+				<label class="radio-inline">
+					<input type="radio" name="gender" value="M" required/> Male
+				</label>
+				<label class="radio-inline">
+					<input type="radio" name="gender" value="F"/> Female
+				</label><br/>
+				
+				<label>Date of birth:</label>
+				<input type="date" name="dob" autocomplete="off" required />
+				
+				<input type="email" name='Email_address'  placeholder="Email address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$" 
+					    autocomplete="off" required />
+				<input type="submit" value="Create">
+				<p class="message">Already registered? 
+					<a href="login.html" class="to_register">Sign In</a>
+				</p>
+			</form>
+		  </div>
+		</div>
+	</body>
+
+<footer>
+</footer>
+
+</html>

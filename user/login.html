@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+	
+	<head>
+		<meta charset = "UTF-8">
+		<title>Computer E-Learning Platform</title>
+		<link href="login_reg_style.css" rel="stylesheet" type="text/css"/>
+	</head>
+	
+	<body>
+		<div id="login-page">
+		  <div>
+			<p class="title">Welcome to Computer E-Learning Platform</p>
+		  </div>
+			  
+			  <div id="login" class="form">
+				<form action="login.php" method="post" accept-charset="utf-8">
+					<h1>Log in</h1>
+					<input type="text" name="Username" placeholder="Username" pattern="[0-9a-zA-Z]{5,40}$" 
+						 title="Username should only contain at less 10-40 alphanumerics." autocomplete="off" required />
+					<input type="password" name="Password" placeholder="Password" pattern="[0-9a-zA-Z]{5,40}$" 
+						 title="Password should only contain at less 10-40 alphanumerics." autocomplete="off" required />
+					<input type="submit" value="Login">
+					<p class="message">Not registered? 
+						<a href="register.html" class="to_register">Create an account</a>
+					</p>
+				</form>
+			   </div>
+		</div>
+	</body>
+
+<footer>
+</footer>
+
+</html>

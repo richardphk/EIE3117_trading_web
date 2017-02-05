@@ -1,0 +1,4 @@
+Tweb_User:
+
+INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`) VALUES ('U00001', 'test1', 'test1', '1990-10-20', '123@email.com', '+85211112222', 'User', 'test1', TRUE);
+INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`) VALUES ('U00002', 'test2', 'test2', '1991-11-11', '456@email.com', '+85133334444', 'User', 'test1', FALSE);
