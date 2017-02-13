@@ -4,11 +4,20 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 /*! normalize.css v3.0.3 | MIT License | github.com/necolas/normalize.css */
+<<<<<<< HEAD
+
+.wrapper {
+	width:auto;
+	margin: 0 auto;
+	min-height: 100%;
+	max-height:100%;
+=======
 .wrapper {
 	min-width: 1000px;
 	max-width: 2000px;
 	margin: 0 auto;
 	min-height: 100%;
+>>>>>>> origin/master
 	height: auto !important;
 	height: 100%;
 }
