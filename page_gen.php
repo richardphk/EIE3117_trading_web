@@ -90,7 +90,7 @@
 		</div>
 
 
-	<div class="container-fluid" style="width:100%; padding:0px; position: absolute;top: 186px;bottom: 0;">
+	<div class="container-fluid" style="width:100%; padding:0px; position: relative;height:80.3%;bottom: 0;">
 	<!-- content div template -------->
 
 	<!---
