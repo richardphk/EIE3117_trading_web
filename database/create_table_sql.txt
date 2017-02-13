@@ -1,4 +1,4 @@
-CREATE SCHEMA IF NOT EXISTS `trading_web` DEFAULT CHARACTER SET utf8;
+CREATE Database IF NOT EXISTS `trading_web` DEFAULT CHARACTER SET utf8;
 
 CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_User` (
   `Tweb_User_ID` VARCHAR(6) NOT NULL,
@@ -9,65 +9,75 @@ CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_User` (
   `Tweb_User_Phone` VARCHAR(14) NULL,
   `Tweb_User_Privilege` VARCHAR(45) NULL,
   `Tweb_User_Nickname` VARCHAR(50) NULL,
-  `Tweb_User_activated` TINYINT(1) NULL,
-  PRIMARY KEY (`Tweb_User_ID`)
-  );
-
-CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_User` (
-  `Tweb_User_ID` VARCHAR(6) NOT NULL,
-  `Tweb_User_First_Name` VARCHAR(50) NULL,
-  `Tweb_User_Last_Name` VARCHAR(50) NULL,
-  `Tweb_User_Nickname` VARCHAR(100) NULL,
-  `Tweb_User_Birthday` DATE NULL,
-  `Tweb_User_Email` VARCHAR(50) NULL,
-  `Tweb_User_Phone` VARCHAR(14) NULL,
-  PRIMARY KEY (`Tweb_User_ID`)
-  );
-
-CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Orderline` (
-  `Tweb_Orderline_ID` VARCHAR(6) NOT NULL,
-  `Tweb_Orderline_Customer_ID` VARCHAR(6) NULL,
-  `Tweb_Orderline_Order_Date` DATETIME(8) NULL,
-  `Tweb_Orderline_Ship_Address` VARCHAR(50) NULL,
-  `Tweb_Orderline_Ship_Date` DATE NULL,
-  `Tweb_Orderline_Sale_Tax_Rate` INT NULL,
-  PRIMARY KEY (`Tweb_Orderline_ID`),
-  INDEX `Tweb_Orderline_Customer_fk_idx` (`Tweb_Orderline_Customer_ID` ASC),
-  CONSTRAINT `Tweb_Orderline_Customer_fk`
-    FOREIGN KEY (`Tweb_Orderline_Customer_ID`)
+  `Tweb_User_Activated` TINYINT(1) NULL,
+  PRIMARY KEY (`Tweb_User_ID`));
+  
+CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Product` (
+  `Tweb_Product_ID` VARCHAR(6) NOT NULL,
+  `Tweb_Product_Name` VARCHAR(50) NULL,
+  `Tweb_Product_Price` FLOAT NULL,
+  `Tweb_Product_Inventory` INT NULL,
+  `Tweb_Product_Image_Path` VARCHAR(100) NULL,
+  `Tweb_Product_Type` VARCHAR(30) NULL,
+  `Tweb_Product_Create_Date` DATE NULL,
+  `Tweb_Product_Sale` INT NULL,
+  `Tweb_Product_Creator_ID` VARCHAR(6) NULL,
+  `Tweb_Product_Desc` VARCHAR(255) NULL,
+  PRIMARY KEY (`Tweb_Product_ID`),
+  INDEX `Tweb_Product_Creator_ID_idx` (`Tweb_Product_Creator_ID` ASC),
+  CONSTRAINT `Tweb_Product_Creator_ID`
+    FOREIGN KEY (`Tweb_Product_Creator_ID`)
     REFERENCES `trading_web`.`Tweb_User` (`Tweb_User_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-	
-CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Payment` (
-  `Tweb_Payment_ID` INT NOT NULL,
-  `Tweb_Payment_Orderline_ID` VARCHAR(6) NULL,
-  `Tweb_Payment_Payment_Amount` INT NULL,
-  `Tweb_Payment_Payment_Date` DATE NULL,
-  `Tweb_Payment_Address` VARCHAR(100) NULL,
-  PRIMARY KEY (`Tweb_Payment_ID`),
-  INDEX `Tweb_Payment_Orderline_fk_idx` (`Tweb_Payment_Orderline_ID` ASC),
-  CONSTRAINT `Tweb_Payment_Orderline_fk`
-    FOREIGN KEY (`Tweb_Payment_Orderline_ID`)
-    REFERENCES `trading_web`.`Tweb_Orderline` (`Tweb_Orderline_ID`)
+
+CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Sale_Record` (
+  `Tweb_Sale_Record_ID` VARCHAR(6) NOT NULL,
+  `Tweb_Sale_Record_Customer_ID` VARCHAR(6) NULL,
+  `Tweb_Sale_Record_Order_Date` DATE NULL,
+  `Tweb_Sale_Record_Ship_Address` VARCHAR(50) NULL,
+  `Tweb_Sale_Record_Ship_Date` DATE NULL,
+  `Tweb_Sale_Record_Sale_Tax_Rate` INT NULL,
+  PRIMARY KEY (`Tweb_Sale_Record_ID`),
+  INDEX `Tweb_Orderline_Customer_fk_idx` (`Tweb_Sale_Record_Customer_ID` ASC),
+  CONSTRAINT `Tweb_Orderline_Customer_fk`
+    FOREIGN KEY (`Tweb_Sale_Record_Customer_ID`)
+    REFERENCES `trading_web`.`Tweb_User` (`Tweb_User_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
+
 	
 CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Order` (
   `Tweb_Order_ID` VARCHAR(6) NOT NULL,
   `Tweb_Order_Product_ID` VARCHAR(6) NULL,
   `Tweb_Order_Quantity` INT NULL,
   `Tweb_Order_Discount` INT NULL,
-  `Tweb_Order_Orderline_ID` VARCHAR(6) NULL,
+  `Tweb_Order_Sale_Record_ID` VARCHAR(6) NULL,
   PRIMARY KEY (`Tweb_Order_ID`),
   INDEX `Tweb_Order_Product_fk_idx` (`Tweb_Order_Product_ID` ASC),
+  INDEX `Tweb_Order_Orderline_fk_idx` (`Tweb_Order_Sale_Record_ID` ASC),
   CONSTRAINT `Tweb_Order_Product_fk`
     FOREIGN KEY (`Tweb_Order_Product_ID`)
     REFERENCES `trading_web`.`Tweb_Product` (`Tweb_Product_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `Tweb_Order_Orderline_fk`
-    FOREIGN KEY (`Tweb_Order_ID`)
-    REFERENCES `trading_web`.`Tweb_Orderline` (`Tweb_Orderline_ID`)
+    FOREIGN KEY (`Tweb_Order_Sale_Record_ID`)
+    REFERENCES `trading_web`.`Tweb_Sale_Record` (`Tweb_Sale_Record_ID`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+
+
+CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Payment` (
+  `Tweb_Payment_ID` INT NOT NULL,
+  `Tweb_Payment_Sale_Record_ID` VARCHAR(6) NULL,
+  `Tweb_Payment_Payment_Amount` INT NULL,
+  `Tweb_Payment_Payment_Date` DATE NULL,
+  `Tweb_Payment_Address` VARCHAR(100) NULL,
+  PRIMARY KEY (`Tweb_Payment_ID`),
+  INDEX `Tweb_Payment_Sale_Record_fk_idx` (`Tweb_Payment_Sale_Record_ID` ASC),
+  CONSTRAINT `Tweb_Payment_Sale_Record_fk`
+    FOREIGN KEY (`Tweb_Payment_Sale_Record_ID`)
+    REFERENCES `trading_web`.`Tweb_Sale_Record` (`Tweb_Sale_Record_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
