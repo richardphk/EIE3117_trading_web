@@ -1,11 +1,11 @@
 <?php
 	include_once('page_gen.php');
-	page_header();
+	page_header('home');
 ?>
 		<style>
 		#main{
 			 position: relative;
-			 top: 15%;
+			 top: 20%;
 			 color:lightblue;
 			 font-size:50px;
 		}
@@ -16,22 +16,23 @@
 			background-size: cover;
 		}
 		#search{
-			background-color:rgba(255, 255, 255, 0.26);
 			width:500px;
-			height:100px;
-			font-size:50px;
+			height:45px;
+			font-size:25px;
 			color:#555;
 		}
 		</style>
 		<div class="col-lg" id="content">
 			<main id="main">
-				<center><strong>Main</strong>
+				<center style="font-family: 'Lora', serif;color:#333;">Search Your Product
 				
-				<form class="navbar-form" style="margin: 0px; height:50px;">
+				<form class="navbar-form" name="home_search_form" style="margin: 0px; height:50px;">
 					<div class="input-group" style="width:100px;">
-					  <input id="search" type="text" class="form-control" placeholder="Search for..." style="">
+					  <input id="search" type="text" class="form-control" placeholder="Search for...">
 					  <span class="input-group-btn">
-					  <button type="submit" class="btn btn-default">Submit</button>
+						  <button type="submit" class="btn btn-default"  style="height:45px;" >
+							<span class="glyphicon glyphicon-search"></span>
+						  </button>
 					  </span>
 					</div>
 					

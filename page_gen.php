@@ -1,17 +1,24 @@
 <?php
-	function page_header(){
+	function page_header($title){
 	
 
 ?>
 
 <html>
 <head>
+		<title><?php $title?></title>
+	<base href="http://localhost/EIE3117_trading_web/"/>
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="js/bootstrap.min.js"></script>
+
+	<link href="https://fonts.googleapis.com/css?family=Lora:700i" rel="stylesheet">
+
 	<script>
 	</script>
 	<style>
+	
+	
 
 	#head_bar{
 		margin-bottom:1px;
@@ -40,10 +47,10 @@
 	</style>
 </head>
 <body>
-	<div class="wrapper">
-		<div style="background-image:url(image/header_bg.jpg);">;
+	<div class="wrapper" style="background-color:#eee;">
+		<div style="background-image:url(image/header_bg.jpg);">
 		<header class="header" style="height:12%;">
-			<strong>Header:</strong>
+			<center style="font-family: 'Lora', serif;color:#333; font-size:50px;color:rgb(193, 221, 234);">Online Trading Website</strong>
 			
 		</header><!-- .header-->
 		
@@ -61,6 +68,7 @@
 					</div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
+					<span style="font-family: 'Lora', serif;">
 					<div class="collapse navbar-collapse"  style="font-size:20px;">
 					  <ul class="nav navbar-nav" >
 						<div class="col-lg-1" style="width:350px;"></div>
@@ -80,31 +88,17 @@
 						<li><a href="#">Account</a></li>
 					  </ul>
 					  <ul class="nav navbar-nav navbar-right">
-						<li><a style="font-size:22px;" ><span class="glyphicon glyphicon-shopping-cart" onmouseover="this.color='red';"></span></a></li>
+						<li><a style="font-size:22px;" ><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
 						<li><a href="#">sign in</a>
 						</li>
 					  </ul>
 					</div><!-- /.navbar-collapse -->
 				  </div><!-- /.container-fluid -->
 			</nav>
-		</div>
-
+		</div></span>
 
 	<div class="container-fluid" style="width:100%; padding:0px; position: relative;height:80.3%;bottom: 0;">
-	<!-- content div template -------->
 
-	<!---
-		<div class="col-lg-1">
-			<strong>Left Sidebar:</strong> 
-		</div>    -----left-sidebar--------
-		
-		<div class="col-lg-11">
-			<main>
-				<strong>Content:</strong>
-
-			</main> -----content------ 
-		</div>
-	-->
 	
 <?php
 	}
