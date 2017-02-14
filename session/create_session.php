@@ -1,5 +1,4 @@
 <?php
-	session_start();
 	function start_session($expire = 10){
 		if ($expire == 0){
 			$expire = ini_get('session.gc_maxlifetime');

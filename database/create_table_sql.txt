@@ -3,7 +3,7 @@ CREATE Database IF NOT EXISTS `trading_web` DEFAULT CHARACTER SET utf8;
 CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_User` (
   `Tweb_User_ID` VARCHAR(6) NOT NULL,
   `Tweb_User_Name` VARCHAR(50) NULL,
-  `Tweb_User_Password` VARCHAR(50) NULL,
+  `Tweb_User_Password` VARCHAR(255) NULL,
   `Tweb_User_Birthday` DATE NULL,
   `Tweb_User_Email` VARCHAR(50) NULL,
   `Tweb_User_Phone` VARCHAR(14) NULL,
