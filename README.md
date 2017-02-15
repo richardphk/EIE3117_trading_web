@@ -12,3 +12,7 @@ root pw: root
 
 Also, the config.inc.php is needed to edit
 $cfg['Servers'][$i]['password'] = ''; => $cfg['Servers'][$i]['password'] = 'root';
+
+
+reference:
+http://seiyria.com/bootstrap-slider/
