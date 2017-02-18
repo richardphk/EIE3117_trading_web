@@ -14,22 +14,22 @@
 		}
 	}
 	
-	function get_email($id) { 
+	function get_user_info($id, $attribute) { 
 		$db_conn = db_connect('root','');
-		$result = $db_conn->prepare('SELECT Tweb_User_Email FROM Tweb_user WHERE Tweb_User_ID = "' . $id . '";');
+		$result = $db_conn->prepare('SELECT * FROM Tweb_user WHERE Tweb_User_ID = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 		foreach($rec as $value) {
-			return $value['Tweb_User_Email'];
+			return $value[$attribute];
 		}
 	}
-		
+	
 		
 	function email_to_buyer($id) { 
-			$email = get_email($id);
+			$email = get_user_info($id, 'Tweb_User_Email');
 			$from = "From: support@phpbookmark \r\n";
 			$mesg = "Thanks for buying";
-			if (mail($email, 'PHPBookmark login information', $mesg, $from)) {
+			if (mail($email, 'Online Trading Website', $mesg, $from)) {
 				return true;
 		} else { 
 			throw new Exception('Could not send email.'); 
@@ -37,15 +37,36 @@
 	}
 	
 	function email_to_seller($seller_id, $buyer_id) { 
-			$email = get_email($seller_id);
+			$email = get_user_info($seller_id, 'Tweb_User_Email');
+			$buyer_name = get_user_info($seller_id, 'Tweb_User_Name');
 			$from = "From: support@phpbookmark \r\n";
-			$mesg = "Thanks for buying";
-			if (mail($email, 'PHPBookmark login information', $mesg, $from)) {
+			$mesg = $buyer_id . " has bought something from you";
+			if (mail($email, 'Online Trading Website', $mesg, $from)) {
 				return true;
 		} else { 
 			throw new Exception('Could not send email.'); 
 		}
 	}
-
+	
+	function sales_record($id) {
+		$date = date('Y-m-d');
+		$record_id = 'test01'; //Temporary data
+		try {
+			$db_conn = db_connect('root', '');
+			$stmt = $db_conn->prepare('INSERT INTO tweb_sale_record (Tweb_Sale_Record_ID, Tweb_Sale_Record_Customer_ID, Tweb_Sale_Record_Order_Date) VALUES (:record_id, :id, :date)');
+			
+			$stmt->bindparam(':record_id', $record_id);
+			$stmt->bindparam(':id', $id);
+			$stmt->bindparam(':date', $date);
+			
+			$stmt->execute();
+			return 'Your sales record has been added';
+			
+		} catch (PDOException $e) {
+			return $e->getMessage();
+		}
+		
+	}
+	
 
 ?>

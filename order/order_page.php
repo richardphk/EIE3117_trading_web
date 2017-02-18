@@ -5,7 +5,7 @@
 	session_start();
 	
 	//$product_id = $isset($_GET['product_id']) ? $_GET['id'] : "";
-	$product_id = 'ABC';
+	$product_id = 'ABCD';
 
 	page_header('cart');
 ?>
