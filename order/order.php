@@ -4,6 +4,10 @@
 	include_once('../page_gen.php');
 	session_start();
 	
+	foreach($_POST as $key => $value) {
+		echo $_POST[$key];
+	}
+	/*
 	page_header('Order');
 	
 	//Buyer ID from session $buyer_id = $_SESSION['valid_user'];
@@ -17,5 +21,5 @@
 	email_to_seller($seller_id, $seller_id);
 	
 	echo 'Thanks for purchasing <br />';
-	
+	*/
 ?>

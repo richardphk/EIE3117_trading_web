@@ -63,7 +63,7 @@
 				</tr>
 			</tbody>
 		</table>
-		<input type="submit" class="btn btn-primary btn-lg btn-block" value="Purchase" />
+		<input type="submit" class="btn btn-primary btn-lg" value="Purchase" />
 	</form>
 			
 
