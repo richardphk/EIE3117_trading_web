@@ -60,7 +60,7 @@
 			$stmt->bindparam(':date', $date);
 			
 			$stmt->execute();
-			return 'Your sales record has been added';
+			return 'Your sales record has been added <br />';
 			
 		} catch (PDOException $e) {
 			return $e->getMessage();

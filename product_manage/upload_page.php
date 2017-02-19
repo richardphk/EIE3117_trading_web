@@ -5,22 +5,56 @@
 	
 	page_header('Upload');
 ?>
-	<form action="product_manage/upload.php" method="post" enctype="multipart/form-data">
-		Product name: 
-		<input type="text" name="product_name" /> <br />
-		Price: 
-		$ <input type="text" name="product_price" size="4" /> <br />
-		Inventory: 
-		<input type="inventory" name="product_inventory" /> <br />
-		Product Image: 
-		<input type="file" name="product_image" id="product_image"/> <br />
-		Product type: 
-		<input type="text" name="product_type" /> <br />
-		Quantity: 
-		<input type="text" name="product_quantity" /> <br />
-		Description
-		<input type="text" name="product_desc" width="100" height="100"/> <br />
-		<input type="submit" value="Submit" name="submit" /> 
+	<form action="product_manage/upload.php" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Product name:</label>
+			<div class="col-sm-10">
+				<input class="form-control" id="focusedInput" type="text" name="product_name">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Price:</label>
+			<div class="col-sm-10">
+				<input class="form-control" id="focusedInput" type="text" name="product_price">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Product inventory:</label>
+			<div class="col-sm-10">
+				<input class="form-control" id="focusedInput" type="text" name="product_inventory">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Product image:</label>
+			<div class="col-sm-10">
+				<input class="form-control" id="inputfile" type="file" name="product_image">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Product type:</label>
+			<div class="col-sm-10">
+				<input class="form-control" id="focusedInput" type="product_type">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Quantity:</label>
+			<div class="col-sm-10">
+				<input class="form-control" id="focusedInput" type="product_quantity">
+			</div>
+		</div>
+		
+		<div class="form-group">
+			<label class="col-sm-2 control-label">Description:</label>
+			<div class="col-sm-10">
+				<textarea class="form-control" rows="3" name="product_desc"></textarea>
+			</div>
+		</div>
+		<input type="submit" class="btn btn-primary btn-lg btn-block" value="Submit" />
 		
 	</form>
 	

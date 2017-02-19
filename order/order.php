@@ -10,8 +10,12 @@
 	$product_id = $_POST["product_id"];
 	$seller_id = get_result($product_id, 'Creator_ID');
 	
-	//email_to_buyer($seller_id);
-	//email_to_seller($seller_id, $seller_id);
-	echo 'Thanks for purchasing <br />'
+	email_to_buyer($seller_id);
 	echo sales_record($seller_id);
+	
+	echo 'The email record has been sent to your email. <br />';
+	email_to_seller($seller_id, $seller_id);
+	
+	echo 'Thanks for purchasing <br />';
+	
 ?>

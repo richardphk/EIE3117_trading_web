@@ -5,9 +5,9 @@
 	session_start();
 	
 	//$product_id = $isset($_GET['product_id']) ? $_GET['id'] : "";
-	$product_id = 'ABCD';
+	$product_id = $_SESSION["product_id"];
 
-	page_header('cart');
+	page_header('Order');
 	
 ?>
 	
@@ -41,7 +41,7 @@
 			<tbody>
 				<tr>
 					<td>
-						<?php echo '<img src="' . get_result($product_id, 'Image_Path') . '" class="img-responsive" alt="Cinque Terre" />';?>
+						<?php echo '<img src="' . get_result($product_id, 'Image_Path') . '" class="img-thumbnail" width="140" height="140" />';?>
 						<?php echo get_result($product_id, 'Name'); ?>
 					</td>
 					<td id="price">
@@ -59,17 +59,11 @@
 					</td>
 					<td>
 						<p id="total_price">$0</p>
-					</td>
-					
-					<tfoot>
-						<td rowspan="2">
-							<input type="submit" class="btn btn-primary btn-lg btn-block" value="Purchase" />
-						</td>
-					</tfoot>
+					</td>	
 				</tr>
 			</tbody>
-			
 		</table>
+		<input type="submit" class="btn btn-primary btn-lg btn-block" value="Purchase" />
 	</form>
 			
 

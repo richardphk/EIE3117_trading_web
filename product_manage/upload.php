@@ -13,7 +13,7 @@
 	$upfile = '';
 	
 	if (isset($_FILES['product_image'])) {
-		$upfile = 'product_image/' . basename($_FILES['product_image']['name']);
+		$upfile = '../product_image/' . basename($_FILES['product_image']['name']);
 	}
 	//echo $upfile;
 	
@@ -21,7 +21,7 @@
 
 	
 	
-	$product_id = 'ABC';
+	$product_id = 'ABCF';
 	$product_name = $_POST['product_name']; //string
 	$product_price = $_POST['product_price']; //price
 	$product_inventory = $_POST['product_inventory']; //string
