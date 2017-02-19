@@ -1,4 +1,4 @@
-Tweb_User:
+/* Tweb_User: */
 
 INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`) 
 VALUES ('U00001', 'test1', 'test1', '1990-10-20', '123@email.com', '+85211112222', 'User', 'test1', TRUE);
@@ -8,7 +8,19 @@ INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_U
 VALUES ('U00003', 'test3', 'test3', '1991-11-13', '789@email.com', '+85133334443', 'User', 'test3', FALSE);
 
 
-Tweb_Product:
-INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) VALUES ('P00001', ' Canon SELPHY CP1200', 1120, 100, NULL, 'Printer', '2017-2-13', 0, 'U00001', NULL);
-INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) VALUES ('P00002', 'ASUS RT-AC68U', 980, 50, NULL, 'Router', '2017-2-14', 1, 'U00002', NULL);
-INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) VALUES ('P00003', 'ASUS Vivobook E200HA', 2350, 10, NULL, 'NB', '2017-1-11', 10, 'U00003', NULL);
+/* Tweb_Product: */
+INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) 
+VALUES ('P00001', ' Canon SELPHY CP1200', 1120, 100, NULL, 'Printer', '2017-2-13', 0, 'U00001', NULL);
+INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) 
+VALUES ('P00002', 'ASUS RT-AC68U', 980, 50, NULL, 'Router', '2017-2-14', 1, 'U00002', NULL);
+INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) 
+VALUES ('P00003', 'ASUS Vivobook E200HA', 2350, 10, NULL, 'NB', '2017-1-11', 10, 'U00003', NULL);
+
+
+/* Tweb_Sale_Record: */
+INSERT INTO `trading_web`.`Tweb_Sale_Record` (`Tweb_Sale_Record_ID`, `Tweb_Sale_Record_Customer_ID`, `Tweb_Sale_Record_Order_Date`, `Tweb_Sale_Record_Ship_Address`, `Tweb_Sale_Record_Ship_Date`, `Tweb_Sale_Record_Sale_Tax_Rate`) 
+VALUES ('S00001', 'U00001', '2017-2-20', 'abc', '2017-3-1', 5);
+
+
+/* Tweb_Order: */
+INSERT INTO `trading_web`.`Tweb_Order` (`Tweb_Order_ID`, `Tweb_Order_Product_ID`, `Tweb_Order_Quantity`, `Tweb_Order_Discount`, `Tweb_Order_Sale_Record_ID`) VALUES ('O00001', 'P00001', 1, 0, 'S00001');
