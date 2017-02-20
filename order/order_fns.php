@@ -48,24 +48,55 @@
 		}
 	}
 	
-	function sales_record($id) {
-		$date = date('Y-m-d');
-		$record_id = 'test01'; //Temporary data
-		try {
-			$db_conn = db_connect('root', '');
-			$stmt = $db_conn->prepare('INSERT INTO tweb_sale_record (Tweb_Sale_Record_ID, Tweb_Sale_Record_Customer_ID, Tweb_Sale_Record_Order_Date) VALUES (:record_id, :id, :date)');
+	function add_sale_record($purchase_id, $user_id, $purchase_date) {
+		$db_conn = db_connect('root', '');
+		$stmt = $db_conn->prepare('INSERT INTO tweb_sale_record (Tweb_Sale_Record_ID, Tweb_Sale_Record_Customer_ID, Tweb_Sale_Record_Order_Date) VALUES (:purchase_id, :user_id, :purchase_date)');
 			
-			$stmt->bindparam(':record_id', $record_id);
-			$stmt->bindparam(':id', $id);
-			$stmt->bindparam(':date', $date);
+		$stmt->bindparam(':purchase_id', $purchase_id);
+		$stmt->bindparam(':user_id', $user_id);
+		$stmt->bindparam(':purchase_date', $purchase_date);
 			
-			$stmt->execute();
-			return 'Your sales record has been added <br />';
+		$stmt->execute();
+		echo 'Sale record of ' . $purchase_id . ' is updated <br />';
+	
+	}
+
+	function add_order($order_id, $product_id, $quantity, $sales_id) {
+		$db_conn = db_connect('root', '');
+		$stmt = $db_conn->prepare('INSERT INTO Tweb_Order (Tweb_Order_ID, Tweb_Order_Product_ID, Tweb_Order_Quantity, Tweb_Order_Sale_Record_ID) VALUES (:order_id, :product_id, :quantity, :sales_id)');
 			
-		} catch (PDOException $e) {
-			return $e->getMessage();
-		}
+		$stmt->bindparam(':order_id', $order_id);
+		$stmt->bindparam(':product_id', $product_id);
+		$stmt->bindparam(':quantity', $quantity);
+		$stmt->bindparam(':sales_id', $sales_id);
 		
+		$stmt->execute();
+
+		echo 'Order of ' . $product_id . ' is added <br />';
+	}
+
+	function edit_inventory($id, $quantity) {
+		$inventory = get_result($id, 'Inventory');
+		echo 'got inventory: ' . $inventory;
+		//$inventory = $inventory - $quantity;
+
+		$sale = get_result($id, 'Sale');
+		echo 'got sale: ' . $sale;
+		//$sale = $sale + $quantity;
+
+		$inventory = 100;
+		$sale = 999;
+
+		$db_conn = db_connect('root', '');
+		$stmt = $db_conn->prepare('UPDATE Tweb_Product SET Tweb_Product_Inventory = :inventory, Tweb_Product_Sale = :sale WHERE Tweb_Product_ID = :id');
+		
+		$stmt->bindparam(':inventory', $inventory);
+		$stmt->bindparam(':sale', $sale);
+		$stmt->bindparam(':id', $id);
+		$stmt->execute();
+
+		echo 'Product inventory of ' . $id . ' is updated <br />';
+
 	}
 
 	function order_table_header() {
