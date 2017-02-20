@@ -5,17 +5,31 @@
 	include_once('../includes/get_today.php');
 	include_once('../session/checking.php');
 	include_once('upload_fns.php');
+	session_start();
 	
 	page_header('Upload');
 	
 	if (check_login()) {
+		
 		$upfile = '';
+		$product_id = gen_id('Tweb_Product');
+		$product_name = $_POST['product_name'];
+		$product_price = $_POST['product_price'];
+		$product_quantity = $_POST['product_quantity'];
+		$product_type = $_POST['product_type'];
+		$date = get_today();
+		$sale = 0;
+		$product_creator = $_SESSION['login_user'];
+		$product_desc = $_POST['product_desc'];
 
 		if (isset($_FILES['product_image']) && !empty( $_FILES["product_image"]["name"] )) {
-
 			if ($_FILES['product_image']['error'] > 0) {
-				echo 'Image upload problem';
-				switch ($_FILES['product_image']) {
+				?>
+					<div class="jumbotron">
+						<h1>
+				<?php
+				echo 'Image upload problem: ';
+				switch ($_FILES['product_image']['error']) {
 					case 1:  echo 'File exceeded upload_max_filesize';
 					break;
 					case 2:  echo 'File exceeded max_file_size';
@@ -29,10 +43,14 @@
 					case 7:  echo 'Upload failed: Cannot write to disk';
 					break;
 				} exit;
+				?>
+						</h1>
+					</div>
+				<?php
 			}
 			
 
-			$upfile = 'product_image/' . $_FILES['product_image']['name'];
+			$upfile = 'product_image/' . $product_creator . '_' . $product_id . '_' . $_FILES['product_image']['name'];
 			move_uploaded_file($_FILES['product_image']["tmp_name"], '../' . $upfile);
 			
 			if (is_uploaded_file($_FILES['product_image']['tmp_name'])) {
@@ -43,16 +61,6 @@
 			$upfile = 'product_image/icon.png';
 		}
 		
-		
-		$product_id = gen_id('Tweb_Product');
-		$product_name = $_POST['product_name']; //string
-		$product_price = $_POST['product_price']; //price
-		$product_quantity = $_POST['product_quantity']; //dropdownlist
-		$product_type = $_POST['product_type']; //dropdownlist
-		$date = get_today();
-		$sale = 0;
-		$product_creator = 'U00001';//$_SESSION['login_user']; //userid
-		$product_desc = $_POST['product_desc']; //String
 		
 		?>
 			<div class="jumbotron">

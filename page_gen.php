@@ -79,7 +79,7 @@
 					<div class="collapse navbar-collapse"  style="font-size:20px;">
 					  <ul class="nav navbar-nav" >
 						<div class="col-lg-1" style="width:350px;"></div>
-						<li><a href="#">Sale Your Product</a></li>
+						<li><a href="product_manage/upload_page.php">Sale Your Product</a></li>
 						<li class="dropdown">
 						  <a id="product" onclick="this.color='red';" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Product <span class="caret"></span></a>
 						  <ul class="dropdown-menu" style="background-color:#6d8cb1;">
