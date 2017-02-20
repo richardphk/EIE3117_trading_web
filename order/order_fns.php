@@ -36,11 +36,11 @@
 		}
 	}
 	
-	function email_to_seller($seller_id, $buyer_id) { 
+	function email_to_seller($seller_id, $buyer_id, $product_id, $product_name, $product_quantity) { 
 			$email = get_user_info($seller_id, 'Tweb_User_Email');
 			$buyer_name = get_user_info($seller_id, 'Tweb_User_Name');
 			$from = "From: support@phpbookmark \r\n";
-			$mesg = $buyer_id . " has bought something from you";
+			$mesg = "This is to notify that user " . $buyer_name . " has bought " . $product_quantity . ' ' . $product_name . '(' . $product_id . ')' . "from you";
 			if (mail($email, 'Online Trading Website', $mesg, $from)) {
 				return true;
 		} else { 
@@ -72,17 +72,17 @@
 		
 		$stmt->execute();
 
-		echo 'Order of ' . $product_id . ' is added <br />';
+		echo 'Order of ' . $product_id . ' with ' . $quantity . ' is added <br />';
 	}
 
 	function edit_inventory($id, $quantity) {
 		$inventory = get_result($id, 'Inventory');
-		echo 'got inventory: ' . $inventory;
-		//$inventory = $inventory - $quantity;
+		echo 'got inventory: ' . $inventory . '<br />';
+		$inventory = $inventory - $quantity;
 
 		$sale = get_result($id, 'Sale');
-		echo 'got sale: ' . $sale;
-		//$sale = $sale + $quantity;
+		echo 'got sale: ' . $sale . '<br />';
+		$sale = $sale + $quantity;
 
 		$inventory = 100;
 		$sale = 999;

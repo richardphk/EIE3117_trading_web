@@ -7,7 +7,7 @@
 	session_start();
 
 	page_header('Order');
-	
+
 	//Add record
 	$purchase_id = gen_id('Tweb_Sale_Record');
 	$dummy_userid = "U00001";
@@ -36,15 +36,16 @@
 
 		order_table_body($i, $_POST['product_name'][$i], $_POST['product_price'][$i], $_POST['product_quantity'][$i]);
 		$total_price += $_POST['product_price'][$i] * $_POST['product_quantity'][$i];
+
+		$seller_id = get_result($_POST['product_id'][$i], 'Creator_ID');
+		email_to_seller($seller_id, $dummy_userid, $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
 	}
 	order_table_footer($total_price);
 
-	/*
 	
 	
 	//Buyer ID from session $buyer_id = $_SESSION['valid_user'];
 	$product_id = $_POST["product_id"];
-	$seller_id = get_result($product_id, 'Creator_ID');
 	
 	email_to_buyer($seller_id);
 	echo sales_record($seller_id);
@@ -53,5 +54,5 @@
 	email_to_seller($seller_id, $seller_id);
 	
 	echo 'Thanks for purchasing <br />';
-	*/
+
 ?>
