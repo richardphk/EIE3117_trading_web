@@ -41,6 +41,7 @@
 					<option>Router</option>
 					<option>Laptop</option>
 					<option>Printer</option>
+					<option>Monitor</option>
 				</select>
 			</div>
 		</div>
