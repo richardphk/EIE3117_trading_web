@@ -4,11 +4,26 @@
 	include_once('../page_gen.php');
 	session_start();
 	
-	foreach($_POST as $key => $value) {
-		echo $_POST[$key];
-	}
-	/*
 	page_header('Order');
+
+	//unset($_SESSION['cart'])Cancel session
+	//Add record
+	//Add order
+	//Send email
+
+	echo "Thanks for using our service." . '<br .>';
+
+	order_table_header();
+	$total_price = 0;
+
+	for ($i=0; $i < count($_POST['product_id']); $i++) {
+		order_table_body($i, $_POST['product_name'][$i], $_POST['product_price'][$i], $_POST['product_quantity'][$i]);
+		$total_price += $_POST['product_price'][$i] * $_POST['product_quantity'][$i];
+	}
+	order_table_footer($total_price);
+
+	/*
+	
 	
 	//Buyer ID from session $buyer_id = $_SESSION['valid_user'];
 	$product_id = $_POST["product_id"];

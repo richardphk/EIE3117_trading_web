@@ -54,16 +54,19 @@
 	function cart_table($id, $quantity) {
 		?>
 		<tr>
+			<input type="hidden" name="product_id[]" value="<?php echo get_result($id, 'ID'); ?>">
+			<input type="hidden" name="product_name[]" value="<?php echo get_result($id, 'Name'); ?>">
 			<td>
 				<img src="<?php echo get_result($id, 'Image_Path'); ?>" class="img-thumbnail" width="140" height="140" />
-				<p name="<?php echo $id; ?>"><?php echo get_result($id, 'Name'); ?></p>
+				<?php echo get_result($id, 'Name'); ?>
 			</td>
-			<td name="<?php echo $id; ?>_price" id="<?php echo $id; ?>_price" '>
+			<td id="<?php echo $id; ?>_price" '>
+				<input type="hidden" name="product_price[]" value="<?php echo get_result($id, 'Price'); ?>">
 				$<?php echo get_result($id, 'Price'); ?>
 					
 			</td>
 			<td>
-				<select name="<?php echo $id; ?>_quantity" id="<?php echo $id; ?>_quantity" onchange="calculator('<?php echo $id; ?>', <?php echo get_result($id, 'Price'); ?>)">
+				<select name="product_quantity[]" id="<?php echo $id; ?>_quantity" onchange="calculator('<?php echo $id; ?>', <?php echo get_result($id, 'Price'); ?>)">
 					<?php echo get_result($id, 'Inventory');
 						for ($i=1; $i<=get_result($id, 'Inventory'); $i++) {
 							if ($i == $quantity) {
@@ -93,7 +96,7 @@
 							Total Amount:
 						</td>
 						<td rowspan="2">
-							<p id="total_amount">$0</p>
+							<p id="total_amount"><script>total_amount();</script></p>
 						</td>
 					</tr>
 					</tbody>

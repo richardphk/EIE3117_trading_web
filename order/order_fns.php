@@ -67,6 +67,40 @@
 		}
 		
 	}
-	
+
+	function order_table_header() {
+		?>
+			<table class="table">
+			    <thead>
+			    		<tr>
+			      		 	<th>#</th>
+			       			<th>Product Name</th>
+			        		<th>Price</th>
+			        		<th>Quantity</th>
+			      		</tr>
+			    </thead>
+				<tbody>
+		<?php
+	}
+	function order_table_body($item, $name, $price, $quantity) {
+		?>
+			<tr>
+				<td><?php echo $item + 1; ?></td>
+			    <td><?php echo $name; ?></td>
+			    <td>$<?php echo $price; ?></td>
+			    <td><?php echo $quantity; ?></td>
+			</tr>
+		<?php
+	}
+	function order_table_footer($total) {
+		?>
+				<tr>
+					<td>Total Amount</td>
+					<td>$<?php echo $total ?></td>
+				</tr>
+				</tbody>
+			</table>
+		<?php
+	}
 
 ?>
