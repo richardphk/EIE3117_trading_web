@@ -114,6 +114,16 @@
 <?php
 	}
 	
+	function not_loggedin() {
+		?>
+		
+			<div class="jumbotron">
+				<h1>You have not logged in.</h1>
+			</div>
+		
+		<?php
+	}
+	
 	function page_footer(){
 
 	
