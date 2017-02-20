@@ -1,5 +1,5 @@
 <?PHP
-	require_once('../config_db/Config_db.php');
+	require_once('../config_db/config_db.php');
 	require_once('../session/create_session.php');
 	require_once('../session/checking.php');
 	require_once('../session/input_replace.php');
@@ -7,7 +7,9 @@
 	require_once('../user/verify.php');
 	require_once('../includes/get_today.php');
 	require_once('../includes/gen_id.php');
-	include('salt.php');
+	require_once('../user/gen_token.php');
+	require_once('../user/mail.php');
+	require_once('./salt.php');
 	
 	/* inital functions */
 	start_session(10);
@@ -52,7 +54,7 @@
 			die();
 		}
 		
-		if (valid_email($email_address)){
+		if (!(valid_email($email_address))){
 			response_message2rediect("Email address is not valid!", "./register.php");
 			die();
 		}	
@@ -104,17 +106,23 @@
 				//print('new id:'.$new_user_id);
 				$today = get_today();
 				//print('today:'.$today);
+				$now_time = time();
+				//get token + time
+				$token = gen_token($salt ,$username, $password, $today, $now_time);
+				
+				$token_exptime = $token[1];
+				$token = $token[0];
 				
 				$sql = "INSERT INTO `trading_web`.`Tweb_User` 
-						(`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`) 
+						(`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
 						VALUES 
-						(:id, :username, :password, :dob, :email, :phone, 'User', :nickname, FALSE);";
+						(:id, :username, '".$password."', :dob, :email, :phone, 'User', :nickname, '0', '".$token."', ".$token_exptime.");";
 				
+				//printf("sql:%s <br/>", $sql);
 				$result = $db->prepare($sql);
 				$result->bindValue(':id', $new_user_id, PDO::PARAM_STR);
 				$result->bindValue(':username', $username, PDO::PARAM_STR);
 				$password = hash('sha256', $salt.$password);
-				$result->bindValue(':password', $password, PDO::PARAM_STR);
 				//echo '<br/>'.'ok here';
 				$result->bindValue(':dob', $dob, PDO::PARAM_STR);
 				$result->bindValue(':email', $email_address, PDO::PARAM_STR);
@@ -122,10 +130,13 @@
 				
 				$result->bindValue(':nickname', $nickname, PDO::PARAM_STR);
 				$result->execute();
-				//printf("sql:%s <br/>", $sql);
+				//printf("<br/> sql:%s <br/>", $sql);
 				
-				printf("Please login again, rediect to %s <br/>", 'login.php');
-				response_message2rediect("Register OK", "./login.php");
+				send_active_mail($username, $token, $email_address);
+				
+				//printf("The activation email has been sent...<br/>  rediect to %s after 3 seconds <br/>", 'Home Page');
+				response_message2rediect("Register OK! The activation email has been sent & rediect to home page ", "../home.php");
+				//header("Location:http://localhost/EIE3117_trading_web/home.php");//
 			}
 
 		} catch(PDOException $e){
@@ -135,9 +146,8 @@
 			die();
 		}
 		
-		
 	}else{
-		response_message2rediect("Bye!", "register.html");
+		response_message2rediect("Bye!", "register.php");
 	}	
 	
 	

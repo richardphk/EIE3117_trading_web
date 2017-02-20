@@ -1,11 +1,11 @@
 <?PHP
-	require_once('../config_db/Config_db.php');
+	require_once('../config_db/config_db.php');
 	require_once('../session/create_session.php');
 	require_once('../session/checking.php');
 	require_once('../session/input_replace.php');
 	require_once('../session/redirect_page.php');
 	require_once('../user/verify.php');
-	include('salt.php');
+	require_once('./salt.php');
 	
 	/* inital functions */
 	start_session(10);
@@ -34,28 +34,38 @@
 		$username = input_replace($username);
 		$password = input_replace($password);
 		$password = hash('sha256', $salt.$password);
-		
-		#printf("username:%s <br/>", $username);
-		#printf("password:%s <br/>", $password);
+
+		//printf("username:%s <br/>", $username);
+		//printf("password:%s <br/>", $password);
 		
 		try{
-			$sql = "Select Tweb_User_ID, Tweb_User_Name, Tweb_User_Privilege from Tweb_User where BINARY Tweb_User_Name = :username and Tweb_User_Password = '".$password."' LIMIT 1;";
+			$sql = "Select Tweb_User_ID, Tweb_User_Name, Tweb_User_Privilege, Tweb_User_Activated from Tweb_User where BINARY Tweb_User_Name = :username and Tweb_User_Password = '".$password."' LIMIT 1;";
 			#printf("sql: %s <br/>", $sql);
 			$result = $db->prepare($sql);
 			$result->bindValue(':username', $username, PDO::PARAM_STR);
 			$result->execute();
 			$rows = $result->fetch(PDO::FETCH_NUM);
-			
-			#print_r($rows);
+			//echo '<br/>hi sql';
+			//print_r($rows);
 			
 			if($rows){
-				$_SESSION['login_user'] = $username;
-				$_SESSION['login_user_id'] = $rows[0];
-				$_SESSION['login_user_privilege'] = $rows[1];
-				
-				response_message2rediect("Welcome back!", "../home.php");
-				$db = null;
-				die();
+				$login_user_id = $rows[0];
+				$login_user = $rows[1];
+				$login_user_privilege = $rows[2];
+				$login_active = $rows[3];
+			
+				if($login_active == 0){
+					$db = null;
+					response_message2rediect("Sorry, you have not activated!", "../home.php");
+					die();
+				} else {
+					$_SESSION['login_user'] = $login_user;
+					$_SESSION['login_user_id'] = $login_user_id;
+					$_SESSION['login_user_privilege'] = $login_user_privilege;
+					$db = null;
+					response_message2rediect("Welcome back!", "../home.php");
+					die();
+				}
 			}else{
 				response_message2rediect("Wrong User name or password!", "./login.php");
 				$db = null;
@@ -64,7 +74,7 @@
 			
 		}catch(PDOException $e){
 			$m = $e->getMessage();
-			echo $m;
+			//echo $m;
 			response_message2rediect("Log-in fail!", "./login.php");
 			$db = null;
 			die();

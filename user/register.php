@@ -42,7 +42,7 @@
 				<div class="form-group">
 					<input type="email" name='Email_address'  
 							placeholder="Email address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
-							title="Email format xxx@xxx.xxx"
+							title="Email format xxx@xxx.xxx(all lowercase)"
 							autocomplete="off" 
 							required />
 				</div>

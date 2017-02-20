@@ -22,11 +22,11 @@
 	
 	function valid_email($address) {
 		// check an email address is possibly valid
-		if (ereg('^[a-zA-Z0-9_\.\-]+@[a-zA-Z0-9\-]+\.[a-zA-Z0-9\-\.]+$', $address)) {
-			return true;
-		} else { 
+		if (!(filter_var($address, FILTER_VALIDATE_EMAIL))) {
 			return false;
 		}
+		
+		return true;
 	}
 
 ?>
