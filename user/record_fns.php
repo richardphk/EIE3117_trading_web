@@ -17,12 +17,12 @@
 			<div class="panel panel-default">
 				<div class="panel-heading">
 					<h4 class="panel-title">
-						<a data-toggle="collapse" data-parent="#accordion" href="#collapse<? echo $number += 1; ?>">
-							<?php echo $rec['Tweb_Sale_Record_ID']; ?>   <?php echo $rec['Tweb_Sale_Record_Order_Date'];?>
+						<a data-toggle="collapse" data-parent="#accordion" href="#collapse<?php echo $number += 1; ?>" style="text-decoration:none;">
+							<button type="button" class="btn btn-primary btn-lg btn-block"><?php echo 'Recept number: ' . $rec['Tweb_Sale_Record_ID']; ?>   <?php echo 'Date: ' . $rec['Tweb_Sale_Record_Order_Date'];?></button>							
 						</a>
 					</h4>
 				</div>
-				<div id="collapse<? echo $number += 1; ?>" class="panel-collapse collapse in">
+				<div id="collapse<?php echo $numberr += 1; ?>" class="panel-collapse collapse in">
 					<div class="panel-body">
 						<table class="table table-striped">
 							<thead>
@@ -34,17 +34,22 @@
 							<tbody>
 								
 									<?php $details = get_details('Product_ID', 'Quantity', $rec['Tweb_Sale_Record_ID']);
+										$total_price = 0;
+										
 										foreach ($details as $det) {
-										?>
-										<tr>
-											<td><img src="<?php echo get_product($id, 'Image_Path'); ?>" class="img-thumbnail" width="140" height="140" />
-												<?php echo get_product($det['Tweb_Order_Product_ID'], 'Name');?></td>
-											<td><?php echo $det['Tweb_Order_Quantity'];?></td>
-										</tr>
-										<?php 
+											?>
+											<tr>
+												<td><img src="<?php echo get_product($det['Tweb_Order_Product_ID'], 'Image_Path'); ?>" class="img-thumbnail" width="140" height="140" />
+													<?php echo get_product($det['Tweb_Order_Product_ID'], 'Name');?></td>
+												<td><?php echo $det['Tweb_Order_Quantity']; ?></td>
+											</tr>
+											<?php 
+											$total_price = $total_price + (get_product($det['Tweb_Order_Product_ID'], 'Price') * $det['Tweb_Order_Quantity']);
 										} 
 										?>
-								
+									<tr>
+										<td>Total amount: </td>
+										<td>$<?php echo $total_price; ?></td>
 							</tbody>
 						</table>
 					</div>

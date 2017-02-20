@@ -95,8 +95,12 @@
 						<li><a href="#">Account</a></li>
 					  </ul>
 					  <ul class="nav navbar-nav navbar-right">
-						<li><a style="font-size:22px;" ><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
-						<li><a href="#">sign in</a>
+						<li><a href="order/cart_page.php" style="font-size:22px;" ><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
+						<?php
+							if(!isset($_SESSION['login_user'])) {
+								echo '<li><a href="#">sign in</a>';
+							}
+						?>
 						</li>
 					  </ul>
 					</div><!-- /.navbar-collapse -->

@@ -6,7 +6,7 @@
 
 	page_header('Purchase Record');
 	table_header();
-	table('U00001');
+	table($user_id);
 	table_footer();
 
 
