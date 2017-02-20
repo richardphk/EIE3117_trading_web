@@ -1,10 +1,10 @@
 <?php
 	require_once('../page_gen.php');
 	require_once('../session/checking.php');
-	
+	session_start();
 	
 	page_header('Upload');
-	
+	$_SESSION['login_user'] = 'U00001';
 	if (check_login()) {
 ?>
 	<form action="product_manage/upload.php" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
@@ -32,7 +32,7 @@
 		<div class="form-group">
 			<label class="col-sm-2 control-label">Product image:</label>
 			<div class="col-sm-10">
-				<input class="form-control" id="inputfile" type="file" name="product_image" />
+				<input class="form-control" id="inputfile" type="file" name="product_image" accept="image/*" />
 			</div>
 		</div>
 		
