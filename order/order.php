@@ -7,7 +7,9 @@
 	session_start();
 
 	page_header('Order');
-
+	
+	echo "Thanks for using our service." . '<br .>';
+	
 	//Add record
 	$purchase_id = gen_id('Tweb_Sale_Record');
 	$dummy_userid = "U00001";
@@ -20,7 +22,7 @@
 	//unset($_SESSION['cart'])Cancel session
 	//Send email
 
-	echo "Thanks for using our service." . '<br .>';
+	
 
 	order_table_header();
 	$total_price = 0;
@@ -48,10 +50,7 @@
 	$product_id = $_POST["product_id"];
 	
 	email_to_buyer($seller_id);
-	echo sales_record($seller_id);
 	
-	echo 'The email record has been sent to your email. <br />';
-	email_to_seller($seller_id, $seller_id);
 	
 	echo 'Thanks for purchasing <br />';
 

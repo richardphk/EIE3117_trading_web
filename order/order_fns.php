@@ -38,7 +38,7 @@
 	
 	function email_to_seller($seller_id, $buyer_id, $product_id, $product_name, $product_quantity) { 
 			$email = get_user_info($seller_id, 'Tweb_User_Email');
-			$buyer_name = get_user_info($seller_id, 'Tweb_User_Name');
+			$buyer_name = get_user_info($buyer_id, 'Tweb_User_Name');
 			$from = "From: support@phpbookmark \r\n";
 			$mesg = "This is to notify that user " . $buyer_name . " has bought " . $product_quantity . ' ' . $product_name . '(' . $product_id . ')' . "from you";
 			if (mail($email, 'Online Trading Website', $mesg, $from)) {
@@ -57,7 +57,7 @@
 		$stmt->bindparam(':purchase_date', $purchase_date);
 			
 		$stmt->execute();
-		echo 'Sale record of ' . $purchase_id . ' is updated <br />';
+		//Statement for chick record echo 'Sale record of ' . $purchase_id . ' is updated <br />';
 	
 	}
 
@@ -72,20 +72,15 @@
 		
 		$stmt->execute();
 
-		echo 'Order of ' . $product_id . ' with ' . $quantity . ' is added <br />';
+		//Statement for chick order echo 'Order of ' . $product_id . ' with ' . $quantity . ' is added <br />';
 	}
 
 	function edit_inventory($id, $quantity) {
 		$inventory = get_result($id, 'Inventory');
-		echo 'got inventory: ' . $inventory . '<br />';
 		$inventory = $inventory - $quantity;
 
 		$sale = get_result($id, 'Sale');
-		echo 'got sale: ' . $sale . '<br />';
 		$sale = $sale + $quantity;
-
-		$inventory = 100;
-		$sale = 999;
 
 		$db_conn = db_connect('root', '');
 		$stmt = $db_conn->prepare('UPDATE Tweb_Product SET Tweb_Product_Inventory = :inventory, Tweb_Product_Sale = :sale WHERE Tweb_Product_ID = :id');
@@ -95,7 +90,7 @@
 		$stmt->bindparam(':id', $id);
 		$stmt->execute();
 
-		echo 'Product inventory of ' . $id . ' is updated <br />';
+		//Statement for chick inventory echo 'Product inventory of ' . $id . ' is updated <br />';
 
 	}
 

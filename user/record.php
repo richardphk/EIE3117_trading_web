@@ -5,6 +5,9 @@
 	$user_id = 'U00001';
 
 	page_header('Purchase Record');
+	table_header();
+	table('U00001');
+	table_footer();
 
 
 ?>
