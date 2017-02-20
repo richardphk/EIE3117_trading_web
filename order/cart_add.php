@@ -2,9 +2,6 @@
 	include_once('cart_fns.php');
 	session_start();
 	
-
-	//$_SESSION['product_id'] = 'P00001';
-	
 	$product_id;
 	$product_quantity;
 	

@@ -3,7 +3,6 @@
 	
 	function check_inventory($id, $quantity) {
 		
-		
 		$db_conn = db_connect('root','');
 		$result = $db_conn->prepare('SELECT Tweb_Product_Inventory FROM tweb_product WHERE Tweb_Product_ID = "' . $id . '";');
 		$result->execute();
@@ -32,15 +31,13 @@
 	
 	function cart_header() {
 		?>
-			<link rel="stylesheet" href="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">  
-			<script src="https://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-			<script src="https://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-			
+			<h2>Cart</h2>
 			<form id="order_list" action='order/order.php' method="post">
-				<table class="table table-bordered">
+				<table class="table table-striped">
 					<thead>
 						<tr>
 							<th>Item</th>
+							<th></th>
 							<th>Price</th>
 							<th>Quantity</th>
 							<th>Total Price</th>
@@ -58,7 +55,9 @@
 			<input type="hidden" name="product_name[]" value="<?php echo get_result($id, 'Name'); ?>">
 			<td>
 				<img src="<?php echo get_result($id, 'Image_Path'); ?>" class="img-thumbnail" width="140" height="140" />
-				<?php echo get_result($id, 'Name'); ?>
+			</td>
+			<td>
+				<?php echo get_result($id, 'Name') . '<br/>' . get_result($id, 'Desc'); ?>
 			</td>
 			<td id="<?php echo $id; ?>_price" '>
 				<input type="hidden" name="product_price[]" value="<?php echo get_result($id, 'Price'); ?>">

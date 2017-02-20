@@ -28,6 +28,8 @@
 							<thead>
 								<tr>
 									<th>Product</th>
+									<th></th>
+									<th>Type</th>
 									<th>Quantity</th>
 								</tr>
 							</thead>
@@ -39,8 +41,9 @@
 										foreach ($details as $det) {
 											?>
 											<tr>
-												<td><img src="<?php echo get_product($det['Tweb_Order_Product_ID'], 'Image_Path'); ?>" class="img-thumbnail" width="140" height="140" />
-													<?php echo get_product($det['Tweb_Order_Product_ID'], 'Name');?></td>
+												<td><img src="<?php echo get_product($det['Tweb_Order_Product_ID'], 'Image_Path'); ?>" class="img-thumbnail" width="140" height="140" /></td>
+												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Name') . '<br />' . get_product($det['Tweb_Order_Product_ID'], 'Desc');?></td>
+												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Type'); ?></td>
 												<td><?php echo $det['Tweb_Order_Quantity']; ?></td>
 											</tr>
 											<?php 

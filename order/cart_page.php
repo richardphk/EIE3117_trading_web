@@ -62,15 +62,12 @@
 		} else {
 			?>
 				<div class="jumbotron">
-					<h1>You have not added any items into the chart.</h1>
+					<h1>You have not added any items into the cart yet.</h1>
 				</div>
 			<?php
 		}
 	} else {
 		not_loggedin();
 	}
-
-	
-	
 	page_footer();
 ?>
