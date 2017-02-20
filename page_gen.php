@@ -11,10 +11,17 @@
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="js/bootstrap.min.js"></script>
-
+	<script src="js/bootstrap-slider.min.js"></script>
+	<link href="css/bootstrap-slider.css" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Lora:700i" rel="stylesheet">
-
+	<!--<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> 
+		<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		-->
 	<script>
+	 //function check_input_search(){
+	//	 var ele = document.getElementsByClass("check");
+	//	 ele
+	 //}
 	</script>
 	<style>
 	
@@ -46,7 +53,7 @@
 	}
 	</style>
 </head>
-<body>
+<body style="background-color:#eee;">
 	<div class="wrapper" style="background-color:#eee;">
 		<div style="background-image:url(image/header_bg.jpg);">
 		<header class="header" style="height:12%;">
