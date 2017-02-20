@@ -1,9 +1,11 @@
 <?php
 	require_once('../page_gen.php');
-	
+	require_once('../session/checking.php');
 	
 	
 	page_header('Upload');
+	
+	if (check_login()) {
 ?>
 	<form action="product_manage/upload.php" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
 		<div class="form-group">
@@ -59,6 +61,9 @@
 	
 	
 <?php
+	} else {
+		not_loggedin();
+	}
 	page_footer();
 
 ?>
