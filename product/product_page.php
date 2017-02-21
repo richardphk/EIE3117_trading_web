@@ -11,19 +11,30 @@
 
 <script>
 	
-
+	
   $( function() {
-	  
-	  
-	  
-		var price = new Slider("#slider", {
+	  var price = new Slider("#slider", {
 		  range: true,
-		  value:[250,450],
+		  
 		  
 		});
+	var check_price_setted = "<?php if(!empty($_GET['price'])){echo $_GET['price'];}else echo''; ?>";
+	//document.write(check_price_setted);
+	  if(check_price_setted.length != 0){
+		  var price_new = check_price_setted;
+		  //alert(typeof(price_new),price_new);
+		  price_new_2 = price_new.split(',');
+		  //document.write(price_new_2[0],typeof(price_new_2));
+		 //$("#slider").attr('data-slider-min', 200);
+		 var price_new_2 = [parseInt(price_new_2[0],10),parseInt(price_new_2[1],10)];
+		 //document.write(arr,typeof(arr[0]));
+		  //$("#slider").attr('range', arr);
+		 price.setValue([price_new_2[0],price_new_2[1]],true,false);
+	  }
 
 		
-		
+		//price.setValue(500);
+
 		var value = price.getValue();
 		$("#amount").val( "$" + value[0] + " - $" + value[1] );
 		price.on("slide", function(slideEvt){
@@ -33,23 +44,14 @@
 			//var value = price.getValue();
 			//$("#amount").val( "$" + value[0] + " - $" + value[1] );
 			$("#amount").val( "$" + slideEvt[0] + " - $" + slideEvt[1]);
-			//$("#slider").submit();
+			
 			$("#adv_search_form").submit();
 			var php = "<?php if(!empty($_GET['price'])){echo $_GET['price'];} ?>";
+			
 			//document.write(php);
 			//document.write(php);
-			var new_val = parseInt(php,10);
-			new_val_2 = new_val.toString();
-			
-			document.write(new_val);
-			//var new_val = parseInt(new_val,10);
-			//document.write(typeof(new_val),new_val);
-			document.write(new_val_2);
-			//alert(php);
-			
-			//var min = price.getValue[0];
-			//var max = price.getValue[1];
-			//price.setValue(new_val);
+
+			var new_val = php.split(",");
 			
 			
 		})
@@ -72,7 +74,7 @@
 					<input name="" type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;width:90px;" >
 				<br>
 				<br>
-				<input id="slider" type="text" name="price" class="span2" value=""  data-slider-min="10" data-slider-max="1000" data-slider-step="5" style="width:100%;"/>
+				<input id="slider" type="text" name="price" class="span2" value=""  data-slider-min="100" data-slider-max="5000" data-slider-step="100" style="width:100%;"/>
 				<br>
 				<br>
 				
@@ -85,6 +87,14 @@
 						  </button>
 					  </span>
 				</div>
+				<label>Sort by:</label>
+				<select name="sort" class="form-control">
+				  <option selected="selected"></option>
+				  <option id="Lowest Price">Lowest Price</option>
+				  <option id="Hightest Price">Hightest Price</option>
+				  <option id="amount">Lastest Arrival</option>
+				  
+				</select>
 				
 			</form>
 				
@@ -104,15 +114,41 @@
 							//print_r($_GET);
 							
 							
-							var_dump($_GET);
+							//var_dump($_GET);
 							/*if(empty($_GET['price'])){
 								echo"in";
 								echo $_GET['price'] . "<script>
 									price.setValue([200,400]);
 									</script>";
 							}*/
+							if($_SERVER['REQUEST_METHOD'] == 'GET'){
+								$value = $_GET;
+								get_result($value,"all");
+								
+								var_dump(!empty($_GET['sort']));
+								if(!empty($_GET['sort'])){
+									
+									set_selected_sort($_GET['sort']);
+								}
+								if(empty($_GET['type'])){
+									exit;
+								}
+								
+								set_checked_butt($value['type']);
+								
+								
+							}
+							/*if(!empty($_GET['price'])){
+								$value = $_GET;
+								print_r($value);
+								get_result($value,'price');
+								
+							}
 							if(!empty($_GET['search'])){
 								$value = $_GET['search'];
+								$_GET['name'] = $value;
+								//var_dump($_GET);
+								
 								get_result($value,'keyword');
 								
 							}
@@ -124,7 +160,7 @@
 							}
 							elseif(!empty($_GET['type'])){
 								$value = $_GET['type'];
-								get_result($value,'Tweb_Product_Type');
+								get_result($value,'type');
 								set_checked_butt($value);
 							}	
 							elseif(!empty($_GET['search'])){
@@ -133,7 +169,7 @@
 							}
 							else{
 								$value = 0;
-							}
+							}*/
 							function set_checked_butt($value){
 								foreach($value as $id){
 									echo'<script>						
@@ -141,6 +177,13 @@
 
 										</script>';
 								}
+							}
+							function set_selected_sort($value){
+									print($value);
+									echo'<script>						
+												$("#'.$value .'").prop("selected", "selected");
+
+											</script>';
 							}
 							
 						
