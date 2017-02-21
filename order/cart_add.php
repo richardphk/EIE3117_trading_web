@@ -8,7 +8,7 @@
 	//start_session(10);
 	
 	page_header('Adding Cart');
-	print_r($_SESSION);
+	//print_r($_SESSION);
 	$product_id;
 	$product_quantity;
 	

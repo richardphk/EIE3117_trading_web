@@ -10,7 +10,7 @@
 	include('salt.php');
 	
 	/* inital functions */
-	start_session(10);
+	start_session(10000);
 	
 	if(!(check_login())){
 		response_message2rediect("You have not login", "./login.php");

@@ -18,9 +18,9 @@
 					<p>'. $des .'</p>
 					<p align="right">$'. $price .'</p>
 					<form action= "order/cart_add.php" method="GET">
-					<p align="right"><button href="#" class="btn btn-primary" role="button">Buy</button>
+					<p align="right"><button onClick="this.form.submit();" class="btn btn-primary" role="button">Buy</button>
 					<input type="hidden" name="product_id" value="'.$PID.'"></input>
-					<button class="btn btn-default" role="button" onClick="this.form.submit()">add Cart<span class="glyphicon glyphicon-shopping-cart"></span></button>
+					<button class="btn btn-default" role="button" onClick="this.form.submit();">add Cart<span class="glyphicon glyphicon-shopping-cart"></span></button>
 					</form>
 					</p>
 				  </div>
@@ -60,7 +60,7 @@
 			if(empty($key['type'])){
 
 				$key['type'] = null;
-				print($key['type']);
+				//print($key['type']);
 			}
 			if(empty($key['price'])){
 				$stat_price = "(select * FROM `tweb_product` where Tweb_Product_Price between ? and ?) as a";
@@ -146,7 +146,7 @@
 					array_push($type_array_bind,$key['type'][$n-1]);
 				}
 			}
-			var_dump($type_array_bind);
+			//var_dump($type_array_bind);
 			for($r=1;$r<=count($type_array_bind); $r++){
 				//print($r);
 				$result->bindParam($r,$type_array_bind[$r]);

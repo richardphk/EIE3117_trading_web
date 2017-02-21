@@ -98,7 +98,7 @@
 						  <ul class="dropdown-menu" style="background-color:#6d8cb1;">
 							<li><a href="http://158.132.145.246/EIE3117_trading_web/product/product_page.php?type%5B%5D=Printer&price=100%2C5000&name=&sort=" class="dp_item">Printer</a></li>
 							<li><a href="http://158.132.145.246/EIE3117_trading_web/product/product_page.php?type%5B%5D=Router&price=100%2C5000&name=&sort=" class="dp_item">Router</a></li>
-							<li><a href="http://158.132.145.246/EIE3117_trading_web/product/product_page.php?type%5B%5D=NB&price=100%2C5000&name=&sort=" class="dp_item">Notebook</a></li>
+							<li><a href="http://158.132.145.246/EIE3117_trading_web/product/product_page.php?type%5B%5D=Notebook&price=100%2C5000&name=&sort=" class="dp_item">Notebook</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="http://158.132.145.246/EIE3117_trading_web/product/product_page.php" class="dp_item">All Products</a></li>
 							<li role="separator" class="divider"></li>

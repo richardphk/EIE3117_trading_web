@@ -6,7 +6,7 @@
 	page_header('Cart');
 	
 	if (check_login()) {
-		?>
+?>
 			<script type="text/javascript">
 			
 			var item_id = [];

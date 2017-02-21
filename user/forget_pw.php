@@ -21,7 +21,7 @@
 	$db = db_connect('root', '');
 	
 	/* main */
-	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'http://localhost/EIE3117_trading_web/user/forget_pw_page.php')) {
+	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'http://158.132.145.246/EIE3117_trading_web/user/forget_pw_page.php')) {
 		
 		/* checking */
 		if (check_variable($_POST['Username']) && check_variable($_POST['Email_address'])){
@@ -80,8 +80,8 @@
 				$result->bindValue(':email_address', $email_address, PDO::PARAM_STR);
 				$result->execute();
 				
-				$url = "<a href='http://localhost/EIE3117_trading_web/user/reset_forget_pw.php?email=".$email_address."&verify=".$token."' target=
-						'_blank'>http://localhost/EIE3117_trading_web/user/reset_forget_pw.php?email=".$email_address."&verify=".$token."</a><br/>";
+				$url = "<a href='http://158.132.145.246/EIE3117_trading_web/user/reset_forget_pw.php?email=".$email_address."&verify=".$token."' target=
+						'_blank'>http://158.132.145.246/EIE3117_trading_web/user/reset_forget_pw.php?email=".$email_address."&verify=".$token."</a><br/>";
 				
 				send_forget_pw_email($token, $email_address, $url);
 				
