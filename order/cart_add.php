@@ -1,44 +1,54 @@
 <?php
-	include_once('cart_fns.php');
-	session_start();
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/cart_fns.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/checking.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/page_gen.php');
+	
+	
+	
+	page_header('Adding Cart');
 	
 	$product_id;
 	$product_quantity;
 	
-	if (isset($_GET['product_id'])) {
-		$product_id = $_GET['product_id'];
-	} else {
-		echo "Error";
-		exit;
-	}
 	
-	if (isset($_GET['product_quantity'])) {
-		$product_quantity = $_GET['product_quantity'];
-		
-		if (check_inventory($product_id, $product_quantity) == true) {
-			$product_quantity = $product_quantity + 1;
-			echo $product_id;
-			echo $product_quantity . '<~~after check<br />';
+	if (check_login()) {
+		if (isset($_GET['product_id'])) {
+			$product_id = $_GET['product_id'];
 		} else {
-			echo 'You can not make more';
+			echo "Error";
 			exit;
 		}
-	} else {
-		$product_quantity = '1';
-	}
-
-	$cart_item = array('product_quantity' => $product_quantity);
-	
-	if(!isset($_SESSION['cart'])) {
-		$_SESSION['cart'] = array();
-	}
-	
-	if(array_key_exists($product_id, $_SESSION['cart'])) {
 		
+		if (isset($_GET['product_quantity'])) {
+			$product_quantity = $_GET['product_quantity'];
+			
+			if (check_inventory($product_id, $product_quantity) == true) {
+				$product_quantity = $product_quantity + 1;
+				echo $product_id;
+				echo $product_quantity . '<~~after check<br />';
+			} else {
+				echo 'You can not make more';
+				exit;
+			}
+		} else {
+			$product_quantity = '1';
+		}
+
+		$cart_item = array('product_quantity' => $product_quantity);
+		
+		if(!isset($_SESSION['cart'])) {
+			$_SESSION['cart'] = array();
+		}
+		
+		if(array_key_exists($product_id, $_SESSION['cart'])) {
+			
+		} else {
+			$_SESSION['cart'][$product_id] = $cart_item;
+		}
+		
+		header("Location: " . $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/cart_page.php');
 	} else {
-		$_SESSION['cart'][$product_id] = $cart_item;
+		not_loggedin();
+		page_footer();
 	}
-	
-	header("Location: " . $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/cart_page.php');
-	
 ?>
