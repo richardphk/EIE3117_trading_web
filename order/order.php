@@ -1,9 +1,9 @@
 <?php
-	include_once('order_fns.php');
-	include_once('../page_gen.php');
-	include_once('../includes/gen_id.php');
-	include_once('../session/checking.php');
-	include_once('../includes/get_today.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/order_fns.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/page_gen.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/includes/gen_id.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/checking.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/includes/get_today.php');
 
 
 	page_header('Order');

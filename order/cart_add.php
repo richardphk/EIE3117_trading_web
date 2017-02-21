@@ -1,6 +1,7 @@
 <?php
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/cart_fns.php');
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/checking.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/redirect_page.php');
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/page_gen.php');
 	
 	
@@ -46,7 +47,7 @@
 			$_SESSION['cart'][$product_id] = $cart_item;
 		}
 		
-		header("Location: " . $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/cart_page.php');
+		response_message2rediect('Added', $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/cart_page.php');
 	} else {
 		not_loggedin();
 		page_footer();

@@ -5,9 +5,13 @@
 
 	page_header('inventory');
 	
-	product_header();
-	product_body($_SESSION['login_user_id']);
-	product_footer();
+	if (check_login()) {
+		product_header();
+		product_body($_SESSION['login_user_id']);
+		product_footer();
+	} else {
+		not_loggedin();
+	}
 	
 	page_footer();
 	

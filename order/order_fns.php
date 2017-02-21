@@ -1,6 +1,6 @@
 <?php
 
-	include_once('../config_db/config_db.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/config_db/config_db.php');
 	
 	
 	function get_result($id, $type) {
