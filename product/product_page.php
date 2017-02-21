@@ -89,10 +89,10 @@
 				</div>
 				<label>Sort by:</label>
 				<select name="sort" class="form-control">
-				  <option selected="selected"></option>
-				  <option id="Lowest Price">Lowest Price</option>
-				  <option id="Hightest Price">Hightest Price</option>
-				  <option id="amount">Lastest Arrival</option>
+				  <option id="blank" selected="selected"></option>
+				  <option id="Lowest_Price" value="Lowest_Price">Lowest Price</option>
+				  <option id="Hightest_Price" value="Hightest_Price">Hightest Price</option>
+				  <option id="amount" value="Lastest_Arrival">Lastest Arrival</option>
 				  
 				</select>
 				
@@ -125,9 +125,9 @@
 								$value = $_GET;
 								get_result($value,"all");
 								
-								var_dump(!empty($_GET['sort']));
+								//var_dump(!empty($_GET['sort']));
 								if(!empty($_GET['sort'])){
-									
+
 									set_selected_sort($_GET['sort']);
 								}
 								if(empty($_GET['type'])){
@@ -179,9 +179,10 @@
 								}
 							}
 							function set_selected_sort($value){
-									print($value);
-									echo'<script>						
-												$("#'.$value .'").prop("selected", "selected");
+									//print($value);
+									echo'<script>		
+												$("#blank").attr("selected", false);
+												$("#'.$value .'").attr("selected", true);
 
 											</script>';
 							}
