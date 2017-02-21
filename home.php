@@ -1,6 +1,6 @@
 <?php
-	session_start();
 	include_once('page_gen.php');
+	
 	page_header('home');
 ?>
 		<style>

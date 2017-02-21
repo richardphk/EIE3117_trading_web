@@ -1,12 +1,14 @@
 <?php
 	function page_header($title){
-	
+		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
+		start_session(10);
 
 ?>
 
 <html>
 <head>
-		<title><?php $title?></title>
+	<title><?php $title?></title>
 	<base href="http://localhost/EIE3117_trading_web/"/>
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
@@ -103,7 +105,21 @@
 						<li><a href="order/cart_page.php" style="font-size:22px;" ><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
 						<?php
 							if(!isset($_SESSION['login_user'])) {
-								echo '<li><a href="#">sign in</a>';
+								echo '<li><a href="./user/login.php">sign in</a>';
+							} else {
+								//echo '<li><a href="#">'.$_SESSION['login_user'].'</a>';
+								echo '<li class="dropdown">';
+									echo '<a id="product" onclick="this.color=\'red\' href="#" 
+											class="dropdown-toggle" data-toggle="dropdown" 
+											role="button" aria-haspopup="true" aria-expanded="false">';
+									echo $_SESSION['login_user'];
+									echo '<span class="caret"></span></a>';
+									echo '<ul class="dropdown-menu" style="background-color:#6d8cb1;">';
+										echo '<li><a href="http://localhost/EIE3117_trading_web/logout.php" class="1">Logout</a></li>';
+										echo '<li><a href="#" class="2">Action</a></li>';
+										echo '<li><a href="#" class="3">Something else here</a></li>';
+									echo '</ul>';
+								echo '</li>';
 							}
 						?>
 						</li>
