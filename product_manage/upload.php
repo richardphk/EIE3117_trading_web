@@ -49,15 +49,15 @@
 			}
 			
 
-			$upfile = $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/product_image/' . $product_creator . '_' . $product_id . '_' . $_FILES['product_image']['name'];
-			move_uploaded_file($_FILES['product_image']["tmp_name"], $upfile);
+			$upfile = 'product_image/' . $product_creator . '_' . $product_id . '_' . $_FILES['product_image']['name'];
+			move_uploaded_file($_FILES['product_image']["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/' . $upfile);
 			
 			if (is_uploaded_file($_FILES['product_image']['tmp_name'])) {
 				echo 'Problem: Could not move file to destination directory'; 
 				exit;
 			}
 		} else {
-			$upfile = $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/product_image/icon.png';
+			$upfile = 'product_image/icon.png';
 		}
 		
 		

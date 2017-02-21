@@ -39,4 +39,6 @@
 		$_SESSION['cart'][$product_id] = $cart_item;
 	}
 	
+	header("Location: " . $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/cart_page.php');
+	
 ?>

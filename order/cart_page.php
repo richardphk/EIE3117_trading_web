@@ -1,7 +1,7 @@
 <?php
-	include_once('../page_gen.php');
-	include_once('../session/checking.php');
-	include_once('cart_fns.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/page_gen.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/checking.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/cart_fns.php');
 	
 	page_header('Cart');
 	

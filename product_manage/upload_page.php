@@ -5,7 +5,6 @@
 
 	page_header('Upload');
 
-	
 	if (check_login()) {
 		upload_form();
 	} else {
