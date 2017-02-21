@@ -1,5 +1,4 @@
 <?php
-	session_start();
 	include_once('../page_gen.php');
 	include_once('../session/checking.php');
 	include_once('cart_fns.php');

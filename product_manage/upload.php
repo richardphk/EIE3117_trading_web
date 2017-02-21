@@ -5,7 +5,6 @@
 	include_once('../includes/get_today.php');
 	include_once('../session/checking.php');
 	include_once('upload_fns.php');
-	session_start();
 	
 	page_header('Upload');
 	
@@ -19,7 +18,7 @@
 		$product_type = $_POST['product_type'];
 		$date = get_today();
 		$sale = 0;
-		$product_creator = $_SESSION['login_user'];
+		$product_creator = $_SESSION['login_user_id'];
 		$product_desc = $_POST['product_desc'];
 
 		if (isset($_FILES['product_image']) && !empty( $_FILES["product_image"]["name"] )) {

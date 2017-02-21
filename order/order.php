@@ -1,5 +1,4 @@
 <?php
-	session_start();
 	include_once('order_fns.php');
 	include_once('../page_gen.php');
 	include_once('../includes/gen_id.php');
@@ -16,7 +15,7 @@
 		$purchase_id = gen_id('Tweb_Sale_Record');
 		$purchase_date = get_today();
 
-		echo add_sale_record($purchase_id, $_SESSION['login_user'], $purchase_date);
+		echo add_sale_record($purchase_id, $_SESSION['login_user_id'], $purchase_date);
 		
 		order_table_header();
 		$total_price = 0;
@@ -33,11 +32,11 @@
 			$total_price += $_POST['product_price'][$i] * $_POST['product_quantity'][$i];
 
 			$seller_id = get_result($_POST['product_id'][$i], 'Creator_ID');
-			email_to_seller($seller_id, $_SESSION['login_user'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
+			email_to_seller($seller_id, $_SESSION['login_user_id'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
 		}
 		order_table_footer($total_price);
 		
-		email_to_buyer($_SESSION['login_user']);
+		email_to_buyer($_SESSION['login_user_id']);
 		
 		?>
 			<div class="jumbotron">
