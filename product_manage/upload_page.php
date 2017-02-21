@@ -4,7 +4,6 @@
 	session_start();
 	
 	page_header('Upload');
-	$_SESSION['login_user'] = 'U00001';
 	if (check_login()) {
 ?>
 	<form action="product_manage/upload.php" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">

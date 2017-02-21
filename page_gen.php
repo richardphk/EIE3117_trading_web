@@ -92,7 +92,12 @@
 							<li><a href="#" class="dp_item">One more separated link</a></li>
 						  </ul>
 						</li>
-						<li><a href="#">Account</a></li>
+						<li class="dropdown">
+							<a id="account" onclick="this.color='red';" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
+							<ul class="dropdown-menu" style="background-color:#6d8cb1;">
+								<li><a href="user/record.php" class="dp_item">Purchase Record</a></li>
+							</ul>
+						</li>
 					  </ul>
 					  <ul class="nav navbar-nav navbar-right">
 						<li><a href="order/cart_page.php" style="font-size:22px;" ><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
