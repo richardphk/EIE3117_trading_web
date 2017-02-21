@@ -2,8 +2,19 @@
 	function page_header($title){
 		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/salt.php');
 		start_session(10);
-
+		
+		if(isset($_COOKIE['user']) && $_COOKIE['user'] != ''){
+			list($hash, $login_user, $login_user_id) = split('-', $_COOKIE['user']);
+			if(hash('sha256', $salt.$login_user.$login_user_id.$salt.$login_user_id.$salt) == $hash){
+				$_SESSION['login_user'] = $login_user;
+				$_SESSION['login_user_id'] = $login_user_id;
+				$_SESSION['login_user_privilege'] = '';
+			}
+			//print_r($_COOKIE);
+		}
+		
 ?>
 
 <html>
@@ -85,7 +96,7 @@
 						<li class="dropdown">
 						  <a id="product" onclick="this.color='red';" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Product <span class="caret"></span></a>
 						  <ul class="dropdown-menu" style="background-color:#6d8cb1;">
-							<li><a href="#" class="dp_item">Action</a></li>
+							<li><a href="#" class="dp_item">Router</a></li>
 							<li><a href="#" class="dp_item">Another action</a></li>
 							<li><a href="#" class="dp_item">Something else here</a></li>
 							<li role="separator" class="divider"></li>
@@ -94,18 +105,26 @@
 							<li><a href="#" class="dp_item">One more separated link</a></li>
 						  </ul>
 						</li>
-						<li class="dropdown">
-							<a id="account" onclick="this.color='red';" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Account<span class="caret"></span></a>
-							<ul class="dropdown-menu" style="background-color:#6d8cb1;">
-								<li><a href="user/record.php" class="dp_item">Purchase Record</a></li>
-							</ul>
-						</li>
+						<!-- <li><a href="#">Account</a></li> -->
 					  </ul>
 					  <ul class="nav navbar-nav navbar-right">
 						<li><a href="order/cart_page.php" style="font-size:22px;" ><span class="glyphicon glyphicon-shopping-cart"></span></a></li>
 						<?php
 							if(!isset($_SESSION['login_user'])) {
-								echo '<li><a href="./user/login.php">sign in</a>';
+								echo '<li class="dropdown">';
+									echo '<a id="product" onclick="this.color=\'red\' href="./user/login.php"
+											class="dropdown-toggle" data-toggle="dropdown" 
+											role="button" aria-haspopup="true" aria-expanded="false">';
+									echo 'sign in';
+									echo '<span class="caret"></span></a>';
+									echo '<ul class="dropdown-menu" style="background-color:#6d8cb1;">';
+										echo '<li><a href="http://localhost/EIE3117_trading_web/user/login.php" class="1">Login</a></li>';
+										echo '<li><a href="http://localhost/EIE3117_trading_web/user/forget_pw_page.php" class="1">Forget Password</a></li>';
+										echo '<li><a href="http://localhost/EIE3117_trading_web/user/register.php" class="2">Register</a></li>';
+									echo '</ul>';
+								echo '</li>';
+							
+								//echo '<li><a href="./user/login.php">sign in</a>';
 							} else {
 								//echo '<li><a href="#">'.$_SESSION['login_user'].'</a>';
 								echo '<li class="dropdown">';
@@ -114,10 +133,10 @@
 											role="button" aria-haspopup="true" aria-expanded="false">';
 									echo $_SESSION['login_user'];
 									echo '<span class="caret"></span></a>';
-									echo '<ul class="dropdown-menu" style="background-color:#6d8cb1;">';
-										echo '<li><a href="http://localhost/EIE3117_trading_web/logout.php" class="1">Logout</a></li>';
-										echo '<li><a href="#" class="2">Action</a></li>';
-										echo '<li><a href="#" class="3">Something else here</a></li>';
+									echo '<ul class="dropdown-menu" style="background-color:#6d8cb1;">';	
+										echo '<li><a href="http://localhost/EIE3117_trading_web/user/record.php" class="2">Purchase History</a></li>';
+										echo '<li><a href="http://localhost/EIE3117_trading_web/user/reset_pw_page.php" class="3">Reset Password</a></li>';
+										echo '<li><a href="http://localhost/EIE3117_trading_web/logout.php" class="4">Logout</a></li>';
 									echo '</ul>';
 								echo '</li>';
 							}

@@ -4,7 +4,7 @@
 	require_once('../session/checking.php');
 	require_once('../session/redirect_page.php');
 	
-	if(check_login()){
+	if(!(check_login())){
 		response_message2rediect("You have not login", "./login.php");
 	}
 

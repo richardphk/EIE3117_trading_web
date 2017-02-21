@@ -29,7 +29,7 @@
 				
 				<form class="navbar-form check" name="home_search_form" action="./product/product_page.php" style="margin: 0px; height:50px;">
 					<div class="input-group" style="width:100px;">
-					  <input id="search" type="text" class="form-control" name="search" placeholder="Search for...">
+					  <input id="search" type="text" class="form-control" name="search" placeholder="Search for..." required>
 					  <span class="input-group-btn">
 						  <button type="submit" class="btn btn-default"  style="height:45px;" action="this.form.submit()" >
 							<span class="glyphicon glyphicon-search"></span>

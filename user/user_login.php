@@ -6,7 +6,6 @@
 	require_once('../session/redirect_page.php');
 	require_once('../user/verify.php');
 	require_once('../includes/get_today.php');
-	require_once('../user/gen_token.php');
 	require_once('./salt.php');
 	
 	/* inital functions */
@@ -24,9 +23,9 @@
 			$username = $_POST['Username'];
 			$password = $_POST['Password'];
 			if (isset($_POST['Remember'])){
-				$remenber_me = $_POST['Remember'];
+				$remember_me = $_POST['Remember'];
 			} else {
-				$remenber_me = false;
+				$remember_me = false;
 			}
 		} else {
 			response_message2rediect("Please fullin the form!", "./login.php");
@@ -70,14 +69,22 @@
 					$_SESSION['login_user_id'] = $login_user_id;
 					$_SESSION['login_user_privilege'] = $login_user_privilege;
 					
-					if($remenber_me == 'on'){
-						$today = get_today;
+					//print($remember_me);
+					
+					if($remember_me == 'on'){
+						//print($remember_me.'<br/>');
+						$cookie_name = 'user';
+						$today = get_today();
 						$now_time = time();
-						$secret = gen_token($salt, $login_user, $login_user_id, $today, $now_time);
-						$secret = $secret[0];
+						$secret = hash('sha256', $salt.$login_user.$login_user_id.$salt.$login_user_id.$salt);
 						$cookie_name = 'login_cookie';
 						$expiry = time() + (86400 * 30);
-						setcookie($cookie_name, $login_user_id, $expiry);
+						
+						if(!(isset($_COOKIE['user']))){
+							setcookie('user', $secret.'-'.$login_user.'-'.$login_user_id , $expiry);
+						}
+						
+						//print_r($_COOKIE['user']);
 					}
 					
 					$db = null;
@@ -99,6 +106,7 @@
 		}
 		
 	}else{
+		echo 'Error';
 		response_message2rediect("Bye!", "./login.php");
 		$db = null;
 		die();

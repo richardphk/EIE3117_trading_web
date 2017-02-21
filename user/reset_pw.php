@@ -69,7 +69,7 @@
 				$result = $db->prepare($update_sql);
 				$result->bindValue(':username', $username, PDO::PARAM_STR);
 				$result->execute();
-				response_message2rediect("Reset OK!", "./reset_pw_page.php");
+				response_message2rediect("Reset OK!", "./home.php");
 				$db = null;
 				die();
 			} else {
@@ -81,7 +81,7 @@
 		} catch(PDOException $e){
 			$m = $e->getMessage();
 			//echo $m;
-			//response_message2rediect("Reset fail!", "./reset_pw_page.php");
+			response_message2rediect("Reset fail!", "./reset_pw_page.php");
 			die();
 		}
 		
