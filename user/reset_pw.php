@@ -19,7 +19,7 @@
 	$db = db_connect('root', '');
 	
 	/* main */
-	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'http://localhost/EIE3117_trading_web/user/reset_pw_page.php')) {
+	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'http://158.132.145.246/EIE3117_trading_web/user/reset_pw_page.php')) {
 		
 		/* checking */
 		if (check_variable($_POST['Old_Password']) && check_variable($_POST['New_Password'])
@@ -69,7 +69,7 @@
 				$result = $db->prepare($update_sql);
 				$result->bindValue(':username', $username, PDO::PARAM_STR);
 				$result->execute();
-				response_message2rediect("Reset OK!", "./home.php");
+				response_message2rediect("Reset OK!", "../home.php");
 				$db = null;
 				die();
 			} else {

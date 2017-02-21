@@ -18,7 +18,7 @@
 	$db = db_connect('root', '');
 	
 	/* main */
-	if(check_request_method() == 'POST' && check_post_from($_SERVER['HTTP_REFERER'], 'http://localhost/EIE3117_trading_web/user/login.php')) {
+	if(check_request_method() == 'POST' && check_post_from($_SERVER['HTTP_REFERER'], 'http://158.132.145.246/EIE3117_trading_web/user/login.php')) {
 		if (check_variable($_POST['Username']) && check_variable($_POST['Password'])){
 			$username = $_POST['Username'];
 			$password = $_POST['Password'];

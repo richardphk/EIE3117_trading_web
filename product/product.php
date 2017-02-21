@@ -11,18 +11,20 @@
 		echo'
 			  <div class="col-sm-6 col-md-4" style="padding-right:0px;">
 				<div class="thumbnail">
-				<form action= "order/cart_add.php" method="GET">
+				
 				  <img src="'. $img .'" alt="'.$name.'" style="width:200px;">
 				  <div class="caption">
 					<h3>'. $name .'</h3>
 					<p>'. $des .'</p>
 					<p align="right">$'. $price .'</p>
-					<p align="right"><a href="#" class="btn btn-primary" role="button">Buy</a>
+					<form action= "order/cart_add.php" method="GET">
+					<p align="right"><button href="#" class="btn btn-primary" role="button">Buy</button>
 					<input type="hidden" name="product_id" value="'.$PID.'"></input>
 					<button class="btn btn-default" role="button" onClick="this.form.submit()">add Cart<span class="glyphicon glyphicon-shopping-cart"></span></button>
+					</form>
 					</p>
 				  </div>
-				 </form>
+				 
 				</div>
 			  </div>
 			';
@@ -31,7 +33,7 @@
 		echo'</div>';
 	}
 	function get_type(){
-		$stat = 'select Tweb_Product_Type FROM `tweb_product`;';
+		$stat = 'select distinct(Tweb_Product_Type) FROM `tweb_product`;';
 		$db_conn = db_connect('root','');
 		$result = $db_conn->prepare($stat);
 		$result->execute();
@@ -51,7 +53,7 @@
 	}
 	
 	function get_result($key,$key_type){
-		print_r($key);
+		//print_r($key);
 		//print $key_type;
 		if($key_type == 'all'){
 			//echo"type-search";
@@ -62,7 +64,7 @@
 			}
 			if(empty($key['price'])){
 				$stat_price = "(select * FROM `tweb_product` where Tweb_Product_Price between ? and ?) as a";
-				$key_price = array(100,10000);
+				$key_price = array(100,5550000);
 			}
 			else{
 				$key_price = explode(",", $key['price']);
@@ -74,7 +76,7 @@
 				if(!empty($key['search'])){
 					$key['name'] = $key['search'];
 				}else{
-					$key['name'] = ' ';
+					$key['name'] = '';
 				}
 				
 			}
@@ -84,7 +86,7 @@
 			$stat_select = 'SELECT * FROM ';
 			$stat_form = '(SELECT * FROM tweb_product';
 			$stat_add = ' or ';
-			//print($search_key_num . $key['type']);
+			//print_r($key['type']);
 			switch ($search_key_num) {
 				case 0:
 					$stat_form = $stat_form .') as c ';
@@ -104,7 +106,7 @@
 					break;
 			}
 
-			//echo $stat_type;
+			//echo $stat_form;
 			$stat_form .= 'where a.Tweb_Product_ID = b.Tweb_Product_ID and a.Tweb_Product_ID = c.Tweb_Product_ID and b.Tweb_Product_ID = c.Tweb_Product_ID ';
 			
 			
@@ -124,6 +126,7 @@
 				}
 				
 			}
+			//print($total_stat);
 			//echo $total_stat;
 			$db_conn = db_connect('root','');
 			$result = $db_conn->prepare($total_stat);
@@ -137,24 +140,23 @@
 			
 			for($n=1; $n<=$search_key_num; $n++){
 				if($search_key_num == 0 or empty($key['type'])){
-					array_push($type_array_bind,'');
+					array_push($type_array_bind,'Laptop');
 				}
 				else{
 					array_push($type_array_bind,$key['type'][$n-1]);
 				}
 			}
-			//print_r($type_array_bind);
+			var_dump($type_array_bind);
 			for($r=1;$r<=count($type_array_bind); $r++){
-				
+				//print($r);
 				$result->bindParam($r,$type_array_bind[$r]);
+				
 			}
 			$result->execute();
 
-			/*for($n=1; $n<=$search_key_num; $n++){
-				$result->bindParam($n,$key['type'][($n-1)]);
-			}*/
+			
 		}
-		elseif($key_type == "keyword"){
+		/*elseif($key_type == "keyword"){
 			$db_conn = db_connect('root','');
 			$stat_keyword = "(select * from tweb_product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?) as b";
 			$result = $db_conn->prepare($stat);
@@ -173,7 +175,7 @@
 			
 			$result->bindParam(1,$key[0]);
 			$result->bindParam(2,$key[1]);
-		}
+		}*/
 		
 		
 		

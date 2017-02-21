@@ -107,7 +107,7 @@
 						print($_SESSION['login_user']);
 						echo "<h4>Token is vaild.Please reset password.<h4><br/>";
 
-		echo '<link rel="stylesheet" text="text/css" href="http://localhost/EIE3117_trading_web/user/form.css" >';
+		echo '<link rel="stylesheet" text="text/css" href="http://158.132.145.246/EIE3117_trading_web/user/form.css" >';
 		echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
 		echo '<div class="container">';
 			echo '<div class="form form-container.form">';

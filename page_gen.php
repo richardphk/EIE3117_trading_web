@@ -20,7 +20,7 @@
 <html>
 <head>
 	<title><?php $title?></title>
-	<base href="http://localhost/EIE3117_trading_web/"/>
+	<base href="http://158.132.145.246/EIE3117_trading_web/"/>
 	<link href="css/bootstrap.css" rel="stylesheet">
 	<script src="http://code.jquery.com/jquery-latest.js"></script>
 	<script src="js/bootstrap.min.js"></script>
@@ -84,7 +84,7 @@
 						<span class="icon-bar"></span>
 						<span class="icon-bar"></span>
 					  </button>
-					  <a class="navbar-brand" href="#">Brand</a>
+					  <a class="navbar-brand" href="#">Home</a>
 					</div>
 
     <!-- Collect the nav links, forms, and other content for toggling -->
@@ -96,11 +96,11 @@
 						<li class="dropdown">
 						  <a id="product" onclick="this.color='red';" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Product <span class="caret"></span></a>
 						  <ul class="dropdown-menu" style="background-color:#6d8cb1;">
-							<li><a href="#" class="dp_item">Router</a></li>
-							<li><a href="#" class="dp_item">Another action</a></li>
-							<li><a href="#" class="dp_item">Something else here</a></li>
+							<li><a href="http://158.132.145.246/EIE3117_trading_web/product/product_page.php?type%5B%5D=Printer&price=100%2C5000&name=&sort=" class="dp_item">Printer</a></li>
+							<li><a href="http://158.132.145.246/EIE3117_trading_web/product/product_page.php?type%5B%5D=Router&price=100%2C5000&name=&sort=" class="dp_item">Router</a></li>
+							<li><a href="http://158.132.145.246/EIE3117_trading_web/product/product_page.php?type%5B%5D=NB&price=100%2C5000&name=&sort=" class="dp_item">Notebook</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="#" class="dp_item">Separated link</a></li>
+							<li><a href="http://158.132.145.246/EIE3117_trading_web/product/product_page.php" class="dp_item">All Products</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="#" class="dp_item">One more separated link</a></li>
 						  </ul>
@@ -118,9 +118,9 @@
 									echo 'sign in';
 									echo '<span class="caret"></span></a>';
 									echo '<ul class="dropdown-menu" style="background-color:#6d8cb1;">';
-										echo '<li><a href="http://localhost/EIE3117_trading_web/user/login.php" class="1">Login</a></li>';
-										echo '<li><a href="http://localhost/EIE3117_trading_web/user/forget_pw_page.php" class="1">Forget Password</a></li>';
-										echo '<li><a href="http://localhost/EIE3117_trading_web/user/register.php" class="2">Register</a></li>';
+										echo '<li><a href="http://158.132.145.246/EIE3117_trading_web/user/login.php" class="1">Login</a></li>';
+										echo '<li><a href="http://158.132.145.246/EIE3117_trading_web/user/forget_pw_page.php" class="1">Forget Password</a></li>';
+										echo '<li><a href="http://158.132.145.246/EIE3117_trading_web/user/register.php" class="2">Register</a></li>';
 									echo '</ul>';
 								echo '</li>';
 							
@@ -133,10 +133,11 @@
 											role="button" aria-haspopup="true" aria-expanded="false">';
 									echo $_SESSION['login_user'];
 									echo '<span class="caret"></span></a>';
-									echo '<ul class="dropdown-menu" style="background-color:#6d8cb1;">';	
-										echo '<li><a href="http://localhost/EIE3117_trading_web/user/record.php" class="2">Purchase History</a></li>';
-										echo '<li><a href="http://localhost/EIE3117_trading_web/user/reset_pw_page.php" class="3">Reset Password</a></li>';
-										echo '<li><a href="http://localhost/EIE3117_trading_web/logout.php" class="4">Logout</a></li>';
+									echo '<ul class="dropdown-menu" style="background-color:#6d8cb1;">';
+										echo '<li><a href="http://158.132.145.246/EIE3117_trading_web/user/inventory.php" class="1">My products</a></li>';
+										echo '<li><a href="http://158.132.145.246/EIE3117_trading_web/user/record.php" class="2">Purchase History</a></li>';
+										echo '<li><a href="http://158.132.145.246/EIE3117_trading_web/user/reset_pw_page.php" class="3">Reset Password</a></li>';
+										echo '<li><a href="http://158.132.145.246/EIE3117_trading_web/logout.php" class="4">Logout</a></li>';
 									echo '</ul>';
 								echo '</li>';
 							}

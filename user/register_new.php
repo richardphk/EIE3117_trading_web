@@ -21,7 +21,7 @@
 	$db = db_connect('root', '');
 	
 	/* main */
-	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'http://localhost/EIE3117_trading_web/user/register.php')) {
+	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'http://158.132.145.246/EIE3117_trading_web/user/register.php')) {
 		
 		/* checking */
 		if (check_variable($_POST['Username']) && check_variable($_POST['Password']) && check_variable($_POST['Nickname'])
@@ -136,7 +136,7 @@
 				
 				//printf("The activation email has been sent...<br/>  rediect to %s after 3 seconds <br/>", 'Home Page');
 				response_message2rediect("Register OK! The activation email has been sent & rediect to home page ", "../home.php");
-				//header("Location:http://localhost/EIE3117_trading_web/home.php");//
+				//header("Location:http://158.132.145.246/EIE3117_trading_web/home.php");//
 			}
 
 		} catch(PDOException $e){

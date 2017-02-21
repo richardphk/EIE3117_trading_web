@@ -11,7 +11,7 @@
 	require_once('../page_gen.php');
 	page_header('Register Page');
 ?>
-	<link rel="stylesheet" text="text/css" href="http://localhost/EIE3117_trading_web/user/form.css" >
+	<link rel="stylesheet" text="text/css" href="http://158.132.145.246/EIE3117_trading_web/user/form.css" >
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<div class="container">
 		<div class="form form-container.form">

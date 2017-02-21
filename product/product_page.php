@@ -4,8 +4,7 @@
 	include_once('product.php');
 	page_header("product");
 
-		
-
+	
 	
 ?>
 
