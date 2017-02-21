@@ -1,10 +1,10 @@
 <?php
 	
-	include_once('../page_gen.php');
-	include_once('../includes/gen_id.php');
-	include_once('../includes/get_today.php');
-	include_once('../session/checking.php');
-	include_once('upload_fns.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/page_gen.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/includes/gen_id.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/includes/get_today.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/checking.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/product_manage/upload_fns.php');
 	
 	page_header('Upload');
 	
@@ -49,15 +49,15 @@
 			}
 			
 
-			$upfile = 'product_image/' . $product_creator . '_' . $product_id . '_' . $_FILES['product_image']['name'];
-			move_uploaded_file($_FILES['product_image']["tmp_name"], '../' . $upfile);
+			$upfile = $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/product_image/' . $product_creator . '_' . $product_id . '_' . $_FILES['product_image']['name'];
+			move_uploaded_file($_FILES['product_image']["tmp_name"], $upfile);
 			
 			if (is_uploaded_file($_FILES['product_image']['tmp_name'])) {
 				echo 'Problem: Could not move file to destination directory'; 
 				exit;
 			}
 		} else {
-			$upfile = 'product_image/icon.png';
+			$upfile = $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/product_image/icon.png';
 		}
 		
 		

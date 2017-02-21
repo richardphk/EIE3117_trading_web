@@ -3,7 +3,7 @@
 		//args = table name
 		//args : Tweb_User_ID->U, Tweb_Product_ID->P, Tweb_Sale_Record_ID->S, Tweb_Order_ID->O, Tweb_Payment_ID->A
 		//return false means error
-		require_once('../config_db/config_db.php');
+		require_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/config_db/config_db.php');
 		
 		// get db
 		$db = db_connect('root', '');
@@ -42,6 +42,7 @@
 		$result->execute();
 		$row = $result->fetch(PDO::FETCH_NUM);
 		
+
 		if(empty($row[0])){
 			return $tag."00001";
 		} else {

@@ -3,8 +3,6 @@
 	include_once('../session/checking.php');
 	include_once('cart_fns.php');
 	
-	
-	//unset($_SESSION['cart']);
 	page_header('Cart');
 	
 	if (check_login()) {
