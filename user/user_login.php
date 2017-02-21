@@ -5,6 +5,8 @@
 	require_once('../session/input_replace.php');
 	require_once('../session/redirect_page.php');
 	require_once('../user/verify.php');
+	require_once('../includes/get_today.php');
+	require_once('../user/gen_token.php');
 	require_once('./salt.php');
 	
 	/* inital functions */
@@ -21,6 +23,11 @@
 		if (check_variable($_POST['Username']) && check_variable($_POST['Password'])){
 			$username = $_POST['Username'];
 			$password = $_POST['Password'];
+			if (isset($_POST['Remember'])){
+				$remenber_me = $_POST['Remember'];
+			} else {
+				$remenber_me = false;
+			}
 		} else {
 			response_message2rediect("Please fullin the form!", "./login.php");
 		}
@@ -62,6 +69,17 @@
 					$_SESSION['login_user'] = $login_user;
 					$_SESSION['login_user_id'] = $login_user_id;
 					$_SESSION['login_user_privilege'] = $login_user_privilege;
+					
+					if($remenber_me == 'on'){
+						$today = get_today;
+						$now_time = time();
+						$secret = gen_token($salt, $login_user, $login_user_id, $today, $now_time);
+						$secret = $secret[0];
+						$cookie_name = 'login_cookie';
+						$expiry = time() + (86400 * 30);
+						setcookie($cookie_name, $login_user_id, $expiry);
+					}
+					
 					$db = null;
 					response_message2rediect("Welcome back!", "../home.php");
 					die();

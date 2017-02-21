@@ -1,16 +1,14 @@
 <?PHP
 	/* inital functions */
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/create_session.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/checking.php');
-	require_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/redirect_page.php');
-	start_session(10);
+	require_once('../page_gen.php');
+	require_once('../session/redirect_page.php');
+	page_header('Login Page');
 	
 	if(check_login()){
-		response_message2rediect("You are already login", "../home.php");
+		response_message2rediect("You are already login", "./home.php");
 	}
 
-	require_once('../page_gen.php');
-	page_header('Login Page');
+	
 ?>
 	<link rel="stylesheet" text="text/css" href="http://localhost/EIE3117_trading_web/user/form.css" >
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -32,11 +30,11 @@
 				</div>
 				
 				<div class="form-group">
-					<div class="g-recaptcha" data-sitekey="6LePghUUAAAAAFNjJdhM3cpSbcv_EzaODhXZOLtg"></div>
+					<label><input name="Remember" type="checkbox" value="on"> Remember me</label>
 				</div>
 				
 				<div class="form-group">
-					<label><input name="Remember" type="checkbox"> Remember me</label>
+					<div class="g-recaptcha" data-sitekey="6LePghUUAAAAAFNjJdhM3cpSbcv_EzaODhXZOLtg"></div>
 				</div>
 				
 				<div class="form-group">

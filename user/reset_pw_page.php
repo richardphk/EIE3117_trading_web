@@ -3,9 +3,8 @@
 	require_once('../session/create_session.php');
 	require_once('../session/checking.php');
 	require_once('../session/redirect_page.php');
-	start_session(10);
 	
-	if(!(check_login())){
+	if(check_login()){
 		response_message2rediect("You have not login", "./login.php");
 	}
 
