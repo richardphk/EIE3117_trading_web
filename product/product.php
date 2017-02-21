@@ -1,23 +1,28 @@
 <?php
 	include_once('../Config_db/config_db.php');
+
 	function product_frame_header(){
 		echo'<div class="row">';
-
+	
 	}
 
-	function product_sale_form($img,$name,$des,$price){
+	function product_sale_form($img,$name,$des,$price,$PID){
 		
 		echo'
-			  <div class="col-sm-6 col-md-4">
+			  <div class="col-sm-6 col-md-4" style="padding-right:0px;">
 				<div class="thumbnail">
+				<form action= "order/cart_add.php" method="GET">
 				  <img src="'. $img .'" alt="'.$name.'" style="width:200px;">
 				  <div class="caption">
 					<h3>'. $name .'</h3>
 					<p>'. $des .'</p>
-					<p>'. $price .'</p>
-					<p align="right"><a href="#" class="btn btn-primary" role="button">Buy</a> 
-					<a href="#" class="btn btn-default" role="button">add Cart<span class="glyphicon glyphicon-shopping-cart"></span></a></p>
+					<p align="right">$'. $price .'</p>
+					<p align="right"><a href="#" class="btn btn-primary" role="button">Buy</a>
+					<input type="hidden" name="product_id" value="'.$PID.'"></input>
+					<button class="btn btn-default" role="button" onClick="this.form.submit()">add Cart<span class="glyphicon glyphicon-shopping-cart"></span></button>
+					</p>
 				  </div>
+				 </form>
 				</div>
 			  </div>
 			';
@@ -205,7 +210,7 @@
 		//print_r($rec);
 		foreach($rec as $item){
 			//print_r($item);
-			product_sale_form($item['Tweb_Product_Image_Path'],$item['Tweb_Product_Name'],$item['Tweb_Product_Desc'],$item['Tweb_Product_Type']);
+			product_sale_form($item['Tweb_Product_Image_Path'],$item['Tweb_Product_Name'],$item['Tweb_Product_Desc'],$item['Tweb_Product_Price'],$item['Tweb_Product_ID']);
 			$num +=1;
 			$check = $num/3;
 			//print($check);
