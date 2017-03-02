@@ -66,7 +66,7 @@
 	
 	function get_product($id, $type) {
 		$db_conn = db_connect('root','');
-		$result = $db_conn->prepare('SELECT * FROM tweb_product WHERE tweb_product_id = "' . $id . '";');
+		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_id = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 		foreach($rec as $value){

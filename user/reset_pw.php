@@ -1,12 +1,12 @@
 <?PHP
-	require_once('../config_db/Config_db.php');
-	require_once('../session/create_session.php');
-	require_once('../session/checking.php');
-	require_once('../session/input_replace.php');
-	require_once('../session/redirect_page.php');
-	require_once('../user/verify.php');
-	require_once('../includes/get_today.php');
-	require_once('../includes/gen_id.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/config_db/config_db.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/input_replace.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/verify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/includes/get_today.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/includes/gen_id.php');
 	include('salt.php');
 	
 	/* inital functions */
@@ -19,7 +19,7 @@
 	$db = db_connect('root', '');
 	
 	/* main */
-	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'http://158.132.145.246/EIE3117_trading_web/user/reset_pw_page.php')) {
+	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'user/reset_pw_page.php')) {
 		
 		/* checking */
 		if (check_variable($_POST['Old_Password']) && check_variable($_POST['New_Password'])

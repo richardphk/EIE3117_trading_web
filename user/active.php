@@ -1,7 +1,7 @@
 <?PHP
-	require_once('../config_db/config_db.php');
-	require_once('../session/checking.php');
-	require_once('../session/redirect_page.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/config_db/config_db.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
 	
 	$now_time = time();
 	$db = db_connect('root', '');

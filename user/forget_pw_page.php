@@ -1,18 +1,18 @@
 <?PHP
 	/* inital functions */
-	require_once('../session/create_session.php');
-	require_once('../session/checking.php');
-	require_once('../session/redirect_page.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
 	
 	if(check_login()){
 		response_message2rediect("You are already login", "../home.php");
 	}
 
-	require_once('../page_gen.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/page_gen.php');
 	page_header('Forget Password Page');
 
 ?>
-	<link rel="stylesheet" text="text/css" href="http://158.132.145.246/EIE3117_trading_web/user/form.css" >
+	<link rel="stylesheet" text="text/css" href="user/form.css" >
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 	<div class="container">
 		<div class="form form-container.form">

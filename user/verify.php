@@ -1,6 +1,6 @@
 <?PHP
 	function verify_captcha($recaptcha){
-		require_once('..\includes\src\autoload.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/includes/src/autoload.php');
 	
 		$url = 'https://www.google.com/recaptcha/api/siteverify';
 		$secret_key = '6LePghUUAAAAAN0DDxNLJYZea85nFJ8Gg26WwpXh';

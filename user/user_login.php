@@ -1,12 +1,12 @@
 <?PHP
-	require_once('../config_db/config_db.php');
-	require_once('../session/create_session.php');
-	require_once('../session/checking.php');
-	require_once('../session/input_replace.php');
-	require_once('../session/redirect_page.php');
-	require_once('../user/verify.php');
-	require_once('../includes/get_today.php');
-	require_once('./salt.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/config_db/config_db.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/input_replace.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/verify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/includes/get_today.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/salt.php');
 	
 	/* inital functions */
 	start_session(10);
@@ -18,7 +18,9 @@
 	$db = db_connect('root', '');
 	
 	/* main */
-	if(check_request_method() == 'POST' && check_post_from($_SERVER['HTTP_REFERER'], 'http://158.132.145.246/EIE3117_trading_web/user/login.php')) {
+	//bug : && check_post_from($_SERVER['HTTP_REFERER'], 'user/login.php')
+
+	if(check_request_method() == 'POST') {
 		if (check_variable($_POST['Username']) && check_variable($_POST['Password'])){
 			$username = $_POST['Username'];
 			$password = $_POST['Password'];

@@ -1,11 +1,11 @@
 <?PHP
-	require_once('../config_db/Config_db.php');
-	require_once('../session/create_session.php');
-	require_once('../session/checking.php');
-	require_once('../user/gen_token.php');
-	require_once('../includes/get_today.php');
-	require_once('../session/redirect_page.php');
-	require_once('./salt.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/config_db/config_db.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/gen_token.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/includes/get_today.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/salt.php');
 	
 	/* inital functions */
 	start_session(10);
@@ -107,7 +107,7 @@
 						print($_SESSION['login_user']);
 						echo "<h4>Token is vaild.Please reset password.<h4><br/>";
 
-		echo '<link rel="stylesheet" text="text/css" href="http://158.132.145.246/EIE3117_trading_web/user/form.css" >';
+		echo '<link rel="stylesheet" text="text/css" href="user/form.css" >';
 		echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
 		echo '<div class="container">';
 			echo '<div class="form form-container.form">';

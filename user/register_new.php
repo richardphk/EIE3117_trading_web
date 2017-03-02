@@ -1,16 +1,16 @@
 <?PHP
-	require_once('../config_db/config_db.php');
-	require_once('../session/create_session.php');
-	require_once('../session/checking.php');
-	require_once('../session/input_replace.php');
-	require_once('../session/redirect_page.php');
-	require_once('../user/verify.php');
-	require_once('../includes/get_today.php');
-	require_once('../includes/gen_id.php');
-	require_once('../user/gen_token.php');
-	require_once('../user/mail.php');
-	require_once('./salt.php');
-	
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/config_db/config_db.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/input_replace.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/verify.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/includes/get_today.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/includes/gen_id.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/gen_token.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/mail.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/salt.php');
+
 	/* inital functions */
 	start_session(10);
 	
@@ -21,8 +21,13 @@
 	$db = db_connect('root', '');
 	
 	/* main */
-	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'http://158.132.145.246/EIE3117_trading_web/user/register.php')) {
-		
+	
+	//remark bugs: check_post_from($_SERVER['HTTP_REFERER'], 'user/register.php')
+
+	if(!($_SERVER["REQUEST_METHOD"] == "POST")) {
+		response_message2rediect("Bye!", "register.php");
+	}
+	
 		/* checking */
 		if (check_variable($_POST['Username']) && check_variable($_POST['Password']) && check_variable($_POST['Nickname'])
 			&& check_variable($_POST['Retype_Password']) && check_variable($_POST['Email_address']) 
@@ -37,12 +42,15 @@
 		} else {
 			response_message2rediect("Please fullin the form!", "./register.php");
 		}
-		
+
+		/*
 		if (!(verify_captcha($_POST['g-recaptcha-response']))){
+			//check captcha
 			//echo 'Captcha is no ok';
 			response_message2rediect("Please check the captcha form!", "./register.php");
 			die();
 		}
+		*/
 		
 		if($password != $retype_password){
 			response_message2rediect("Password and retype password are not same!", "./register.php");
@@ -57,7 +65,7 @@
 		if (!(valid_email($email_address))){
 			response_message2rediect("Email address is not valid!", "./register.php");
 			die();
-		}	
+		}
 		
 		/* checking end */
 		
@@ -136,7 +144,7 @@
 				
 				//printf("The activation email has been sent...<br/>  rediect to %s after 3 seconds <br/>", 'Home Page');
 				response_message2rediect("Register OK! The activation email has been sent & rediect to home page ", "../home.php");
-				//header("Location:http://158.132.145.246/EIE3117_trading_web/home.php");//
+				//header("Location:home.php");//
 			}
 
 		} catch(PDOException $e){
@@ -145,10 +153,6 @@
 			response_message2rediect("Register fail", "./register.php");
 			die();
 		}
-		
-	}else{
-		response_message2rediect("Bye!", "register.php");
-	}	
 	
 	
 ?>

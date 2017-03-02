@@ -4,8 +4,6 @@
 	include_once('product.php');
 	page_header("product");
 
-	
-	
 ?>
 
 <script>
@@ -109,7 +107,7 @@
 		
 		<div class="col-md-10" style="padding:5px;">
 			<main>
-				<?php 
+				<?php
 							//print_r($_GET);
 							
 							

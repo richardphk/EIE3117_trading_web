@@ -5,7 +5,7 @@
 	
 	function get_result($id, $type) {
 		$db_conn = db_connect('root','');
-		$result = $db_conn->prepare('SELECT * FROM tweb_product WHERE Tweb_Product_ID = "' . $id . '";');
+		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_ID = "' . $id . '";');
 		
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);

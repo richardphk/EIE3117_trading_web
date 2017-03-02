@@ -3,7 +3,7 @@
    
 	if(session_destroy()) {
 		
-		$home = sprintf('Refresh:0; url=%s/EIE3117_trading_web/home.php', 'http://158.132.145.246');
+		$home = sprintf('Refresh:0; url=%s/EIE3117_trading_web/home.php', 'http://'.$_SERVER['HTTP_HOST'].'');
 		//print($home);
 		header($home);
 		exit;

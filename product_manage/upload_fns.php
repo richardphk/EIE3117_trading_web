@@ -60,7 +60,7 @@
 	function insert_goods($id, $name, $price, $quantity, $image_path, $type, $date, $sale, $creator, $desc) {
 		try {
 			$db_conn = db_connect('root', '');
-			$stmt = $db_conn->prepare('INSERT INTO tweb_product VALUES(:id, :name, :price, :quantity, :image_path, :type, :date, :sale, :creator, :desc)');
+			$stmt = $db_conn->prepare('INSERT INTO Tweb_Product VALUES(:id, :name, :price, :quantity, :image_path, :type, :date, :sale, :creator, :desc)');
 			
 			$stmt->bindparam(':id', $id);
 			$stmt->bindparam(':name', $name);
