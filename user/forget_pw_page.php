@@ -3,7 +3,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
-	
+
 	if(check_login()){
 		response_message2rediect("You are already login", "../home.php");
 	}
@@ -20,18 +20,18 @@
 			<form class="form-horizontal" action="./user/forget_pw.php" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 				
 				<div class="form-group">
-					<input type="text" name='Username' placeholder="Username" 
+					<input type="text" name='Username' placeholder="Username"
 							pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{5,40}"
-							autocomplete="off" 
-							title="Username should only contain at least 5(MAX:40) characters that are of at least one number, one uppercase and lowercase letter." 
+							autocomplete="off"
+							title="Username should only contain at least 5(MAX:40) characters that are of at least one number, one uppercase and lowercase letter."
 							required />
 				</div>
 				
 				<div class="form-group">
-					<input type="email" name='Email_address'  
+					<input type="email" name='Email_address'
 							placeholder="Email address" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$"
 							title="Email format xxx@xxx.xxx(all lowercase)"
-							autocomplete="off" 
+							autocomplete="off"
 							required />
 				</div>
 				

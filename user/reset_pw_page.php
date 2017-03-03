@@ -3,7 +3,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
-	
+
 	if(check_login()){
 		response_message2rediect("You have not login", "./login.php");
 	}
@@ -20,23 +20,23 @@
 			<form class="form-horizontal" action="./user/reset_pw.php" method="post" accept-charset="utf-8" enctype="multipart/form-data">
 				
 				<div class="form-group">
-					<input type="password" name="Old_Password"  class="form-control" pattern="[0-9a-zA-Z]{5,40}$" 
+					<input type="password" name="Old_Password"  class="form-control" pattern="[0-9a-zA-Z]{5,40}$"
 							placeholder="Old_Password"
-							title="Old Password should only contain at less 5 alphanumerics." 
+							title="Old Password should only contain at less 5 alphanumerics."
 							autocomplete="off" required />
 				</div>
 				
 				<div class="form-group">
-					<input type="password" name="New_Password"  class="form-control" pattern="[0-9a-zA-Z]{5,40}$" 
+					<input type="password" name="New_Password"  class="form-control" pattern="[0-9a-zA-Z]{5,40}$"
 							placeholder="New Password"
-							title="New Password should only contain at less 5 alphanumerics." 
+							title="New Password should only contain at less 5 alphanumerics."
 							autocomplete="off" required />
 				</div>
 				
 				<div class="form-group">
-					<input type="password" name="Retype_Password"  class="form-control" pattern="[0-9a-zA-Z]{5,40}$" 
+					<input type="password" name="Retype_Password"  class="form-control" pattern="[0-9a-zA-Z]{5,40}$"
 							placeholder="Retype-Password"
-							title="Password should only contain at less 5 alphanumerics." 
+							title="Password should only contain at less 5 alphanumerics."
 							autocomplete="off" required />
 				</div>
 				

@@ -3,7 +3,7 @@
 		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/salt.php');
-		start_session(10);
+		start_session();
 
 		if(isset($_COOKIE['user']) && $_COOKIE['user'] != ''){
 			list($hash, $login_user, $login_user_id) = split('-', $_COOKIE['user']);

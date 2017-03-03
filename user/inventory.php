@@ -14,5 +14,4 @@
 	}
 	
 	page_footer();
-	
 ?>

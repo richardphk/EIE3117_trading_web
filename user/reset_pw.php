@@ -10,7 +10,7 @@
 	include('salt.php');
 	
 	/* inital functions */
-	start_session(10000);
+	start_session();
 	
 	if(!(check_login())){
 		response_message2rediect("You have not login", "./login.php");
@@ -19,8 +19,7 @@
 	$db = db_connect('root', '');
 	
 	/* main */
-	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'user/reset_pw_page.php')) {
-		
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		/* checking */
 		if (check_variable($_POST['Old_Password']) && check_variable($_POST['New_Password'])
 				&& check_variable($_POST['Retype_Password'])){
@@ -45,7 +44,6 @@
 		}
 		
 		/* checking end */
-		
 		$old_password = input_replace($old_password);
 		$new_password = input_replace($new_password);
 		$retype_password = input_replace($retype_password);
@@ -56,14 +54,13 @@
 		
 		try{
 			$username = $_SESSION['login_user'];
-			
 			$sql = "Select Tweb_User_ID, Tweb_User_Name, Tweb_User_Privilege from Tweb_User where BINARY Tweb_User_Name = :username and Tweb_User_Password = '".$old_password."' LIMIT 1;";
 			#printf("sql: %s <br/>", $sql);
 			$result = $db->prepare($sql);
 			$result->bindValue(':username', $username, PDO::PARAM_STR);
 			$result->execute();
 			$rows_user = $result->fetch(PDO::FETCH_NUM);
-			
+
 			if($rows_user){
 				$update_sql = "Update Tweb_User set Tweb_User_Password = '".$new_password."' where BINARY Tweb_User_Name = :username ";
 				$result = $db->prepare($update_sql);
@@ -85,10 +82,8 @@
 			die();
 		}
 		
-		
 	}else{
 		response_message2rediect("Bye!", "./reset_pw_page.php");
-	}	
-	
-	
+	}
+
 ?>

@@ -12,7 +12,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/salt.php');
 
 	/* inital functions */
-	start_session(10);
+	start_session();
 	
 	if(check_login()){
 		response_message2rediect("You are already login", "../home.php");

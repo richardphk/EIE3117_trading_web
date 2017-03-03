@@ -6,22 +6,20 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/includes/get_today.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/salt.php');
-	
+
 	/* inital functions */
-	start_session(10);
-	
+	start_session();
+
 	//if(check_login()){
 	//	response_message2rediect("You are already login", "../home.php");
 	//}
-	
+
 	$db = db_connect('root', '');
-	
+
 	if(check_request_method() == 'POST') {
 		if (check_variable($_POST['New_Password']) && check_variable($_POST['Retype_Password'])){
 			$new_password = $_POST['New_Password'];
 			$retype_password = $_POST['Retype_Password'];
-			
-			
 			if($new_password != $retype_password){
 				response_message2rediect("Password and retype password are not same! Please click the link again!", "../home.php");
 				session_destroy();
@@ -29,7 +27,6 @@
 			}
 			
 			$new_password = hash('sha256', $salt.$new_password);
-			
 			try{
 				$username = $_SESSION['login_user'];
 				$user_id = $_SESSION['login_user_id'];
@@ -38,12 +35,11 @@
 				$result->bindValue(':user_id', $user_id);
 				$result->execute();
 				$rows = $result->fetch(PDO::FETCH_NUM);
-				
+
 				if($rows){
-					
 					$user_id = $rows[0];
 					$token_exptime = $rows[1];
-				
+
 					if($token_exptime == '0'){
 						response_message2rediect("Token was been used!", "../home.php");
 						session_destroy();
@@ -56,22 +52,22 @@
 					$db = null;
 					die();
 				}
-				
-				
+
 				$update_sql = "Update Tweb_User set Tweb_User_Password = '".$new_password."' where BINARY Tweb_User_Name = :username ";
 				$result = $db->prepare($update_sql);
 				$result->bindValue(':username', $username, PDO::PARAM_STR);
 				$result->execute();
 
-				$update_sql = "Update Tweb_User set Tweb_User_Activated = '1', Tweb_User_Activation_token_exptime = 'NULL'
+				$update_sql = "Update Tweb_User set Tweb_User_Activated = '1', Tweb_User_Activation_token_exptime = '0'
 									where Tweb_User_ID = '".$user_id."';";
+
 				$result = $db->prepare($update_sql);
 				$result->execute();
 				session_destroy();
 				response_message2rediect("Reset OK!", "../home.php");
 				$db = null;
 				die();
-				
+
 			} catch(PDOException $e){
 				$m = $e->getMessage();
 				//echo $m;
@@ -82,16 +78,16 @@
 
 		}
 	} else {
+
 		$token = stripslashes(trim($_GET['verify']));
 		$email = stripslashes(trim($_GET['email']));
-	
 		try{
 			$sql = "select * from Tweb_User where Tweb_User_Email=:email LIMIT 1;";
 			$result = $db->prepare($sql);
 			$result->bindValue(':email', $email, PDO::PARAM_STR);
 			$result->execute();
 			$rows = $result->fetch(PDO::FETCH_NUM);
-			
+
 			if($rows){
 				$ds = $rows[9];
 				$exptime = $rows[10];
@@ -107,7 +103,7 @@
 						print($_SESSION['login_user']);
 						echo "<h4>Token is vaild.Please reset password.<h4><br/>";
 
-		echo '<link rel="stylesheet" text="text/css" href="user/form.css" >';
+		echo '<link rel="stylesheet" text="text/css" href="./form.css" >';
 		echo '<script src="https://www.google.com/recaptcha/api.js" async defer></script>';
 		echo '<div class="container">';
 			echo '<div class="form form-container.form">';
@@ -117,19 +113,19 @@
 					echo '<div class="form-group">';
 						echo '<input type="password" name="New_Password"  class="form-control" pattern="[0-9a-zA-Z]{5,40}$"
 								placeholder="New Password"
-								title="New Password should only contain at less 5 alphanumerics." 
+								title="New Password should only contain at less 5 alphanumerics."
 								autocomplete="off" required />';
 					echo '</div>';
 					
 					echo '<div class="form-group">';
-						echo '<input type="password" name="Retype_Password"  class="form-control" pattern="[0-9a-zA-Z]{5,40}$" 
+						echo '<input type="password" name="Retype_Password"  class="form-control" pattern="[0-9a-zA-Z]{5,40}$"
 								placeholder="Retype-Password"
-								title="Password should only contain at less 5 alphanumerics." 
+								title="Password should only contain at less 5 alphanumerics."
 								autocomplete="off" required />';
 					echo '</div>';
 					
-					//echo '<div class="form-group">';
-					//	echo '<div class="g-recaptcha" data-sitekey="6LePghUUAAAAAFNjJdhM3cpSbcv_EzaODhXZOLtg"></div>';
+					echo '<div class="form-group">';
+						echo '<div class="g-recaptcha" data-sitekey="6LePghUUAAAAAFNjJdhM3cpSbcv_EzaODhXZOLtg"></div>';
 					//echo '</div>';
 					
 					echo '<div class="form-group">';
@@ -154,15 +150,12 @@
 			die();
 		}
 		
-	
 		} catch (PDOException $e){
 			response_message2rediect("It is not exist2.", "./login.php");
 			$db = null;
 			die();
-		
 		}
 	}
-	
 	
 
 ?>

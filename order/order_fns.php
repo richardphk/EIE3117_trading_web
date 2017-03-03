@@ -2,11 +2,9 @@
 
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/config_db/config_db.php');
 	
-	
 	function get_result($id, $type) {
 		$db_conn = db_connect('root','');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_ID = "' . $id . '";');
-		
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 		foreach($rec as $value){
@@ -16,7 +14,7 @@
 	
 	function get_user_info($id, $attribute) { 
 		$db_conn = db_connect('root','');
-		$result = $db_conn->prepare('SELECT * FROM Tweb_user WHERE Tweb_User_ID = "' . $id . '";');
+		$result = $db_conn->prepare('SELECT * FROM Tweb_User WHERE Tweb_User_ID = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 		foreach($rec as $value) {
@@ -24,7 +22,6 @@
 		}
 	}
 	
-		
 	function email_to_buyer($id) { 
 			$email = get_user_info($id, 'Tweb_User_Email');
 			$from = "From: support@phpbookmark \r\n";
@@ -50,12 +47,10 @@
 	
 	function add_sale_record($purchase_id, $user_id, $purchase_date) {
 		$db_conn = db_connect('root', '');
-		$stmt = $db_conn->prepare('INSERT INTO tweb_sale_record (Tweb_Sale_Record_ID, Tweb_Sale_Record_Customer_ID, Tweb_Sale_Record_Order_Date) VALUES (:purchase_id, :user_id, :purchase_date)');
-			
+		$stmt = $db_conn->prepare('INSERT INTO Tweb_Sale_Record (Tweb_Sale_Record_ID, Tweb_Sale_Record_Customer_ID, Tweb_Sale_Record_Order_Date) VALUES (:purchase_id, :user_id, :purchase_date)');
 		$stmt->bindparam(':purchase_id', $purchase_id);
 		$stmt->bindparam(':user_id', $user_id);
 		$stmt->bindparam(':purchase_date', $purchase_date);
-			
 		$stmt->execute();
 		//Statement for chick record echo 'Sale record of ' . $purchase_id . ' is updated <br />';
 	
@@ -64,12 +59,10 @@
 	function add_order($order_id, $product_id, $quantity, $sales_id) {
 		$db_conn = db_connect('root', '');
 		$stmt = $db_conn->prepare('INSERT INTO Tweb_Order (Tweb_Order_ID, Tweb_Order_Product_ID, Tweb_Order_Quantity, Tweb_Order_Sale_Record_ID) VALUES (:order_id, :product_id, :quantity, :sales_id)');
-			
 		$stmt->bindparam(':order_id', $order_id);
 		$stmt->bindparam(':product_id', $product_id);
 		$stmt->bindparam(':quantity', $quantity);
 		$stmt->bindparam(':sales_id', $sales_id);
-		
 		$stmt->execute();
 
 		//Statement for chick order echo 'Order of ' . $product_id . ' with ' . $quantity . ' is added <br />';
@@ -84,12 +77,10 @@
 
 		$db_conn = db_connect('root', '');
 		$stmt = $db_conn->prepare('UPDATE Tweb_Product SET Tweb_Product_Inventory = :inventory, Tweb_Product_Sale = :sale WHERE Tweb_Product_ID = :id');
-		
 		$stmt->bindparam(':inventory', $inventory);
 		$stmt->bindparam(':sale', $sale);
 		$stmt->bindparam(':id', $id);
 		$stmt->execute();
-
 		//Statement for chick inventory echo 'Product inventory of ' . $id . ' is updated <br />';
 
 	}
@@ -108,6 +99,7 @@
 				<tbody>
 		<?php
 	}
+
 	function order_table_body($item, $name, $price, $quantity) {
 		?>
 			<tr>
@@ -118,6 +110,7 @@
 			</tr>
 		<?php
 	}
+
 	function order_table_footer($total) {
 		?>
 				<tr>

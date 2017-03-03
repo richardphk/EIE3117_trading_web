@@ -4,7 +4,7 @@
 		$DB_username = $username;
 		$DB_password = $password;
 		$DB_databasename = 'trading_web';
-	   
+
 		try{
 			$db = new PDO("mysql:host=".$DB_server.";"."dbname=".$DB_databasename.";charset=utf8", $DB_username, $DB_password);
 			$db->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
@@ -13,15 +13,14 @@
 			return $db;
 		}catch(PDOException $e) {
 			$m = $e->getMessage();
-			echo $m;
+			//echo $m;
 			if(strpos($m, "Access denied for user") == true){
-				echo '<script type="text/javascript">'; 
-				echo 'alert("Log-in error:Wrong User or Password of DataBase!");'; 
+				echo '<script type="text/javascript">';
+				echo 'alert("Log-in error:Wrong User or Password of DataBase!");';
 				echo 'window.location.href = "login.html"';
 				echo '</script>';
 				die();
 			}
-			
 		}
 	}
 ?>

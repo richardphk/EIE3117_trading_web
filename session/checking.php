@@ -3,7 +3,6 @@
 		//$_SESSION['login_user'] -> username
 		//$_SESSION['login_user_id'] -> user_id
 		//$_SESSION['login_user_privilege'] -> no for now
-		
 		if(isset($_SESSION['login_user'])){
 			return true;
 		}else{

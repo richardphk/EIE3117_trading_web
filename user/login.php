@@ -9,7 +9,6 @@
 		response_message2rediect("You are already login", "./home.php");
 	}
 
-	
 ?>
 	<link rel="stylesheet" text="text/css" href="user/form.css" >
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>

@@ -64,12 +64,12 @@
 	
 	function get_sales($id) {
 		$db_conn = db_connect('root','');
-		$result = $db_conn->prepare('SELECT tweb_sale_record.Tweb_Sale_Record_Order_Date, 
-										tweb_sale_record.Tweb_Sale_Record_Customer_ID, 
-											tweb_order.Tweb_Order_Quantity 
-												FROM tweb_order, tweb_sale_record 
-													WHERE tweb_order.Tweb_Order_Sale_Record_ID = tweb_sale_record.Tweb_Sale_Record_ID 
-														AND tweb_order.Tweb_Order_Product_ID = "' . $id . '";');
+		$result = $db_conn->prepare('SELECT Tweb_Sale_Record.Tweb_Sale_Record_Order_Date, 
+										Tweb_Sale_Record.Tweb_Sale_Record_Customer_ID, 
+											Tweb_Order.Tweb_Order_Quantity 
+												FROM Tweb_Order, Tweb_Sale_Record 
+													WHERE Tweb_Order.Tweb_Order_Sale_Record_ID = Tweb_Sale_Record.Tweb_Sale_Record_ID 
+														AND Tweb_Order.Tweb_Order_Product_ID = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 		return $rec;

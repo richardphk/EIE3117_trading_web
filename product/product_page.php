@@ -1,19 +1,16 @@
 
 <?php
-	include_once('../page_gen.php');
-	include_once('product.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/page_gen.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/product/product.php');
 	page_header("product");
 
 ?>
 
 <script>
 	
-	
-  $( function() {
+  $(function() {
 	  var price = new Slider("#slider", {
 		  range: true,
-		  
-		  
 		});
 	var check_price_setted = "<?php if(!empty($_GET['price'])){echo $_GET['price'];}else echo''; ?>";
 	//document.write(check_price_setted);
@@ -50,12 +47,8 @@
 
 			var new_val = php.split(",");
 			
-			
 		})
 		
-		
-		
-	
 	}
   );
 </script>
@@ -78,7 +71,7 @@
 				<label>Keyword:</label>
 				<div class="input-group" style="">
 				<input type="text" class="form-control check" name="name" placeholder="Keyword..." required>
-				<span class="input-group-btn">	
+				<span class="input-group-btn">
 						  <button type="submit" class="btn btn-default"  style="height:34px;" action="this.form.submit();">
 							<span class="glyphicon glyphicon-search"></span>
 						  </button>
@@ -95,21 +88,12 @@
 				
 			</form>
 				
-				
-				
 		</div>
-			 
-			
-			
-		
-		
-	 
 		
 		<div class="col-md-10" style="padding:5px;">
 			<main>
 				<?php
 							//print_r($_GET);
-							
 							
 							//var_dump($_GET);
 							/*if(empty($_GET['price'])){
@@ -132,7 +116,6 @@
 								}
 								
 								set_checked_butt($value['type']);
-								
 								
 							}
 							/*if(!empty($_GET['price'])){
@@ -169,7 +152,7 @@
 							}*/
 							function set_checked_butt($value){
 								foreach($value as $id){
-									echo'<script>						
+									echo'<script>
 											$("#'.$id .'").prop("checked", true);
 
 										</script>';
@@ -177,21 +160,18 @@
 							}
 							function set_selected_sort($value){
 									//print($value);
-									echo'<script>		
+									echo'<script>
 												$("#blank").attr("selected", false);
 												$("#'.$value .'").attr("selected", true);
 
 											</script>';
 							}
 							
-						
 				?>
-			</main>  
+			</main>
 		</div>
 	</div>
-		
 <?php
 	page_footer();
-
 
 ?>

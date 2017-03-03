@@ -4,5 +4,6 @@
 		echo 'alert("'.$msg.'");';
 		echo 'window.location.href = "'.$page.'"';
 		echo '</script>';
+		exit();
 	}
 ?>

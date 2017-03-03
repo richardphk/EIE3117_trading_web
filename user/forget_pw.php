@@ -12,7 +12,7 @@
 	require_once('salt.php');
 	
 	/* inital functions */
-	start_session(10);
+	start_session();
 	
 	if(check_login()){
 		response_message2rediect("You are already login", "../home.php");
@@ -21,7 +21,7 @@
 	$db = db_connect('root', '');
 	
 	/* main */
-	if($_SERVER["REQUEST_METHOD"] == "POST" && check_post_from($_SERVER['HTTP_REFERER'], 'user/forget_pw_page.php')) {
+	if($_SERVER["REQUEST_METHOD"] == "POST") {
 		
 		/* checking */
 		if (check_variable($_POST['Username']) && check_variable($_POST['Email_address'])){
@@ -40,7 +40,7 @@
 		if (!(valid_email($email_address))){
 			response_message2rediect("Email address is not valid!", "./forget_pw_page.php");
 			die();
-		}	
+		}
 		
 		/* checking end */
 		
@@ -79,11 +79,8 @@
 				$result->bindValue(':user_id', $rows_user[0], PDO::PARAM_STR);
 				$result->bindValue(':email_address', $email_address, PDO::PARAM_STR);
 				$result->execute();
-				
-				$url = "<a href='user/reset_forget_pw.php?email=".$email_address."&verify=".$token."' target=
-						'_blank'>user/reset_forget_pw.php?email=".$email_address."&verify=".$token."</a><br/>";
-				
-				send_forget_pw_email($token, $email_address, $url);
+
+				send_forget_pw_email($token, $email_address);
 				
 				response_message2rediect("Email was been sent, please have a check.", "./login.php");
 			}
@@ -95,10 +92,7 @@
 			die();
 		}
 		
-		
 	}else{
-		response_message2rediect("Bye!", "register.html");
-	}	
-	
-	
+		response_message2rediect("Bye!", "./register.php");
+	}
 ?>
