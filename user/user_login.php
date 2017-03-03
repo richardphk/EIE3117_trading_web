@@ -16,10 +16,9 @@
 	}
 	
 	$db = db_connect('root', '');
+	print($_SERVER['HTTP_REFERER']);
 	
 	/* main */
-	//bug : && check_post_from($_SERVER['HTTP_REFERER'], 'user/login.php')
-
 	if(check_request_method() == 'POST') {
 		if (check_variable($_POST['Username']) && check_variable($_POST['Password'])){
 			$username = $_POST['Username'];

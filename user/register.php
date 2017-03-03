@@ -67,11 +67,11 @@
 							title="Password should only contain at less 5 alphanumerics."
 							autocomplete="off" required />
 				</div>
-				<!--
+
 				<div class="form-group">
 					<div class="g-recaptcha" data-sitekey="6LePghUUAAAAAFNjJdhM3cpSbcv_EzaODhXZOLtg"></div>
 				</div>
-				-->
+
 				<div class="form-group">
 					<input name="login" type="submit" value="Submit">
 				</div>

@@ -43,14 +43,14 @@
 			response_message2rediect("Please fullin the form!", "./register.php");
 		}
 
-		/*
+
 		if (!(verify_captcha($_POST['g-recaptcha-response']))){
 			//check captcha
 			//echo 'Captcha is no ok';
 			response_message2rediect("Please check the captcha form!", "./register.php");
 			die();
 		}
-		*/
+
 		
 		if($password != $retype_password){
 			response_message2rediect("Password and retype password are not same!", "./register.php");
