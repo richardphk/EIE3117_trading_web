@@ -1,16 +1,21 @@
 
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/page_gen.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/product/product.php');
+	include_once('../page_gen.php');
+	include_once('product.php');
 	page_header("product");
 
+	
+	
 ?>
 
 <script>
 	
-  $(function() {
+	
+  $( function() {
 	  var price = new Slider("#slider", {
 		  range: true,
+		  
+		  
 		});
 	var check_price_setted = "<?php if(!empty($_GET['price'])){echo $_GET['price'];}else echo''; ?>";
 	//document.write(check_price_setted);
@@ -47,8 +52,12 @@
 
 			var new_val = php.split(",");
 			
+			
 		})
 		
+		
+		
+	
 	}
   );
 </script>
@@ -64,14 +73,14 @@
 					<input name="" type="text" id="amount" readonly style="border:0; color:#f6931f; font-weight:bold;width:90px;" >
 				<br>
 				<br>
-				<input id="slider" type="text" name="price" class="span2" value=""  data-slider-min="100" data-slider-max="5000" data-slider-step="100" style="width:100%;"/>
+				<input id="slider" type="text" name="price" class="span2" value=""  <?php get_price()?> data-slider-step="100" style="width:100%;"/>
 				<br>
 				<br>
 				
 				<label>Keyword:</label>
 				<div class="input-group" style="">
 				<input type="text" class="form-control check" name="name" placeholder="Keyword..." required>
-				<span class="input-group-btn">
+				<span class="input-group-btn">	
 						  <button type="submit" class="btn btn-default"  style="height:34px;" action="this.form.submit();">
 							<span class="glyphicon glyphicon-search"></span>
 						  </button>
@@ -88,12 +97,21 @@
 				
 			</form>
 				
+				
+				
 		</div>
+			 
+			
+			
+		
+		
+	 
 		
 		<div class="col-md-10" style="padding:5px;">
 			<main>
-				<?php
+				<?php 
 							//print_r($_GET);
+							
 							
 							//var_dump($_GET);
 							/*if(empty($_GET['price'])){
@@ -116,6 +134,7 @@
 								}
 								
 								set_checked_butt($value['type']);
+								
 								
 							}
 							/*if(!empty($_GET['price'])){
@@ -151,27 +170,34 @@
 								$value = 0;
 							}*/
 							function set_checked_butt($value){
+								//print_r($value);
+								//echo 'HI';
 								foreach($value as $id){
-									echo'<script>
-											$("#'.$id .'").prop("checked", true);
+									$type_id = str_replace(' ','',$id);
+									//echo'<script> $("#Smart Phone").prop("checked", true);</script>';
+									echo'<script>						
+											$("#'.$type_id.'").prop("checked", true);
 
 										</script>';
 								}
 							}
 							function set_selected_sort($value){
 									//print($value);
-									echo'<script>
+									echo'<script>		
 												$("#blank").attr("selected", false);
 												$("#'.$value .'").attr("selected", true);
 
 											</script>';
 							}
 							
+						
 				?>
-			</main>
+			</main>  
 		</div>
 	</div>
+		
 <?php
 	page_footer();
+
 
 ?>

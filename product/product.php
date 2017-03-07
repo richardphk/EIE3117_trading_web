@@ -1,5 +1,6 @@
 <?php
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/config_db/config_db.php');
+	include_once('../Config_db/config_db.php');
+
 	function product_frame_header(){
 		echo'<div class="row">';
 	
@@ -31,8 +32,17 @@
 	function product_frame_end(){
 		echo'</div>';
 	}
+	function get_price(){
+		$stat = 'SELECT MIN(`Tweb_Product_Price`) as min_price, Max(`Tweb_Product_Price`) as max_price FROM `tweb_product`';
+		$db_conn = db_connect('root','');
+		$result = $db_conn->prepare($stat);
+		$result->execute();
+		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
+		print_r($rec[0]['min_price']);
+		echo 'data-slider-min="'.$rec[0]['min_price'].'" data-slider-max="'.$rec[0]['max_price'].'"';
+	}
 	function get_type(){
-		$stat = 'select distinct Tweb_Product_Type FROM `Tweb_Product`;';
+		$stat = 'select distinct(Tweb_Product_Type) FROM `tweb_product`;';
 		$db_conn = db_connect('root','');
 		$result = $db_conn->prepare($stat);
 		$result->execute();
@@ -40,10 +50,12 @@
 		echo'<div class="checkbox">';
 		//print_r($rec);
 		foreach($rec as $type){
-			
+			//var_dump($type);
+			$type_id = str_replace(' ','',$type['Tweb_Product_Type']);
+			//print($type['Tweb_Product_Type']);
 			echo'
 			  <label>
-				<input type="checkbox" value="'.$type['Tweb_Product_Type'].'" id="'.$type['Tweb_Product_Type'].'"  name="type[]" onChange="this.form.submit()">
+				<input type="checkbox" value="'.$type['Tweb_Product_Type'].'" id="'.$type_id.'"  name="type[]" onChange="this.form.submit()">
 				'.$type['Tweb_Product_Type'].'
 				</input>
 			  </label>';
@@ -62,13 +74,13 @@
 				//print($key['type']);
 			}
 			if(empty($key['price'])){
-				$stat_price = "(select * FROM `Tweb_Product` where Tweb_Product_Price between ? and ?) as a";
+				$stat_price = "(select * FROM `tweb_product` where Tweb_Product_Price between ? and ?) as a";
 				$key_price = array(100,5550000);
 			}
 			else{
 				$key_price = explode(",", $key['price']);
 				
-				$stat_price = "(select * FROM `Tweb_Product` where Tweb_Product_Price between ? and ?) as a";
+				$stat_price = "(select * FROM `tweb_product` where Tweb_Product_Price between ? and ?) as a";
 			}
 			
 			if(empty($key['name'])){
@@ -81,9 +93,9 @@
 			}
 			$key_where_stat = 'Tweb_Product_Type = ?';
 			$search_key_num = count($key['type']);
-			$stat_type = 'SELECT * FROM `Tweb_Product` as c where c.Tweb_Product_Type = ?;';
+			$stat_type = 'SELECT * FROM `tweb_product` as c where c.Tweb_Product_Type = ?;';
 			$stat_select = 'SELECT * FROM ';
-			$stat_form = '(SELECT * FROM Tweb_Product';
+			$stat_form = '(SELECT * FROM tweb_product';
 			$stat_add = ' or ';
 			//print_r($key['type']);
 			switch ($search_key_num) {
@@ -111,20 +123,28 @@
 			
 			
 			
-			$stat_keyword = "(select * from Tweb_Product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?) as b";
+			$stat_keyword = "(select * from tweb_product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?) as b";
 			$key_keyword = '%'.$key['name'].'%';
 			
 			$total_stat = $stat_select . $stat_price . ',' . $stat_keyword . ',' . $stat_form;
+			
+			//------------------------------------check_sort-------------------------------
+			//print_r($key['sort']);
 			if(!empty($key['sort'])){
+				//print_r($key['sort']);
 				$sort = $key['sort'];
-				if($sort == 'Lowest Price'){
+				if($sort == 'Lowest_Price'){
 					$total_stat .= "ORDER BY `a`.`Tweb_Product_Price` ASC";
+					//echo $total_stat;
 				}
-				elseif($sort == 'Hightest Price'){
+				elseif($sort == 'Hightest_Price'){
+					
 					$total_stat .= "ORDER BY `a`.`Tweb_Product_Price` DESC";
+					//echo $total_stat;
 				}
 				
 			}
+			//------------------------------------check_sort-------------------------------
 			//print($total_stat);
 			//echo $total_stat;
 			$db_conn = db_connect('root','');
@@ -157,7 +177,7 @@
 		}
 		/*elseif($key_type == "keyword"){
 			$db_conn = db_connect('root','');
-			$stat_keyword = "(select * from Tweb_Product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?) as b";
+			$stat_keyword = "(select * from tweb_product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?) as b";
 			$result = $db_conn->prepare($stat);
 			$key_2 = '%'.$key.'%';
 			$result->bindParam(1,$key_2);
@@ -167,7 +187,7 @@
 		else{
 			
 			$db_conn = db_connect('root','');
-			$stat = "(select * FROM `Tweb_Product` where Tweb_Product_Price between ? and ?)";
+			$stat = "(select * FROM `tweb_product` where Tweb_Product_Price between ? and ?)";
 			$result = $db_conn->prepare($stat);
 			//print_r("price:". $key);
 			$key = explode(",", $key['price']);
