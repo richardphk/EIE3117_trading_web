@@ -15,6 +15,14 @@ INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`
 VALUES ('P00002', 'ASUS RT-AC68U', 980, 50, 'product_image/router.png', 'Router', '2017-2-14', 1, 'U00002', NULL);
 INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) 
 VALUES ('P00003', 'ASUS Vivobook E200HA', 2350, 10, 'product_image/laptop.png', 'NB', '2017-1-11', 10, 'U00003', NULL);
+INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) 
+VALUES ('P00004', 'Apple iPhone 7 Plus 128GB', 6666, 123, 'product_image/ip7.png', 'Smart Phone', '2017-2-9', 10, 'U00004', 'Apple iPhone 7 Plus 128GB');
+INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) 
+VALUES ('P00005', 'Xiaomi 小米 筆記本 Air  4GB + 128GB 12.5"', 4452, 170, 'product_image/simi.png', 'Notebook', '2017-1-21', 10, 'U00004', 'Xiaomi 小米 筆記本 Air  4GB + 128GB 12.5');
+INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) 
+VALUES ('P00006', 'ASUS ROG G752VS-XS74K OC Edition', 2310, 76, 'product_image/asus.png', 'Notebook', '2017-1-16', 10, 'U00004', 'ASUS ROG G752VS-XS74K OC Edition');
+INSERT INTO `trading_web`.`Tweb_Product` (`Tweb_Product_ID`, `Tweb_Product_Name`, `Tweb_Product_Price`, `Tweb_Product_Inventory`, `Tweb_Product_Image_Path`, `Tweb_Product_Type`, `Tweb_Product_Create_Date`, `Tweb_Product_Sale`, `Tweb_Product_Creator_ID`, `Tweb_Product_Desc`) 
+VALUES ('P00007', 'Alienware AW15 R3-7376SLV-PUS', 18000, 1230, 'product_image/alien.png', 'Notebook', '2017-2-22', 10, 'U00004', 'Alienware AW15 R3-7376SLV-PUS');
 
 
 /* Tweb_Sale_Record: */
