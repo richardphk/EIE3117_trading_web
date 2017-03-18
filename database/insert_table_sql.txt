@@ -35,3 +35,8 @@ VALUES ('S00001', 'U00001', '2017-2-20', 'abc', '2017-3-1', 5);
 /* Tweb_Order: */
 INSERT INTO `trading_web`.`Tweb_Order` (`Tweb_Order_ID`, `Tweb_Order_Product_ID`, `Tweb_Order_Quantity`, `Tweb_Order_Discount`, `Tweb_Order_Sale_Record_ID`) VALUES ('O00001', 'P00001', 1, 0, 'S00001');
 
+/* Tweb_User_Credit: */
+INSERT INTO `trading_web`.`Tweb_User_Credit`(`Tweb_User_Credit_id`, `Tweb_User_ID`, `Tweb_User_Credit_Cash`) VALUES ('C00001', 'U00001', 10000000000);
+INSERT INTO `trading_web`.`Tweb_User_Credit`(`Tweb_User_Credit_id`, `Tweb_User_ID`, `Tweb_User_Credit_Cash`) VALUES ('C00002', 'U00002', 10000000000);
+INSERT INTO `trading_web`.`Tweb_User_Credit`(`Tweb_User_Credit_id`, `Tweb_User_ID`, `Tweb_User_Credit_Cash`) VALUES ('C00003', 'U00003', 10000000000);
+INSERT INTO `trading_web`.`Tweb_User_Credit`(`Tweb_User_Credit_id`, `Tweb_User_ID`, `Tweb_User_Credit_Cash`) VALUES ('C00004', 'U00004', 10000000000);
