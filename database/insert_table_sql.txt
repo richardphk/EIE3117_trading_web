@@ -1,13 +1,10 @@
 /* Tweb_User: */
 
-INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
-VALUES ('U00001', 'test1', sha2('Forty2test1・, 256), '1990-10-20', '123@email.com', '+85211112222', 'User', 'test1', TRUE, NULL, NULL);
-INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
-VALUES ('U00002', 'test2', sha2('Forty2test2・, 256), '1991-11-11', '456@email.com', '+85133334444', 'User', 'test2', FALSE, NULL, NULL);
-INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
-VALUES ('U00003', 'test3', sha2('Forty2test3・, 256), '1991-11-13', '789@email.com', '+85133334443', 'User', 'test3', FALSE, NULL, NULL);
-INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
-VALUES ('U00004', 'test4', sha2('Forty2test4・, 256), '1991-11-13', '012@email.com', '+85133334443', 'User', 'test4', FALSE, NULL, NULL);
+INSERT INTO `Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) VALUES
+('U00001', 'test1', '10e297cc335e471e44231f5cde54f36b9d40f738b65982b96f0e3f5ec305f7d9', '1990-10-20', '123@email.com', '+85211112222', 'User', 'test1', 1, NULL, NULL),
+('U00002', 'test2', 'c7a57203bade62673f23d47263f9eca34ac285cecd886c7acd1fb4dcad19ce75', '1991-11-11', '456@email.com', '+85133334444', 'User', 'test2', 0, NULL, NULL),
+('U00003', 'test3', '04bff872a5294a04afc34939a341dd40b5c0f089b7103d868a49dccb583e33e4', '1991-11-13', '789@email.com', '+85133334443', 'User', 'test3', 0, NULL, NULL),
+('U00004', 'test4', 'fd5c3401259c36cf932254dc5425e17ddfe695275959794fce6e4c5a024302fc', '1991-11-13', '012@email.com', '+85133334443', 'User', 'test4', 0, NULL, NULL);
 
 
 /* Tweb_Product: */
