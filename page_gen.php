@@ -14,6 +14,7 @@
 			}
 			//print_r($_COOKIE);
 		}
+                
 
 ?>
 
@@ -139,7 +140,8 @@
 									echo '<a id="product" onclick="this.color=\'red\' href="#"
 											class="dropdown-toggle" data-toggle="dropdown"
 											role="button" aria-haspopup="true" aria-expanded="false">';
-									echo $_SESSION['login_user'];
+									echo $_SESSION['login_user'] . ' Remain Credit: ';// . remain_credit($_SESSION['login_user_id']);
+                                                                        
 									echo '<span class="caret"></span></a>';
 									echo '<ul class="dropdown-menu" style="background-color:#6d8cb1;">';
 										echo '<li><a href="user/inventory.php" class="1">My products</a></li>';
@@ -172,6 +174,19 @@
 
 		<?php
 	}
+        
+        function remain_credit($id) {
+            include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/config_db/config_db.php');
+            $db_conn = db_connect('root','');
+            $result = $db_conn->prepare('SELECT Tweb_User_Credit_Cash FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '"');
+
+            $result->execute();
+            $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach ($rec as $r) {
+                return $r['Tweb_User_Credit_Cash'];
+            }
+        }
 
 	function page_footer(){
 

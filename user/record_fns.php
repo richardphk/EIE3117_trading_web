@@ -53,6 +53,9 @@
 									<tr>
 										<td>Total amount: </td>
 										<td>$<?php echo $total_price; ?></td>
+                                                                                <td />
+                                                                                <td><button type="button" class="btn btn-danger">Request Refund</button></td>
+                                                                        </tr>
 							</tbody>
 						</table>
 					</div>

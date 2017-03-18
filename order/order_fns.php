@@ -121,5 +121,47 @@
 			</table>
 		<?php
 	}
-
+        
+        function check_amont($uid, $pid, $price, $quantity) {
+            
+            $total_price = 0;
+            $user_credit = get_user_credit($uid);
+            
+            for ($i=0; $i < count($_POST['product_id']); $i++) {
+                $total_price += $price[$i] * $quantity[$i];
+            }
+                    
+            if ($user_credit >= $total_price)
+                return true;
+            else
+                return false;
+            
+        }
+        
+        
+        function get_user_credit($id) {
+            $db_conn = db_connect('root','');
+            $result = $db_conn->prepare('SELECT Tweb_User_Credit_Cash FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '";');
+            $result->execute();
+            $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+            foreach($rec as $value){
+                return $value['Tweb_User_Credit_Cash'];
+            }
+        }
+        
+        function transaction($sid, $uid, $price) {
+            try {
+			$db_conn = db_connect('root', '');
+			$stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid)-$price) .' WHERE Tweb_User_ID = :uid');
+			$stmt->bindparam(':uid', $uid);
+			$stmt->execute();
+                        
+                        $stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($sid)+$price) .' WHERE Tweb_User_ID = :sid');
+			$stmt->bindparam(':sid', $sid);
+			$stmt->execute();
+			
+		} catch (PDOException $e) {
+			return $e->getMessage();
+		}
+        }
 ?>

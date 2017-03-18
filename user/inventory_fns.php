@@ -8,6 +8,10 @@
 		<?php
 	}
 	
+        function product_refund($id) {
+            echo $id;
+        }
+        
 	function product_body($id) {
 		$products = get_result($id);
 		$button = 0;
