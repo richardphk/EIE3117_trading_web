@@ -1,11 +1,13 @@
 /* Tweb_User: */
 
 INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
-VALUES ('U00001', 'test1', 'test1', '1990-10-20', '123@email.com', '+85211112222', 'User', 'test1', TRUE, NULL, NULL);
+VALUES ('U00001', 'test1', sha2('Forty2test1・, 256), '1990-10-20', '123@email.com', '+85211112222', 'User', 'test1', TRUE, NULL, NULL);
 INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
-VALUES ('U00002', 'test2', 'test2', '1991-11-11', '456@email.com', '+85133334444', 'User', 'test2', FALSE, NULL, NULL);
+VALUES ('U00002', 'test2', sha2('Forty2test2・, 256), '1991-11-11', '456@email.com', '+85133334444', 'User', 'test2', FALSE, NULL, NULL);
 INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
-VALUES ('U00003', 'test3', 'test3', '1991-11-13', '789@email.com', '+85133334443', 'User', 'test3', FALSE, NULL, NULL);
+VALUES ('U00003', 'test3', sha2('Forty2test3・, 256), '1991-11-13', '789@email.com', '+85133334443', 'User', 'test3', FALSE, NULL, NULL);
+INSERT INTO `trading_web`.`Tweb_User` (`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
+VALUES ('U00004', 'test4', sha2('Forty2test4・, 256), '1991-11-13', '012@email.com', '+85133334443', 'User', 'test4', FALSE, NULL, NULL);
 
 
 /* Tweb_Product: */
@@ -32,3 +34,4 @@ VALUES ('S00001', 'U00001', '2017-2-20', 'abc', '2017-3-1', 5);
 
 /* Tweb_Order: */
 INSERT INTO `trading_web`.`Tweb_Order` (`Tweb_Order_ID`, `Tweb_Order_Product_ID`, `Tweb_Order_Quantity`, `Tweb_Order_Discount`, `Tweb_Order_Sale_Record_ID`) VALUES ('O00001', 'P00001', 1, 0, 'S00001');
+
