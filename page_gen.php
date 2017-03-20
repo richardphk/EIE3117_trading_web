@@ -6,7 +6,7 @@
 		start_session();
 
 		if(isset($_COOKIE['user']) && $_COOKIE['user'] != ''){
-			list($hash, $login_user, $login_user_id) = split('-', $_COOKIE['user']);
+			list($hash, $login_user, $login_user_id) = explode('-', $_COOKIE['user']);
 			if(hash('sha256', $salt.$login_user.$login_user_id.$salt.$login_user_id.$salt) == $hash){
 				$_SESSION['login_user'] = $login_user;
 				$_SESSION['login_user_id'] = $login_user_id;
@@ -14,7 +14,6 @@
 			}
 			//print_r($_COOKIE);
 		}
-                
 
 ?>
 
@@ -73,6 +72,12 @@
 	.dp_item li:hover{
 		background-color:rgba(231, 231, 231, 0.16);
 	}
+	.navbar-nav > li > a {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    line-height: normal;
+}
+	
 	</style>
 </head>
 <body style="background-color:#eee;">
@@ -111,7 +116,7 @@
 							<li role="separator" class="divider"></li>
 							<li><a href="product/product_page.php" class="dp_item">All Products</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="#" class="dp_item">One more separated link</a></li>
+
 						  </ul>
 						</li>
 
@@ -136,12 +141,16 @@
 								//echo '<li><a href="./user/login.php">sign in</a>';
 							} else {
 								//echo '<li><a href="#">'.$_SESSION['login_user'].'</a>';
+								echo $_SESSION['login_user'] . ' Remain Credit: ';// . remain_credit($_SESSION['login_user_id']);
+								echo '<li style="font-size:10px;"><a href="#">Credit:
+																			<br>Bitcon:</br</a></li>'; 
+								//echo '<li><a href="#">Bitcon:</a></li>'; 
+
 								echo '<li class="dropdown">';
 									echo '<a id="product" onclick="this.color=\'red\' href="#"
 											class="dropdown-toggle" data-toggle="dropdown"
 											role="button" aria-haspopup="true" aria-expanded="false">';
-									echo $_SESSION['login_user'] . ' Remain Credit: ';// . remain_credit($_SESSION['login_user_id']);
-                                                                        
+									echo $_SESSION['login_user'];
 									echo '<span class="caret"></span></a>';
 									echo '<ul class="dropdown-menu" style="background-color:#6d8cb1;">';
 										echo '<li><a href="user/inventory.php" class="1">My products</a></li>';
@@ -164,18 +173,7 @@
 
 <?php
 	}
-
-	function not_loggedin() {
-		?>
-
-			<div class="jumbotron">
-				<h1>You have not logged in.</h1>
-			</div>
-
-		<?php
-	}
-        
-        function remain_credit($id) {
+		function remain_credit($id) {
             include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/config_db/config_db.php');
             $db_conn = db_connect('root','');
             $result = $db_conn->prepare('SELECT Tweb_User_Credit_Cash FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '"');
@@ -187,6 +185,15 @@
                 return $r['Tweb_User_Credit_Cash'];
             }
         }
+	function not_loggedin() {
+		?>
+
+			<div class="jumbotron">
+				<h1>You have not logged in.</h1>
+			</div>
+
+		<?php
+	}
 
 	function page_footer(){
 

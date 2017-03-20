@@ -4,14 +4,14 @@
 	
 	function product_header() {
 		?>
-			<div class="row")
+			<div class="row">
 		<?php
 	}
 	
-        function product_refund($id) {
+	function product_refund($id) {
             echo $id;
-        }
-        
+    }
+       
 	function product_body($id) {
 		$products = get_result($id);
 		$button = 0;
@@ -33,6 +33,7 @@
 											<th>Date</th>
 											<th>Buyer</th>
 											<th>Quantity</th>
+											<th>request refund</th>
 										</thead>
 										<tbody>
 											<?php 
@@ -43,6 +44,7 @@
 												<td><?php echo $sale['Tweb_Sale_Record_Order_Date'] ?></td>
 												<td><?php echo $sale['Tweb_Sale_Record_Customer_ID'] ?></td>
 												<td><?php echo $sale['Tweb_Order_Quantity'] ?></td>
+												<td></td>
 											</tr>
 											<?php
 												}
