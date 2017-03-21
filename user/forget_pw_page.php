@@ -1,14 +1,14 @@
 <?PHP
 	/* inital functions */
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/session/redirect_page.php');
 
 	if(check_login()){
 		response_message2rediect("You are already login", "../home.php");
 	}
 
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/page_gen.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/page_gen.php');
 	page_header('Forget Password Page');
 
 ?>

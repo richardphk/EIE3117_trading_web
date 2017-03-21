@@ -1,12 +1,12 @@
 <?PHP
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/config_db/config_db.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/input_replace.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/verify.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/includes/get_today.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/salt.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/session/input_replace.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/session/redirect_page.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/user/verify.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/includes/get_today.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/user/salt.php');
 	
 	/* inital functions */
 	start_session();

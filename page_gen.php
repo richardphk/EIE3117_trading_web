@@ -1,9 +1,10 @@
 <?php
 	function page_header($title){
-		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
-		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/checking.php');
-		require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/user/salt.php');
+		require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
+		require($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
+		require($_SERVER['DOCUMENT_ROOT'].'/user/salt.php');
 		start_session();
+
 
 		if(isset($_COOKIE['user']) && $_COOKIE['user'] != ''){
 			list($hash, $login_user, $login_user_id) = explode('-', $_COOKIE['user']);

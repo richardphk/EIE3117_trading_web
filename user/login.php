@@ -1,8 +1,8 @@
 <?PHP
 	/* inital functions */
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/create_session.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/page_gen.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/EIE3117_trading_web/session/redirect_page.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/page_gen.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/session/redirect_page.php');
 	page_header('Login Page');
 	
 	if(check_login()){
