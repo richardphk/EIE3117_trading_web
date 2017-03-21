@@ -25,6 +25,7 @@
                     //Add order
                     for ($i=0; $i < count($_POST['product_id']); $i++) {
                             $order_id = gen_id('Tweb_Order');
+                            $payment_id = gen_id('Tweb_Payment');
 
                             add_order($order_id, $_POST['product_id'][$i], $_POST['product_quantity'][$i], $purchase_id);
                             edit_inventory($_POST['product_id'][$i], $_POST['product_quantity'][$i]);
@@ -35,7 +36,7 @@
                             $seller_id = get_result($_POST['product_id'][$i], 'Creator_ID');
                             email_to_seller($seller_id, $_SESSION['login_user_id'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
                             
-                            transaction($seller_id, $_SESSION['login_user_id'], $_POST['product_price'][$i] * $_POST['product_quantity'][$i]);
+                            transaction($seller_id, $_SESSION['login_user_id'], $_POST['product_price'][$i] * $_POST['product_quantity'][$i], $purchase_id, $payment_id, $purchase_date);
                     }
                     order_table_footer($total_price);
 

@@ -1,7 +1,7 @@
 <?php
 
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/config_db/config_db.php');
-	
+        
 	function get_result($id, $type) {
 		$db_conn = db_connect('root','');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_ID = "' . $id . '";');
@@ -125,7 +125,7 @@
         function check_amont($uid, $pid, $price, $quantity) {
             
             $total_price = 0;
-            $user_credit = get_user_credit($uid);
+            $user_credit = get_user_credit($uid, 'Tweb_User_Credit_Cash');
             
             for ($i=0; $i < count($_POST['product_id']); $i++) {
                 $total_price += $price[$i] * $quantity[$i];
@@ -139,29 +139,45 @@
         }
         
         
-        function get_user_credit($id) {
+        function get_user_credit($id, $field) {
             $db_conn = db_connect('root','');
-            $result = $db_conn->prepare('SELECT Tweb_User_Credit_Cash FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '";');
+            $result = $db_conn->prepare('SELECT * FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '";');
             $result->execute();
             $rec = $result->fetchAll(PDO::FETCH_ASSOC);
             foreach($rec as $value){
-                return $value['Tweb_User_Credit_Cash'];
+                return $value[$field];
             }
         }
         
-        function transaction($sid, $uid, $price) {
+        function transaction($sid, $uid, $price, $sale_id, $payment_id, $date) {
             try {
-			$db_conn = db_connect('root', '');
-			$stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid)-$price) .' WHERE Tweb_User_ID = :uid');
-			$stmt->bindparam(':uid', $uid);
-			$stmt->execute();
-                        
-                        $stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($sid)+$price) .' WHERE Tweb_User_ID = :sid');
-			$stmt->bindparam(':sid', $sid);
-			$stmt->execute();
-			
-		} catch (PDOException $e) {
-			return $e->getMessage();
-		}
+                
+                $spid = get_user_credit($sid, 'Tweb_User_Credit_id');
+                $upid = get_user_credit($uid, 'Tweb_User_Credit_id');
+                
+		$db_conn = db_connect('root', '');
+		$stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid, 'Tweb_User_Credit_Cash')-$price) .' WHERE Tweb_User_ID = :uid');
+		$stmt->bindparam(':uid', $uid);
+		$stmt->execute();
+                
+                
+                $stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($sid, 'Tweb_User_Credit_Cash')+$price) .' WHERE Tweb_User_ID = :sid');
+		$stmt->bindparam(':sid', $sid);
+		$stmt->execute();
+                
+                
+		$stmt = $db_conn->prepare('INSERT INTO Tweb_Payment (Tweb_Payment_ID, Tweb_Payment_Sale_Record_ID, Tweb_Payment_Payment_Amount, Tweb_Payment_Payment_Date, Tweb_Payment_Buyer_Credit_ID, Tweb_Payment_Saler_Credit_ID) VALUES (:payment_id, :sale_record_id, :amount, :date, :upid, :spid)');
+                $stmt->bindparam(':payment_id', $payment_id);
+                $stmt->bindparam(':sale_record_id', $sale_id);
+                $stmt->bindparam(':amount', $price);
+                $stmt->bindparam(':date', $date);
+                $stmt->bindparam(':upid', $upid);
+                $stmt->bindparam(':spid', $spid);
+		$stmt->execute();
+
+                
+            } catch (PDOException $e) {
+                echo $e->getMessage();
+            }
         }
 ?>
