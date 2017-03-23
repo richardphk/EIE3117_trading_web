@@ -1,8 +1,8 @@
 <?php
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/order/cart_fns.php');
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/checking.php');
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/redirect_page.php');
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/page_gen.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/order/cart_fns.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/session/checking.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/session/redirect_page.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/page_gen.php');
 	require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 
 	page_header('Adding Cart');
