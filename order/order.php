@@ -19,28 +19,29 @@
                     echo add_sale_record($purchase_id, $_SESSION['login_user_id'], $purchase_date);
 
                     order_table_header();
-                    $total_price = 0;
+                    $amount = 0;
 
 
                     //Add order
                     for ($i=0; $i < count($_POST['product_id']); $i++) {
                             $order_id = gen_id('Tweb_Order');
-                            $payment_id = gen_id('Tweb_Payment');
 
                             add_order($order_id, $_POST['product_id'][$i], $_POST['product_quantity'][$i], $purchase_id);
                             edit_inventory($_POST['product_id'][$i], $_POST['product_quantity'][$i]);
 
                             order_table_body($i, $_POST['product_name'][$i], $_POST['product_price'][$i], $_POST['product_quantity'][$i]);
-                            $total_price += $_POST['product_price'][$i] * $_POST['product_quantity'][$i];
+                            $amount += $_POST['product_price'][$i] * $_POST['product_quantity'][$i];
 
                             $seller_id = get_result($_POST['product_id'][$i], 'Creator_ID');
-                            email_to_seller($seller_id, $_SESSION['login_user_id'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
+                            //email_to_seller($seller_id, $_SESSION['login_user_id'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
                             
-                            transaction($seller_id, $_SESSION['login_user_id'], $_POST['product_price'][$i] * $_POST['product_quantity'][$i], $purchase_id, $payment_id, $purchase_date);
+                            transaction($seller_id, $_SESSION['login_user_id'], $_POST['product_price'][$i] * $_POST['product_quantity'][$i]);
                     }
-                    order_table_footer($total_price);
+                    order_table_footer($amount);
+                    $payment_id = gen_id('Tweb_Payment');
+                    add_payment_record($payment_id, $purchase_id, $amount, $purchase_date, $_SESSION['login_user_id']);
 
-                    email_to_buyer($_SESSION['login_user_id']);
+                    //email_to_buyer($_SESSION['login_user_id']);
 
                     ?>
                             <div class="jumbotron">

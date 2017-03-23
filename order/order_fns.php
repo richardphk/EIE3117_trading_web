@@ -149,11 +149,8 @@
             }
         }
         
-        function transaction($sid, $uid, $price, $sale_id, $payment_id, $date) {
+        function transaction($sid, $uid, $price) {
             try {
-                
-                $spid = get_user_credit($sid, 'Tweb_User_Credit_id');
-                $upid = get_user_credit($uid, 'Tweb_User_Credit_id');
                 
 		$db_conn = db_connect('root', '');
 		$stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid, 'Tweb_User_Credit_Cash')-$price) .' WHERE Tweb_User_ID = :uid');
@@ -165,19 +162,29 @@
 		$stmt->bindparam(':sid', $sid);
 		$stmt->execute();
                 
-                
-		$stmt = $db_conn->prepare('INSERT INTO Tweb_Payment (Tweb_Payment_ID, Tweb_Payment_Sale_Record_ID, Tweb_Payment_Payment_Amount, Tweb_Payment_Payment_Date, Tweb_Payment_Buyer_Credit_ID, Tweb_Payment_Saler_Credit_ID) VALUES (:payment_id, :sale_record_id, :amount, :date, :upid, :spid)');
-                $stmt->bindparam(':payment_id', $payment_id);
-                $stmt->bindparam(':sale_record_id', $sale_id);
-                $stmt->bindparam(':amount', $price);
-                $stmt->bindparam(':date', $date);
-                $stmt->bindparam(':upid', $upid);
-                $stmt->bindparam(':spid', $spid);
-		$stmt->execute();
-
-                
             } catch (PDOException $e) {
                 echo $e->getMessage();
+            }
+        }
+        
+        function add_payment_record($pid, $sid, $amount, $date, $uid) {
+            try {
+                $refund = 0;
+                $upid = get_user_credit($uid, 'Tweb_User_Credit_id');
+                
+                $db_conn = db_connect('root', '');
+                
+                $stmt = $db_conn->prepare('INSERT INTO Tweb_Payment (Tweb_Payment_ID, Tweb_Payment_Sale_Record_ID, Tweb_Payment_Payment_Amount, Tweb_Payment_Payment_Date, Tweb_Payment_Refund, Tweb_Payment_Buyer_Credit_ID) VALUES (:pid, :sid, :amount, :date, :refund, :upid)');
+                $stmt->bindparam(':pid', $pid);
+                $stmt->bindparam(':sid', $sid);
+                $stmt->bindparam(':amount', $amount);
+                $stmt->bindparam(':date', $date);
+                $stmt->bindparam(':refund', $refund);
+                $stmt->bindparam(':upid', $upid);
+		$stmt->execute();
+                
+            } catch (Exception $ex) {
+                echo $ex->getMessage();
             }
         }
 ?>
