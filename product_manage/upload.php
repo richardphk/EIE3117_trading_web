@@ -1,10 +1,10 @@
 <?php
 	
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/page_gen.php');
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/includes/gen_id.php');
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/includes/get_today.php');
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/session/checking.php');
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/product_manage/upload_fns.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/page_gen.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/includes/gen_id.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/includes/get_today.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/session/checking.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/product_manage/upload_fns.php');
 	
 	page_header('Upload');
 	
@@ -50,7 +50,7 @@
 			
 
 			$upfile = 'product_image/' . $product_creator . '_' . $product_id . '_' . $_FILES['product_image']['name'];
-			move_uploaded_file($_FILES['product_image']["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/' . $upfile);
+			move_uploaded_file($_FILES['product_image']["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . '//' . $upfile);
 			
 			if (is_uploaded_file($_FILES['product_image']['tmp_name'])) {
 				echo 'Problem: Could not move file to destination directory'; 

@@ -1,8 +1,8 @@
 <?php
 	function page_header($title){
-		require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
-		require($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
-		require($_SERVER['DOCUMENT_ROOT'].'/user/salt.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/user/salt.php');
 		start_session();
 
 
@@ -26,8 +26,8 @@
 	//get folder link
 	$host_uri = $_SERVER['HTTP_HOST'];
 	$self = explode('/', dirname($_SERVER['PHP_SELF']));
-	$folder_eie = $self[1];
-	$folder_link = sprintf('http://%s/%s/', $host_uri, $folder_eie);
+	$folder_eie = $self[0];
+	$folder_link = sprintf('http://%s/', $host_uri, $folder_eie);
 	//print($folder_link);
 	printf('<base href="%s" target="_self">', $folder_link);
 ?>
@@ -142,7 +142,7 @@
 								//echo '<li><a href="./user/login.php">sign in</a>';
 							} else {
 								//echo '<li><a href="#">'.$_SESSION['login_user'].'</a>';
-								echo $_SESSION['login_user'] . ' Remain Credit: ';// . remain_credit($_SESSION['login_user_id']);
+								//echo $_SESSION['login_user'] . ' Remain Credit: ';// . remain_credit($_SESSION['login_user_id']);
 								echo '<li style="font-size:10px;"><a href="#">Credit:
 																			<br>Bitcon:</br</a></li>'; 
 								//echo '<li><a href="#">Bitcon:</a></li>'; 
@@ -158,6 +158,7 @@
 										echo '<li><a href="user/record.php" class="2">Purchase History</a></li>';
 										echo '<li><a href="user/reset_pw_page.php" class="3">Reset Password</a></li>';
 										echo '<li><a href="logout.php" class="4">Logout</a></li>';
+										echo '<li><a href="user/user_info_page.php" class="4">User Information</a></li>';
 									echo '</ul>';
 								echo '</li>';
 							}
@@ -175,7 +176,7 @@
 <?php
 	}
 		function remain_credit($id) {
-            include_once($_SERVER['DOCUMENT_ROOT'] . '/EIE3117_trading_web/config_db/config_db.php');
+            include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
             $db_conn = db_connect('root','');
             $result = $db_conn->prepare('SELECT Tweb_User_Credit_Cash FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '"');
 
