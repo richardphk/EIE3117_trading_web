@@ -7,7 +7,6 @@
 	
 	if (check_login()) {
 		product_header();
-        product_refund($_SESSION['login_user_id']);
 		product_body($_SESSION['login_user_id']);
 		product_footer();
 	} else {

@@ -31,11 +31,14 @@
 									<th></th>
 									<th>Type</th>
 									<th>Quantity</th>
+                                                                        <th>Refund</th>
 								</tr>
 							</thead>
 							<tbody>
 								
-									<?php $details = get_details('Product_ID', 'Quantity', $rec['Tweb_Sale_Record_ID']);
+									<?php 
+                                                                               
+                                                                                $details = get_details($rec['Tweb_Sale_Record_ID']);
 										$total_price = 0;
 										
 										foreach ($details as $det) {
@@ -45,16 +48,21 @@
 												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Name') . '<br />' . get_product($det['Tweb_Order_Product_ID'], 'Desc');?></td>
 												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Type'); ?></td>
 												<td><?php echo $det['Tweb_Order_Quantity']; ?></td>
+                                                                                                <td>
+                                                                                                    <?php get_refund_status($det['Tweb_Order_ID'], $rec['Tweb_Sale_Record_ID']); ?>
+                                                                                                </td>
 											</tr>
 											<?php 
 											$total_price = $total_price + (get_product($det['Tweb_Order_Product_ID'], 'Price') * $det['Tweb_Order_Quantity']);
 										} 
 										?>
 									<tr>
-										<td>Total amount: </td>
-										<td>$<?php echo $total_price; ?></td>
-                                                                                <td />
-                                                                                <td><button type="button" class="btn btn-danger">Request Refund</button></td>
+                                                                            <td />
+                                                                            <td />
+                                                                            <td />
+                                                                            <td>Total amount: </td>
+                                                                            <td>$<?php echo $total_price; ?></td>
+                                                                                
                                                                         </tr>
 							</tbody>
 						</table>
@@ -78,9 +86,9 @@
 	}
 	}
 	
-	function get_details($field1, $field2, $id){
+	function get_details($id){
 		$db_conn = db_connect('root','');
-		$result = $db_conn->prepare('SELECT Tweb_Order_' . $field1 . ', Tweb_Order_' . $field2 . ' FROM Tweb_Order WHERE Tweb_Order_Sale_Record_ID = "' . $id . '";');
+		$result = $db_conn->prepare('SELECT * FROM Tweb_Order WHERE Tweb_Order_Sale_Record_ID = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 		return $rec;
@@ -94,6 +102,52 @@
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 		return $rec;
 	}
+        
+        function get_payment_id($sid) {
+            $db_conn = db_connect('root','');
+            $result = $db_conn->prepare('SELECT * FROM Tweb_Payment WHERE Tweb_Payment_Sale_Record_ID = "' . $sid . '";');
+		
+            $result->execute();
+            $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+            foreach ($rec as $r) {
+                return $r['Tweb_Payment_ID'];
+            }
+        }
+        
+        function get_refund_status($oid, $sid) {
+            $db_conn = db_connect('root','');
+            $result = $db_conn->prepare('SELECT * FROM Tweb_Refund WHERE Tweb_Refund_Order_ID = "' . $oid . '";');
+            $result->execute();
+            $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+            if ($rec) {
+                
+                foreach ($rec as $r) {
+                    $rid = $r['Tweb_Refund_ID'];
+                    $status = $r['Tweb_Refund_Approve'];
+                }
+                
+                switch($status) {
+                    case '0':
+                        echo '<a href="#" class="btn btn-warning disabled" role="button">Waiting for approval</a>';
+                        break;
+                    case '1':
+                        echo '<a href="#" class="btn btn-success disabled role="button">Refunded</a>';
+                        break;
+                    case '2':
+                        echo '<a href="#" class="btn btn-danger disabled role="button">Refund Rejected</a>';
+                        break;
+                    default:
+                        echo 'Error';
+                }
+            } else {
+                echo '<form action="' . '../refund/request_refund.php' . '" method="POST">';
+                echo '<input type="hidden" name="sid" value="' . $sid . '" />';
+                echo '<input type="hidden" name="pid" value="' . get_payment_id($sid) . '" />';
+                echo '<input type="hidden" name="oid" value="' . $oid . '" />';
+                echo '<input type="submit" class="btn btn-info" value="Request" />';
+                echo '</form>';  
+            }
+        }
 	
 	function table_footer() {
 		?>

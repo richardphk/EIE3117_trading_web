@@ -30,6 +30,10 @@
 				$id = "Tweb_Payment_ID";
 				$tag = "A";
 				break;
+                        case "Tweb_Refund":
+                                $id = "Tweb_Refund_ID";
+                                $tag = "R";
+                                break;
 			default:
 				return false;
 		}
