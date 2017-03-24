@@ -5,6 +5,7 @@
 		?>
 			<h2>Purchase Record</h2>
 			<div class="panel-group" id="accordion">
+                        
 		<?php
 	}
 	
@@ -48,6 +49,7 @@
 												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Name') . '<br />' . get_product($det['Tweb_Order_Product_ID'], 'Desc');?></td>
 												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Type'); ?></td>
 												<td><?php echo $det['Tweb_Order_Quantity']; ?></td>
+                                                                                                
                                                                                                 <td>
                                                                                                     <?php get_refund_status($det['Tweb_Order_ID'], $rec['Tweb_Sale_Record_ID']); ?>
                                                                                                 </td>
@@ -140,12 +142,32 @@
                         echo 'Error';
                 }
             } else {
-                echo '<form action="' . '../refund/request_refund.php' . '" method="POST">';
-                echo '<input type="hidden" name="sid" value="' . $sid . '" />';
-                echo '<input type="hidden" name="pid" value="' . get_payment_id($sid) . '" />';
-                echo '<input type="hidden" name="oid" value="' . $oid . '" />';
-                echo '<input type="submit" class="btn btn-info" value="Request" />';
-                echo '</form>';  
+                ?>
+               
+                <button class="btn btn-info" data-toggle="modal" data-target="#<?php echo $oid; ?>">Request</button>
+                <div class="modal fade" id="<?php echo $oid; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+				<h4 class="modal-title" id="myModalLabel">Warning</h4>
+                            </div>
+                            <div class="modal-body">Are you sure to request refund?</div>
+                            <div class="modal-footer">
+                                
+                                <form action="<?php echo '../refund/request_refund.php'; ?>" method="post">
+                                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                    <input type="hidden" name="sid" value="<?php echo $sid; ?>" />
+                                    <input type="hidden" name="pid" value="<?php echo get_payment_id($sid); ?>" />
+                                    <input type="hidden" name="oid" value="<?php echo $oid; ?>" />
+                                    <input type="submit" class="btn btn-danger" value="Yes" />
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>   
+                
+                <?PHP
             }
         }
 	

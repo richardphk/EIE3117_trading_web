@@ -86,23 +86,55 @@
                 switch ($status) {
                     case '0':
                         ?>
-                                <form action="<?php echo '../refund/response_refund.php' ?>" method="post">
-                                    <input type="hidden" name="approve" value="1" />
-                                    <input type="hidden" name="rid" value="<?php echo $rid; ?>" />
+                        <button class="btn btn-success" data-toggle="modal" data-target="#<?php echo $rid . '_approve'; ?>">Approve</button>
+                        <div class="modal fade" id="<?php echo $rid . '_approve'; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="myModalLabel">Warning</h4>
+                                    </div>
+                                    <div class="modal-body">Are you sure to approve the refund?</div>
+                                    <div class="modal-footer">
+                                        <form action="<?php echo '../refund/response_refund.php' ?>" method="post">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <input type="hidden" name="approve" value="1" />
+                                            <input type="hidden" name="rid" value="<?php echo $rid; ?>" />
 
-                                    <input type="hidden" name="uid" value="<?php echo $uid; ?>" />
-                                    <input type="hidden" name="cid" value="<?php echo $cid; ?>" />
-                                    <input type="hidden" name="pid" value="<?php echo $pid; ?>" />
-                                    <input type="hidden" name="quantity" value="<?php echo $quantity; ?>" />
+                                            <input type="hidden" name="uid" value="<?php echo $uid; ?>" />
+                                            <input type="hidden" name="cid" value="<?php echo $cid; ?>" />
+                                            <input type="hidden" name="pid" value="<?php echo $pid; ?>" />
+                                            <input type="hidden" name="quantity" value="<?php echo $quantity; ?>" />
 
-                                    <input type="submit" class="btn btn-success" value="Approve" />
-                                </form>
-                                <form action="<?php echo '../refund/response_refund.php'; ?>" method="post">
-                                    <input type="hidden" name="approve" value="2" />
-                                    <input type="hidden" name="rid" value="<?php echo $rid; ?>" />
+                                            <input type="submit" class="btn btn-danger" value="Yes" />
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <button class="btn btn-danger" data-toggle="modal" data-target="#<?php echo $rid . '_reject'; ?>">Reject</button>
+                        <div class="modal fade" id="<?php echo $rid . '_reject'; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                        <h4 class="modal-title" id="myModalLabel">Warning</h4>
+                                    </div>
+                                    <div class="modal-body">Are you sure to reject the refund?</div>
+                                    <div class="modal-footer">
+                                        <form action="<?php echo '../refund/response_refund.php'; ?>" method="post">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <input type="hidden" name="approve" value="2" />
+                                            <input type="hidden" name="rid" value="<?php echo $rid; ?>" />
 
-                                    <input type="submit" class="btn btn-danger" value="Reject" />
-                                </form>
+                                            <input type="submit" class="btn btn-danger" value="Reject" />
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                                
                         <?php
                         break;
                     case '1':
