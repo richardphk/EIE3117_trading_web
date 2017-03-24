@@ -8,7 +8,12 @@
 		<?php
 	}
 	
-       
+        function product_refund($uid) {
+            $result = check_refund($uid);
+            if ($result) {
+                echo '';
+            }
+        }
 	function product_body($id) {
 		$products = get_result($id);
 		$button = 0;
@@ -30,7 +35,7 @@
 											<th>Date</th>
 											<th>Buyer</th>
 											<th>Quantity</th>
-											<th>Refund requests</th>
+											<th>Status</th>
 										</thead>
 										<tbody>
 											<?php 
@@ -104,6 +109,7 @@
                                             <input type="hidden" name="uid" value="<?php echo $uid; ?>" />
                                             <input type="hidden" name="cid" value="<?php echo $cid; ?>" />
                                             <input type="hidden" name="pid" value="<?php echo $pid; ?>" />
+                                            <input type="hidden" name="oid" value="<?php echo $oid; ?>" />
                                             <input type="hidden" name="quantity" value="<?php echo $quantity; ?>" />
 
                                             <input type="submit" class="btn btn-danger" value="Yes" />
@@ -138,15 +144,31 @@
                         <?php
                         break;
                     case '1':
-                        return 'Approved';
+                        return '<button type="button" class="btn btn-warning">Refuned</button>';
                         break;
                     case '2':
-                        return 'Rejected';
+                        return '<button type="button" class="btn btn-danger">Sold</button>';
                         break;
                     default:
                         return false;
                 }
+            } else {
+                return '<button type="button" class="btn btn-success">Sold</button>';
+                
             }
+        }
+        
+        function check_refund($uid) {
+
+            $db_conn = db_connect('root','root');
+            $result = $db_conn->prepare('SELECT * FROM tweb_refund WHERE tweb_refund_order_id IN 
+                (SELECT tweb_order_id FROM tweb_order WHERE tweb_order_product_id IN 
+                    (SELECT tweb_product_id FROM tweb_product WHERE tweb_product_creator_id = "' . $uid . '")) 
+                        AND tweb_refund_approve = "0";');
+            $result->execute();
+            $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+            return $rec;
+            
         }
 	
 	function product_footer() {

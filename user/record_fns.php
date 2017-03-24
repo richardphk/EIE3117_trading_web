@@ -32,6 +32,7 @@
 									<th></th>
 									<th>Type</th>
 									<th>Quantity</th>
+                                                                        <th>Total Price</th>
                                                                         <th>Refund</th>
 								</tr>
 							</thead>
@@ -49,21 +50,22 @@
 												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Name') . '<br />' . get_product($det['Tweb_Order_Product_ID'], 'Desc');?></td>
 												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Type'); ?></td>
 												<td><?php echo $det['Tweb_Order_Quantity']; ?></td>
+                                                                                                <td><?php echo '$' . $det['Tweb_Order_Price']; ?></td>
                                                                                                 
                                                                                                 <td>
                                                                                                     <?php get_refund_status($det['Tweb_Order_ID'], $rec['Tweb_Sale_Record_ID']); ?>
                                                                                                 </td>
 											</tr>
 											<?php 
-											$total_price = $total_price + (get_product($det['Tweb_Order_Product_ID'], 'Price') * $det['Tweb_Order_Quantity']);
 										} 
 										?>
 									<tr>
                                                                             <td />
                                                                             <td />
                                                                             <td />
+                                                                            <td />
                                                                             <td>Total amount: </td>
-                                                                            <td>$<?php echo $total_price; ?></td>
+                                                                            <td>$<?php echo get_amount($rec['Tweb_Sale_Record_ID']); ?></td>
                                                                                 
                                                                         </tr>
 							</tbody>
@@ -85,8 +87,18 @@
 		foreach($rec as $value){
 			return $value['Tweb_Product_' . $type];
 		
+            }
 	}
-	}
+        
+        function get_amount($id) {
+            $db_conn = db_connect('root','root');
+            $result = $db_conn->prepare('SELECT * FROM Tweb_Sale_Record WHERE Tweb_Sale_Record_ID = "' . $id . '";');
+            $result->execute();
+            $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+            foreach($rec as $r) {
+                return $r['Tweb_Sale_Record_Amount'];
+            }
+        }
 	
 	function get_details($id){
 		$db_conn = db_connect('root','root');

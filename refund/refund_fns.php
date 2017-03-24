@@ -36,9 +36,9 @@
         }
     }
     
-    function refund_process($uid, $cid, $pid, $quantity) {
+    function refund_process($uid, $cid, $pid, $oid, $quantity) {
         try {
-            $price = $quantity * get_result($pid, 'Price');
+            $price = get_price($oid);
             
             $db_conn = db_connect('root','root');
             $stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid, 'Tweb_User_Credit_Cash')-$price) .' WHERE Tweb_User_ID = :uid');
@@ -60,6 +60,17 @@
             
         } catch (Exception $ex) {
             echo $ex->getMessage();
+        }
+    }
+    
+    function get_price($oid) {
+        $db_conn = db_connect('root','root');
+	$result = $db_conn->prepare('SELECT * FROM Tweb_Order WHERE Tweb_Order_ID = "' . $oid . '";');
+		
+	$result->execute();
+	$rec = $result->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($rec as $r) {
+            return $r['Tweb_Order_Price'];
         }
     }
 
