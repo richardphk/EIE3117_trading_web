@@ -57,12 +57,15 @@
 	}
 
 	function add_order($order_id, $product_id, $quantity, $sales_id) {
+<<<<<<< Updated upstream
 		$db_conn = db_connect('root','root');
 		$stmt = $db_conn->prepare('INSERT INTO Tweb_Order (Tweb_Order_ID, Tweb_Order_Product_ID, Tweb_Order_Quantity, Tweb_Order_Sale_Record_ID) VALUES (:order_id, :product_id, :quantity, :sales_id)');
+=======
                 $price = $quantity * get_result($product_id, 'Price');
                 
-		$db_conn = db_connect('root', 'root');
+		$db_conn = db_connect('root', '');
 		$stmt = $db_conn->prepare('INSERT INTO Tweb_Order (Tweb_Order_ID, Tweb_Order_Product_ID, Tweb_Order_Quantity, Tweb_Order_Price, Tweb_Order_Sale_Record_ID) VALUES (:order_id, :product_id, :quantity, :price, :sales_id)');
+>>>>>>> Stashed changes
 		$stmt->bindparam(':order_id', $order_id);
 		$stmt->bindparam(':product_id', $product_id);
 		$stmt->bindparam(':quantity', $quantity);
@@ -196,7 +199,7 @@
         function add_amount($sid, $amount) {
             try {
                 
-                $db_conn = db_connect('root', 'root');
+                $db_conn = db_connect('root', '');
                 
                 $stmt = $db_conn->prepare('UPDATE Tweb_Sale_Record SET Tweb_Sale_Record_Amount = :amount WHERE Tweb_Sale_Record_ID = :sid');
                 $stmt->bindparam(':sid', $sid);
