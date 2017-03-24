@@ -27,12 +27,12 @@
 	$host_uri = $_SERVER['HTTP_HOST'];
 	$self = explode('/', dirname($_SERVER['PHP_SELF']));
 	$folder_eie = $self[0];
-	$folder_link = sprintf('http://%s/', $host_uri, $folder_eie);
+	$folder_link = sprintf('https://%s/', $host_uri, $folder_eie);
 	//print($folder_link);
 	printf('<base href="%s" target="_self">', $folder_link);
 ?>
 	<link href="css/bootstrap.css" rel="stylesheet">
-	<script src="http://code.jquery.com/jquery-latest.js"></script>
+	<script src="js/jquery-3.1.1.min.js"></script>
 	<script src="js/bootstrap.min.js"></script>
 	<script src="js/bootstrap-slider.min.js"></script>
 	<link href="css/bootstrap-slider.css" rel="stylesheet">

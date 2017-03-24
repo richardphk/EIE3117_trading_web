@@ -1,7 +1,7 @@
 <?php
 	include_once('page_gen.php');
 	
-	page_header('home');
+	page_header('Home');
 ?>
 		<style>
 		#main{
