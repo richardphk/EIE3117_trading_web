@@ -5,7 +5,7 @@
 	$cid = $_POST{'cid'};
 	$value = $_POST['Credit'];
 	function addValue($value){
-		$db_conn = db_connect('root','');
+		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare("INSERT INTO `trading_web`.`Tweb_User_Credit`(`Tweb_User_Credit_id`, `Tweb_User_ID`, `Tweb_User_Credit_Cash`) 
 										VALUES (:cid, :id, :val);");
 		$result->bindValue(':val', $value);

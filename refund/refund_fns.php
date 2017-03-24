@@ -8,7 +8,7 @@
             $rid = gen_id('Tweb_Refund');
             $approve = 0;
             
-            $db_conn = db_connect('root', '');
+            $db_conn = db_connect('root','root');
                 
             $stmt = $db_conn->prepare('INSERT INTO Tweb_Refund (Tweb_Refund_ID, Tweb_Refund_Sale_Record_ID, Tweb_Refund_Payment_ID, Tweb_Refund_Order_ID, Tweb_Refund_Approve) VALUES (:rid, :sid, :pid, :oid, :approve)');
             $stmt->bindparam(':rid', $rid);
@@ -24,7 +24,7 @@
     
     function change_refund_status($rid, $approve) {
         try {
-            $db_conn = db_connect('root', '');
+            $db_conn = db_connect('root','root');
             
             $stmt = $db_conn->prepare('UPDATE Tweb_Refund SET Tweb_Refund_Approve = "' . $approve . '" WHERE Tweb_Refund_ID = "' . $rid . '";');
             $stmt->bindparam(':rid', $rid);
@@ -40,7 +40,7 @@
         try {
             $price = $quantity * get_result($pid, 'Price');
             
-            $db_conn = db_connect('root', '');
+            $db_conn = db_connect('root','root');
             $stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid, 'Tweb_User_Credit_Cash')-$price) .' WHERE Tweb_User_ID = :uid');
             $stmt->bindparam(':uid', $uid);
             $stmt->execute();

@@ -10,7 +10,7 @@
 	
 	$id = $_SESSION['login_user_id'];
 	//echo $id;
-	$db_conn = db_connect('root','');
+	$db_conn = db_connect('root','root');
 	$result = $db_conn->prepare('SELECT u.Tweb_User_Name, u.Tweb_User_Email, c.Tweb_User_Credit_Cash FROM tweb_user as u, tweb_user_credit as c 
 									WHERE u.Tweb_User_ID = c.Tweb_User_ID and u.Tweb_User_ID = :id;');
 	$result->bindValue(':id', $id);

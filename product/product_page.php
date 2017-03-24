@@ -5,17 +5,14 @@
 	page_header("product");
 
 	
-	
 ?>
 
 <script>
 	
-	
   $( function() {
 	  var price = new Slider("#slider", {
 		  range: true,
-		  
-		  
+		
 		});
 	var check_price_setted = "<?php if(!empty($_GET['price'])){echo $_GET['price'];}else echo''; ?>";
 	//document.write(check_price_setted);
@@ -52,12 +49,8 @@
 
 			var new_val = php.split(",");
 			
-			
 		})
 		
-		
-		
-	
 	}
   );
 </script>
@@ -80,7 +73,7 @@
 				<label>Keyword:</label>
 				<div class="input-group" style="">
 				<input type="text" class="form-control check" name="name" placeholder="Keyword..." required>
-				<span class="input-group-btn">	
+				<span class="input-group-btn">
 						  <button type="submit" class="btn btn-default"  style="height:34px;" action="this.form.submit();">
 							<span class="glyphicon glyphicon-search"></span>
 						  </button>
@@ -96,23 +89,15 @@
 				</select>
 				
 			</form>
-				
-				
+
 				
 		</div>
 			 
-			
-			
-		
-		
-	 
-		
 		<div class="col-md-10" style="padding:5px;">
 			<main>
-				<?php 
+				<?php
 							//print_r($_GET);
-							
-							
+
 							//var_dump($_GET);
 							/*if(empty($_GET['price'])){
 								echo"in";
@@ -123,7 +108,7 @@
 							if($_SERVER['REQUEST_METHOD'] == 'GET'){
 								$value = $_GET;
 								get_result($value,"all");
-								
+
 								//var_dump(!empty($_GET['sort']));
 								if(!empty($_GET['sort'])){
 
@@ -134,7 +119,6 @@
 								}
 								
 								set_checked_butt($value['type']);
-								
 								
 							}
 							/*if(!empty($_GET['price'])){
@@ -161,7 +145,7 @@
 								$value = $_GET['type'];
 								get_result($value,'type');
 								set_checked_butt($value);
-							}	
+							}
 							elseif(!empty($_GET['search'])){
 								$value =$_GET['search'];
 								get_result($value,'keyword');
@@ -175,7 +159,7 @@
 								foreach($value as $id){
 									$type_id = str_replace(' ','',$id);
 									//echo'<script> $("#Smart Phone").prop("checked", true);</script>';
-									echo'<script>						
+									echo'<script>
 											$("#'.$type_id.'").prop("checked", true);
 
 										</script>';
@@ -183,21 +167,20 @@
 							}
 							function set_selected_sort($value){
 									//print($value);
-									echo'<script>		
+									echo'<script>
 												$("#blank").attr("selected", false);
 												$("#'.$value .'").attr("selected", true);
 
 											</script>';
 							}
 							
-						
+
 				?>
-			</main>  
+			</main>
 		</div>
 	</div>
-		
+
 <?php
 	page_footer();
-
 
 ?>

@@ -58,7 +58,7 @@
 	}
 	
 	function get_result($id) {
-		$db_conn = db_connect('root','');
+		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_Creator_ID = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -66,7 +66,7 @@
 	}
 	
 	function get_sales($id) {
-		$db_conn = db_connect('root','');
+		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Order, Tweb_Sale_Record WHERE Tweb_Order.Tweb_Order_Sale_Record_ID = Tweb_Sale_Record.Tweb_Sale_Record_ID AND Tweb_Order.Tweb_Order_Product_ID = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -74,7 +74,7 @@
 	}
         
         function get_refund_status($oid, $uid, $cid, $pid, $quantity) {
-            $db_conn = db_connect('root','');
+            $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_Refund WHERE Tweb_Refund_Order_ID = "' . $oid . '";');
             $result->execute();
             $rec = $result->fetchAll(PDO::FETCH_ASSOC);

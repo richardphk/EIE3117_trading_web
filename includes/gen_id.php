@@ -6,7 +6,7 @@
 		require_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
 		
 		// get db
-		$db = db_connect('root', '');
+		$db = db_connect('root','root');
 		
 		// matching
 		switch ($args){

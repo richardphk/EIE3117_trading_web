@@ -3,8 +3,8 @@
 		require_once($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/user/salt.php');
-		start_session();
 
+		start_session();
 
 		if(isset($_COOKIE['user']) && $_COOKIE['user'] != ''){
 			list($hash, $login_user, $login_user_id) = explode('-', $_COOKIE['user']);
@@ -157,7 +157,7 @@
 										echo '<li><a href="user/inventory.php" class="1">My products</a></li>';
 										echo '<li><a href="user/record.php" class="2">Purchase History</a></li>';
 										echo '<li><a href="user/reset_pw_page.php" class="3">Reset Password</a></li>';
-										echo '<li><a href="logout.php" class="4">Logout</a></li>';
+										echo '<li><a href="session/logout.php" class="4">Logout</a></li>';
 										echo '<li><a href="user/user_info_page.php" class="4">User Information</a></li>';
 									echo '</ul>';
 								echo '</li>';
@@ -177,7 +177,7 @@
 	}
 		function remain_credit($id) {
             include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
-            $db_conn = db_connect('root','');
+            $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT Tweb_User_Credit_Cash FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '"');
 
             $result->execute();

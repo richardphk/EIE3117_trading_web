@@ -14,7 +14,7 @@
 	//	response_message2rediect("You are already login", "../home.php");
 	//}
 
-	$db = db_connect('root', '');
+	$db = db_connect('root','root');
 
 	if(check_request_method() == 'POST') {
 		if (check_variable($_POST['New_Password']) && check_variable($_POST['Retype_Password'])){

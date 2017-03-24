@@ -18,7 +18,7 @@
 		response_message2rediect("You are already login", "../home.php");
 	}
 	
-	$db = db_connect('root', '');
+	$db = db_connect('root','root');
 	
 	/* main */
 	

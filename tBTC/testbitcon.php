@@ -1,6 +1,6 @@
 <?php
 
-	require($_SERVER['DOCUMENT_ROOT'].'//vendor/autoload.php');
+	require($_SERVER['DOCUMENT_ROOT'].'/vendor/autoload.php');
 	use Blocktrail\SDK\BlocktrailSDK;
 	$client = new BlocktrailSDK("32b74b23f51fb1726e3389ed3acab9c434965880", "5a5cd3aacdb746487d98064ba5d82b01abd8cd7e", "BTC", true/* testnet */);
 	$address = $client->address("2N1MrFG5uzcTe1sxBDmUhPtJRb93HZDWPy1");

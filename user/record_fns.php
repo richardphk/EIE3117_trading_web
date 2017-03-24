@@ -76,7 +76,7 @@
 	
 	
 	function get_product($id, $type) {
-		$db_conn = db_connect('root','');
+		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_id = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -87,7 +87,7 @@
 	}
 	
 	function get_details($id){
-		$db_conn = db_connect('root','');
+		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Order WHERE Tweb_Order_Sale_Record_ID = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -95,7 +95,7 @@
 	}
 	
 	function get_record($user_id, $field1, $field2) {
-		$db_conn = db_connect('root','');
+		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT Tweb_Sale_Record_' . $field1 . ', Tweb_Sale_Record_' . $field2 . ' FROM Tweb_Sale_Record WHERE Tweb_Sale_Record_Customer_ID = "' . $user_id . '";');
 		
 		$result->execute();
@@ -104,7 +104,7 @@
 	}
         
         function get_payment_id($sid) {
-            $db_conn = db_connect('root','');
+            $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_Payment WHERE Tweb_Payment_Sale_Record_ID = "' . $sid . '";');
 		
             $result->execute();
@@ -115,7 +115,7 @@
         }
         
         function get_refund_status($oid, $sid) {
-            $db_conn = db_connect('root','');
+            $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_Refund WHERE Tweb_Refund_Order_ID = "' . $oid . '";');
             $result->execute();
             $rec = $result->fetchAll(PDO::FETCH_ASSOC);

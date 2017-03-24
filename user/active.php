@@ -4,7 +4,7 @@
 	require($_SERVER['DOCUMENT_ROOT'].'/session/redirect_page.php');
 	
 	$now_time = time();
-	$db = db_connect('root', '');
+	$db = db_connect('root','root');
 	
 	if(check_request_method() == 'GET' && check_variable($_GET['verify'])){
 		$verify = stripslashes(trim($_GET['verify']));

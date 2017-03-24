@@ -3,7 +3,7 @@
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
         
 	function get_result($id, $type) {
-		$db_conn = db_connect('root','');
+		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_ID = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -13,7 +13,7 @@
 	}
 	
 	function get_user_info($id, $attribute) { 
-		$db_conn = db_connect('root','');
+		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_User WHERE Tweb_User_ID = "' . $id . '";');
 		$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -46,7 +46,7 @@
 	}
 	
 	function add_sale_record($purchase_id, $user_id, $purchase_date) {
-		$db_conn = db_connect('root', '');
+		$db_conn = db_connect('root','root');
 		$stmt = $db_conn->prepare('INSERT INTO Tweb_Sale_Record (Tweb_Sale_Record_ID, Tweb_Sale_Record_Customer_ID, Tweb_Sale_Record_Order_Date) VALUES (:purchase_id, :user_id, :purchase_date)');
 		$stmt->bindparam(':purchase_id', $purchase_id);
 		$stmt->bindparam(':user_id', $user_id);
@@ -57,7 +57,7 @@
 	}
 
 	function add_order($order_id, $product_id, $quantity, $sales_id) {
-		$db_conn = db_connect('root', '');
+		$db_conn = db_connect('root','root');
 		$stmt = $db_conn->prepare('INSERT INTO Tweb_Order (Tweb_Order_ID, Tweb_Order_Product_ID, Tweb_Order_Quantity, Tweb_Order_Sale_Record_ID) VALUES (:order_id, :product_id, :quantity, :sales_id)');
 		$stmt->bindparam(':order_id', $order_id);
 		$stmt->bindparam(':product_id', $product_id);
@@ -75,7 +75,7 @@
 		$sale = get_result($id, 'Sale');
 		$sale = $sale + $quantity;
 
-		$db_conn = db_connect('root', '');
+		$db_conn = db_connect('root','root');
 		$stmt = $db_conn->prepare('UPDATE Tweb_Product SET Tweb_Product_Inventory = :inventory, Tweb_Product_Sale = :sale WHERE Tweb_Product_ID = :id');
 		$stmt->bindparam(':inventory', $inventory);
 		$stmt->bindparam(':sale', $sale);
@@ -140,7 +140,7 @@
         
         
         function get_user_credit($id, $field) {
-            $db_conn = db_connect('root','');
+            $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '";');
             $result->execute();
             $rec = $result->fetchAll(PDO::FETCH_ASSOC);
@@ -152,7 +152,7 @@
         function transaction($sid, $uid, $price) {
             try {
                 
-		$db_conn = db_connect('root', '');
+		$db_conn = db_connect('root','root');
 		$stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid, 'Tweb_User_Credit_Cash')-$price) .' WHERE Tweb_User_ID = :uid');
 		$stmt->bindparam(':uid', $uid);
 		$stmt->execute();
@@ -172,7 +172,7 @@
                 $refund = 0;
                 $upid = get_user_credit($uid, 'Tweb_User_Credit_id');
                 
-                $db_conn = db_connect('root', '');
+                $db_conn = db_connect('root','root');
                 
                 $stmt = $db_conn->prepare('INSERT INTO Tweb_Payment (Tweb_Payment_ID, Tweb_Payment_Sale_Record_ID, Tweb_Payment_Payment_Amount, Tweb_Payment_Payment_Date, Tweb_Payment_Refund, Tweb_Payment_Buyer_Credit_ID) VALUES (:pid, :sid, :amount, :date, :refund, :upid)');
                 $stmt->bindparam(':pid', $pid);

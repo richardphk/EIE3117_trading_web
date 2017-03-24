@@ -16,7 +16,7 @@
 		response_message2rediect("You have not login", "./login.php");
 	}
 	
-	$db = db_connect('root', '');
+	$db = db_connect('root','root');
 	
 	/* main */
 	if($_SERVER["REQUEST_METHOD"] == "POST") {
