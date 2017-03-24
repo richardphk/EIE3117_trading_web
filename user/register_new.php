@@ -120,7 +120,7 @@
 				
 				$token_exptime = $token[1];
 				$token = $token[0];
-				
+
 				$sql = "INSERT INTO `trading_web`.`Tweb_User` 
 						(`Tweb_User_ID`, `Tweb_User_Name`, `Tweb_User_Password`, `Tweb_User_Birthday`, `Tweb_User_Email`, `Tweb_User_Phone`, `Tweb_User_Privilege`, `Tweb_User_Nickname`, `Tweb_User_Activated`, `Tweb_User_Activation_token`, `Tweb_User_Activation_token_exptime`) 
 						VALUES 

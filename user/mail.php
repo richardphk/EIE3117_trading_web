@@ -14,7 +14,7 @@
 		$message .= '<h4>Thank you for your registration!</h4><br/>';
 		$message .= '<h6>Please click the below link to active the account.</h6><br/>';
 		$message .= '<h7>The code will not be vaild after 2 hours.</h7><br/>';
-		$message .= "<a href='http://".$host_uri."/".$folder_eie."/user/active.php?verify=".$token."' target=
+		$message .= "<a href='http://".$host_uri."/".$folder_eie."/active.php?verify=".$token."' target=
 						'_blank'>Click me</a><br/>";
 
 		$message_footer = '<br/> <div> Best wish, </div> <br/> <div> e-trading-web support </div> <br/>';

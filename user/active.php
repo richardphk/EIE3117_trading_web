@@ -34,7 +34,7 @@
 				die();
 			} else {
 				try{
-					$update_sql = "Update Tweb_User set Tweb_User_Activated = '1', Tweb_User_Activation_token_exptime = 'NULL'
+					$update_sql = "Update Tweb_User set Tweb_User_Activated = '1', Tweb_User_Activation_token_exptime = NULL
 									where Tweb_User_ID = '".$user_id."';";
 					//print($update_sql);
 					$result = $db->prepare($update_sql);
@@ -46,7 +46,7 @@
 				} catch(PDOException $e){
 					$m = $e->getMessage();
 					echo $m;
-					response_message2rediect("Active fail", "../home.php");
+					#response_message2rediect("Active fail", "../home.php");
 					die();
 				}
 			}

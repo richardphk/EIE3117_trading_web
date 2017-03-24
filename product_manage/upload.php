@@ -1,5 +1,4 @@
 <?php
-	
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/page_gen.php');
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/includes/gen_id.php');
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/includes/get_today.php');
@@ -50,20 +49,43 @@
 			
 
 			$upfile = 'product_image/' . $product_creator . '_' . $product_id . '_' . $_FILES['product_image']['name'];
-			move_uploaded_file($_FILES['product_image']["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . '//' . $upfile);
-			
+			print $_SERVER['DOCUMENT_ROOT'] . '/' . $upfile. '<br/>';
+			print $_FILES['product_image']["tmp_name"].'<br/>';
+
+			if(is_dir($_SERVER['DOCUMENT_ROOT'] . '/product_image/') ){
+				print 'yes'.'<br/>';
+			} else{
+				print 'no'.'<br/>';
+
+			}
+
+			if(is_writable($_SERVER['DOCUMENT_ROOT'] . '/product_image/') ){
+				print 'yes'.'<br/>';
+			} else{
+				print 'no'.'<br/>';
+
+			}
+
+			move_uploaded_file($_FILES['product_image']["tmp_name"], $_SERVER['DOCUMENT_ROOT'] . '/' . $upfile);
+
+
 			if (is_uploaded_file($_FILES['product_image']['tmp_name'])) {
-				echo 'Problem: Could not move file to destination directory'; 
+				echo 'Problem: Could not move file to destination directory';
 				exit;
 			}
+			
+
 		} else {
 			$upfile = 'product_image/icon.png';
 		}
 		
-		
 		?>
 			<div class="jumbotron">
-				<h1><?php echo insert_goods($product_id, $product_name, $product_price, $product_quantity, $upfile, $product_type, $date, $sale, $product_creator, $product_desc); ?></h1>
+				<h1>
+					<?php
+						echo insert_goods($product_id, $product_name, $product_price, $product_quantity, $upfile, $product_type, $date, $sale, $product_creator, $product_desc);
+					?>
+				</h1>
 			</div>
 		<?php
 			
