@@ -16,7 +16,7 @@
                     $purchase_id = gen_id('Tweb_Sale_Record');
                     $purchase_date = get_today();
 
-                    add_sale_record($purchase_id, $_SESSION['login_user_id'], $purchase_date);
+                    echo add_sale_record($purchase_id, $_SESSION['login_user_id'], $purchase_date);
 
                     order_table_header();
                     $amount = 0;
@@ -37,9 +37,6 @@
                             
                             transaction($seller_id, $_SESSION['login_user_id'], $_POST['product_price'][$i] * $_POST['product_quantity'][$i]);
                     }
-                    
-                    
-                    add_amount($purchase_id, $amount);
                     order_table_footer($amount);
                     $payment_id = gen_id('Tweb_Payment');
                     add_payment_record($payment_id, $purchase_id, $amount, $purchase_date, $_SESSION['login_user_id']);

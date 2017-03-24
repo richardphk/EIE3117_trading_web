@@ -36,7 +36,6 @@ CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Product` (
 CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Sale_Record` (
   `Tweb_Sale_Record_ID` VARCHAR(6) NOT NULL,
   `Tweb_Sale_Record_Customer_ID` VARCHAR(6) NULL,
-  `Tweb_Sale_Record_Amount` INT NULL,
   `Tweb_Sale_Record_Order_Date` DATE NULL,
   `Tweb_Sale_Record_Ship_Address` VARCHAR(50) NULL,
   `Tweb_Sale_Record_Ship_Date` DATE NULL,
@@ -54,7 +53,6 @@ CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Order` (
   `Tweb_Order_ID` VARCHAR(6) NOT NULL,
   `Tweb_Order_Product_ID` VARCHAR(6) NULL,
   `Tweb_Order_Quantity` INT NULL,
-  `Tweb_Order_Price` INT NULL,
   `Tweb_Order_Discount` INT NULL,
   `Tweb_Order_Sale_Record_ID` VARCHAR(6) NULL,
   PRIMARY KEY (`Tweb_Order_ID`),
