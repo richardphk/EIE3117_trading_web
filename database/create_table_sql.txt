@@ -76,7 +76,6 @@ CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_User_Credit` (
   `Tweb_User_ID` VARCHAR(6) NULL,
   `Tweb_User_Credit_Cash` DOUBLE NULL,
   `Tweb_User_Credi_Bitcon_Pin` VARCHAR(255) NULL,
-  `Tweb_User_Credit_Bitcon_Cash` DOUBLE NULL,
   PRIMARY KEY (`Tweb_User_Credit_id`),
   INDEX `Tweb_User_Credit_User_ID_fk_idx` (`Tweb_User_ID` ASC),
   CONSTRAINT `Tweb_User_Credit_User_ID_fk`
@@ -112,8 +111,8 @@ CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Refund` (
   `Tweb_Refund_Sale_Record_ID` VARCHAR(6) NULL,
   `Tweb_Refund_Payment_ID` VARCHAR(6) NULL,
   `Tweb_Refund_Order_ID` VARCHAR(6) NULL,
-  `Tweb_Refund_Payment` DOUBLE NULL,
   `Tweb_Refund_Approve` TINYINT(1) NULL,
+  `Tweb_Refund_Amount` DOUBLE NULL,
   PRIMARY KEY (`Tweb_Refund_ID`),
   INDEX `Tweb_Refund_Sale_fk_idx` (`Tweb_Refund_Sale_Record_ID` ASC),
   INDEX `Tweb_Refund_Payment_fk_idx` (`Tweb_Refund_Payment_ID` ASC),
