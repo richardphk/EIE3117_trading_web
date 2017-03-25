@@ -43,7 +43,7 @@
 		$message .= '<h4>Here is the reset password link!</h4><br/>';
 		$message .= '<h6>The code will not be vaild after 2 hours.</h6><br/>';
 
-		$url = "<a href='http://".$host_uri."/".$folder_eie."/user/reset_forget_pw.php?email=".$email_address."&verify=".$token."' target='_blank'>Click me</a><br/>";
+		$url = "<a href='http://".$host_uri."/".$folder_eie."/reset_forget_pw.php?email=".$email_address."&verify=".$token."' target='_blank'>Click me</a><br/>";
 
 		$message .= $url;
 
@@ -56,5 +56,5 @@
 			throw new Exception($check);
 		}
 	}
-	
+
 ?>

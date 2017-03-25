@@ -100,7 +100,7 @@
 						$_SESSION['login_user'] = $rows[1];
 						$_SESSION['login_user_id'] = $rows[0];
 						$_SESSION['login_user_privilege'] = $rows[6];
-						print($_SESSION['login_user']);
+						#print($_SESSION['login_user']);
 						echo "<h4>Token is vaild.Please reset password.<h4><br/>";
 
 		echo '<link rel="stylesheet" text="text/css" href="./form.css" >';

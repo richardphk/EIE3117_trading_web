@@ -3,17 +3,16 @@
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
 	
 	function product_header() {
-		?>
-			<div class="row">
-		<?php
+		echo '<div class="row">';
 	}
 	
-        function product_refund($uid) {
-            $result = check_refund($uid);
-            if ($result) {
-                echo '';
-            }
+    function product_refund($uid) {
+        $result = check_refund($uid);
+        if ($result) {
+            echo '';
         }
+    }
+
 	function product_body($id) {
 		$products = get_result($id);
 		$button = 0;
@@ -38,8 +37,8 @@
 											<th>Status</th>
 										</thead>
 										<tbody>
-											<?php 
-												$sales = get_sales($product['Tweb_Product_ID']); 
+											<?php
+												$sales = get_sales($product['Tweb_Product_ID']);
 												foreach ($sales as $sale) {
 											?>
 											<tr>
@@ -77,7 +76,7 @@
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 		return $rec;
 	}
-        
+
         function get_refund_status($oid, $uid, $cid, $pid, $quantity) {
             $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_Refund WHERE Tweb_Refund_Order_ID = "' . $oid . '";');
@@ -118,7 +117,7 @@
                                 </div>
                             </div>
                         </div>
-                        
+
                         <button class="btn btn-danger" data-toggle="modal" data-target="#<?php echo $rid . '_reject'; ?>">Reject</button>
                         <div class="modal fade" id="<?php echo $rid . '_reject'; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -140,7 +139,7 @@
                                 </div>
                             </div>
                         </div>
-                                
+
                         <?php
                         break;
                     case '1':
@@ -154,26 +153,22 @@
                 }
             } else {
                 return '<button type="button" class="btn btn-success">Sold</button>';
-                
             }
         }
-        
-        function check_refund($uid) {
 
+        function check_refund($uid) {
             $db_conn = db_connect('root','root');
-            $result = $db_conn->prepare('SELECT * FROM tweb_refund WHERE tweb_refund_order_id IN 
-                (SELECT tweb_order_id FROM tweb_order WHERE tweb_order_product_id IN 
-                    (SELECT tweb_product_id FROM tweb_product WHERE tweb_product_creator_id = "' . $uid . '")) 
-                        AND tweb_refund_approve = "0";');
+            $check_refund_sql = 'SELECT * FROM Tweb_Refund WHERE Tweb_Refund_Order_ID IN
+                (SELECT Tweb_Order_ID FROM Tweb_Order WHERE Tweb_Order_Product_ID IN
+                    (SELECT Tweb_Product_ID FROM Tweb_Product WHERE Tweb_Product_Creator_ID = "' . $uid . '"))
+                        AND Tweb_Refund_Approve = "0";';
+            $result = $db_conn->prepare($check_refund_sql);
             $result->execute();
             $rec = $result->fetchAll(PDO::FETCH_ASSOC);
             return $rec;
-            
         }
-	
+
 	function product_footer() {
-		?>
-			</div>
-		<?php
+		echo '</div>';
 	}
 ?>

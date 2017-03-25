@@ -39,7 +39,6 @@
 							<tbody>
 								
 									<?php 
-                                                                               
                                                                                 $details = get_details($rec['Tweb_Sale_Record_ID']);
 										$total_price = 0;
 										
@@ -50,7 +49,7 @@
 												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Name') . '<br />' . get_product($det['Tweb_Order_Product_ID'], 'Desc');?></td>
 												<td><?php echo get_product($det['Tweb_Order_Product_ID'], 'Type'); ?></td>
 												<td><?php echo $det['Tweb_Order_Quantity']; ?></td>
-                                                                                                <td><?php echo '$' . $det['Tweb_Order_Price']; ?></td>
+                                                                                                <td><?php echo '$' . $det['Tweb_Order_Price']; ?></Ftd>
                                                                                                 
                                                                                                 <td>
                                                                                                     <?php get_refund_status($det['Tweb_Order_ID'], $rec['Tweb_Sale_Record_ID']); ?>
@@ -134,12 +133,12 @@
             $result->execute();
             $rec = $result->fetchAll(PDO::FETCH_ASSOC);
             if ($rec) {
-                
+
                 foreach ($rec as $r) {
                     $rid = $r['Tweb_Refund_ID'];
                     $status = $r['Tweb_Refund_Approve'];
                 }
-                
+
                 switch($status) {
                     case '0':
                         echo '<a href="#" class="btn btn-warning disabled" role="button">Waiting for approval</a>';
