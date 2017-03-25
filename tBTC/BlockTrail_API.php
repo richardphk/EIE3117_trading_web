@@ -1,8 +1,8 @@
 <?php
-	require_once('vendor/autoload.php');
-	use \Blocktrail\SDK\BlocktrailSDK;
-	use \Blocktrail\SDK\Connection\Exceptions\InvalidCredentials;
-	
+	require('vendor/autoload.php');
+	use Blocktrail\SDK\BlocktrailSDK;
+	use Blocktrail\SDK\Connection\Exceptions\InvalidCredentials;
+
 	#var_dump($client);
 	/*
 	try {
