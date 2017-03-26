@@ -6,10 +6,10 @@
 	page_header('inventory');
 
 	if (check_login()) {
-		product_header();
-        product_refund($_SESSION['login_user_id']);
+                product_refund($_SESSION['login_user_id']);
 		product_body($_SESSION['login_user_id']);
-		product_footer();
+                product_refunded_list($_SESSION['login_user_id']);
+                //Further development
 	} else {
 		not_loggedin();
 	}
