@@ -54,7 +54,7 @@
 	}
   );
 </script>
-	<div class="row">
+	<div class="row" style="width:inherit;">
 		<div class="col-md-2" style="background-color:white;height:100%;padding-right: 0px;">
 			<form id="adv_search_form" name="search" class="form-control" action="" method="GET" style="height:100%;">
 				

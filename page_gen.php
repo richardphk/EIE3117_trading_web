@@ -3,7 +3,7 @@
 		require_once($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/user/salt.php');
-
+		//require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
 		start_session();
 
 		if(isset($_COOKIE['user']) && $_COOKIE['user'] != ''){
@@ -15,8 +15,10 @@
 			}
 			//print_r($_COOKIE);
 		}
-
+	//$testwallet = 2N1tUzMDqx9fjukxv7ShH73tLQpuiFSbLra
+	//wallet_balance()
 ?>
+
 
 <html>
 <head>
@@ -27,7 +29,7 @@
 	$host_uri = $_SERVER['HTTP_HOST'];
 	$self = explode('/', dirname($_SERVER['PHP_SELF']));
 	$folder_eie = $self[0];
-	$folder_link = sprintf('https://%s/', $host_uri, $folder_eie);
+	$folder_link = sprintf('http://%s/', $host_uri, $folder_eie);
 	//print($folder_link);
 	printf('<base href="%s" target="_self">', $folder_link);
 ?>
@@ -143,8 +145,8 @@
 							} else {
 								//echo '<li><a href="#">'.$_SESSION['login_user'].'</a>';
 								//echo $_SESSION['login_user'] . ' Remain Credit: ';// . remain_credit($_SESSION['login_user_id']);
-								echo '<li style="font-size:10px;"><a href="#">Credit:
-																			<br>Bitcon:</br</a></li>'; 
+								echo '<li style="font-size:10px;"><a href="/user/user_info_page">Credit:<span style="color:white;font-weight:bold; font-size:15px;">$'.remain_credit($_SESSION['login_user_id']).'</span>'.'
+																	<br>Bitcon:</br</a></li>'; 
 								//echo '<li><a href="#">Bitcon:</a></li>'; 
 
 								echo '<li class="dropdown">';

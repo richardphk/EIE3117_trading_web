@@ -11,13 +11,12 @@
 	$id = $_SESSION['login_user_id'];
 	//echo $id;
 	$db_conn = db_connect('root','root');
-	$result = $db_conn->prepare('SELECT c.Tweb_User_ID, u.Tweb_User_Name, u.Tweb_User_Email, c.Tweb_User_Credit_id, c.Tweb_User_Credit_Cash FROM tweb_user as u, tweb_user_credit as c 
+	$result = $db_conn->prepare('SELECT c.Tweb_User_ID, u.Tweb_User_Name, u.Tweb_User_Email, c.Tweb_User_Credit_Cash FROM tweb_user as u, tweb_user_credit as c 
 									WHERE u.Tweb_User_ID = c.Tweb_User_ID and u.Tweb_User_ID = :id;');
 	$result->bindValue(':id', $id);
 	$result->execute();
 	$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 	$uid = $rec[0]['Tweb_User_ID'];
-	$cid = $rec[0]['Tweb_User_Credit_id'];
 	#print($uid);
 	#print_r($rec);
 	

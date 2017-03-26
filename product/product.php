@@ -2,20 +2,21 @@
 	include_once('../config_db/config_db.php');
 
 	function product_frame_header(){
-		echo'<div class="row">';
+		echo'<div class="row" >';
 	}
 
 	function product_sale_form($img,$name,$des,$price,$PID){
-		
+		$price_bitcon = $price / 1000000;
 		echo'
-			  <div class="col-sm-6 col-md-4" style="padding-right:0px;">
+			  <div class="col-sm-5 col-md-4" style="padding-right:0px; margin-right:0px;">
 				<div class="thumbnail">
 				
-				  <img src="'. $img .'" alt="'.$name.'" style="width:200px;">
+				  <img src="'. $img .'" alt="'.$name.'" style="width:180px;">
 				  <div class="caption">
 					<h3>'. $name .'</h3>
 					<p>'. $des .'</p>
-					<p align="right">$'. $price .'</p>
+					<p align="right">Credit: <b style="color:#ff0808;">$'. $price .'</b></p>
+					<p align="right">Bitcon: <b style="color:#ff0808;">$'. $price_bitcon .'</b></p>
 					<form action= "order/cart_add.php" method="GET">
 					<p align="right"><button onClick="this.form.submit();" class="btn btn-primary" role="button">Buy</button>
 					<input type="hidden" name="product_id" value="'.$PID.'"></input>

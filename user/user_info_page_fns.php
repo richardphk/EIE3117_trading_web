@@ -1,6 +1,6 @@
 <?php
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
-	//require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
 	$uid = $_POST['uid'];
 	$cid = "222";
 	$value = $_POST['Credit'];
@@ -8,7 +8,7 @@
 	//print_r(wallet_balance($Bitconaddr));
 	
 	/******     this function still not in used         **************/
-	function addValue($value,$uid,$cid){
+	function addValue($value,$uid){
 		try{
 			$db_conn = db_connect('root','root');
 			$result = $db_conn->prepare("UPDATE tweb_user_credit
@@ -29,7 +29,7 @@
 			  <a href="#" class="close" data-dismiss="alert" aria-label="close">&times;</a>
 			  <strong>Success!</strong> Indicates a successful or positive action.
 				</div>';
-		*/
+		
 		
 	}
 
