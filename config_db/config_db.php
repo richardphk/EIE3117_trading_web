@@ -17,7 +17,7 @@
 			if(strpos($m, "Access denied for user") == true){
 				echo '<script type="text/javascript">';
 				echo 'alert("Log-in error:Wrong User or Password of DataBase!");';
-				echo 'window.location.href = "login.html"';
+				echo 'window.location.href = "../user/login.php"';
 				echo '</script>';
 				die();
 			}
