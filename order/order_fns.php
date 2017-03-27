@@ -90,40 +90,65 @@
 
 	}
 
-	function order_table_header() {
+	function order_table_header($sid) {
+            $result = get_sale_record($sid);
 		?>
 			<table class="table">
 			    <thead>
+                                <tr>
+                                    <th>Date: <?php echo $result['Tweb_Sale_Record_Order_Date']; ?></th>
+                                    <th />
+                                    <th />
+                                    <td>Receipt number: <?php echo $result['Tweb_Sale_Record_ID']; ?></th>
+                                </tr>
+                                      
 			    		<tr>
-			      		 	<th>#</th>
-			       			<th>Product Name</th>
+			      		 	<th>Quantity</th>
+			       			<th>Details</th>
 			        		<th>Price</th>
-			        		<th>Quantity</th>
+                                                <th>Amount</th>
 			      		</tr>
 			    </thead>
 				<tbody>
 		<?php
 	}
 
-	function order_table_body($item, $name, $price, $quantity) {
+	function order_table_body($sid) {
+            $result = get_order_result($sid);
+            $amount = 0;
+            
+            foreach ($result as $row) {
+                $amount += $row['Tweb_Order_Price'];
 		?>
-			<tr>
-				<td><?php echo $item + 1; ?></td>
-			    <td><?php echo $name; ?></td>
-			    <td>$<?php echo $price; ?></td>
-			    <td><?php echo $quantity; ?></td>
-			</tr>
+                    <tr>
+                        <td><?php echo $row['Tweb_Order_Quantity']; ?></td>
+                        <td><?php echo $row['Tweb_Product_Name']; ?></td>
+                        <td>$<?php echo $row['Tweb_Order_Price']/$row['Tweb_Order_Quantity']; ?></td>
+                        <td>$<?php echo $row['Tweb_Order_Price']; ?></td>
+                    </tr>
 		<?php
+            }
+            
+            ?>
+                    <tr>
+                        <td />
+                        <td />
+                        <td>
+                            <p align="right">Total</p>
+                        </td>
+                        <td>$<?php echo $amount; ?></td>
+                    </tr>
+                    
+            <?php
 	}
 
-	function order_table_footer($total) {
+	function order_table_footer() {
 		?>
-				<tr>
-					<td>Total Amount</td>
-					<td>$<?php echo $total ?></td>
-				</tr>
 				</tbody>
 			</table>
+                        <div class="jumbotron">
+                            <h4>Thank you for using our service. An email record has been sent to you.</h4>
+                        </div>
 		<?php
 	}
         
@@ -205,6 +230,35 @@
                 
             } catch (Exception $ex) {
                 echo $ex->getMessage();
+            }
+        }
+        
+        function get_order_result($sid) {
+            
+            $db_conn = db_connect('root','root');
+            
+            $result = $db_conn->prepare('SELECT Tweb_Order_Price, Tweb_Order_Quantity, 
+                                                Tweb_Product_Name
+                                            FROM Tweb_Order, Tweb_Product
+                                            WHERE Tweb_Order.Tweb_Order_Product_ID = Tweb_Product.Tweb_Product_ID
+                                            AND Tweb_Order_Sale_Record_ID = "' . $sid . '";');
+            
+            $result->execute();
+            $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+            return $rec;
+        }
+        
+        function get_sale_record($sid) {
+            $db_conn = db_connect('root','root');
+            
+            $result = $db_conn->prepare('SELECT * FROM Tweb_Sale_Record
+                                            WHERE Tweb_Sale_Record_ID = "' . $sid . '";');
+            
+            $result->execute();
+            $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+            
+            foreach ($rec as $r) {
+                return $r;
             }
         }
 ?>
