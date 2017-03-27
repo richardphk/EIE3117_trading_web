@@ -3,11 +3,11 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/session/redirect_page.php');
-	include($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/gen_id.php');
-	//external
-	include($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
 
+	#print $wallet;
 	page_header('User Info');
 
 	if(!(check_login())){

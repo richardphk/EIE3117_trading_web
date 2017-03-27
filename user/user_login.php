@@ -7,6 +7,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/user/verify.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/get_today.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/user/salt.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
 	
 	/* inital functions */
 	start_session();
@@ -72,7 +73,7 @@
 					$_SESSION['login_user_privilege'] = $login_user_privilege;
 					$_SESSION['login_user_pw'] = $login_user_pw;
 					//print($remember_me);
-					
+
 					if($remember_me == 'on'){
 						//print($remember_me.'<br/>');
 						$cookie_name = 'user';
@@ -81,14 +82,14 @@
 						$secret = hash('sha256', $salt.$login_user.$login_user_id.$salt.$login_user_id.$salt);
 						$cookie_name = 'login_cookie';
 						$expiry = time() + (86400 * 30);
-						
+
 						if(!(isset($_COOKIE['user']))){
 							setcookie('user', $secret.'-'.$login_user.'-'.$login_user_id , $expiry);
 						}
-						
+
 						//print_r($_COOKIE['user']);
 					}
-					
+
 					$db = null;
 					response_message2rediect("Welcome back!", "../home.php");
 					die();

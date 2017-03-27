@@ -3,7 +3,8 @@
 		require_once($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/user/salt.php');
-		require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
+		require_once($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
+
 		start_session();
 
 		if(isset($_COOKIE['user']) && $_COOKIE['user'] != ''){
@@ -13,8 +14,12 @@
 				$_SESSION['login_user_id'] = $login_user_id;
 				$_SESSION['login_user_privilege'] = '';
 			}
-			//print_r($_COOKIE);
 		}
+
+		if(isset($_SESSION['login_user_wallet_balance'])){
+			$login_user_wallet_balance = $_SESSION['login_user_wallet_balance'];
+		}
+
 	//$testwallet = 2N1tUzMDqx9fjukxv7ShH73tLQpuiFSbLra
 	//wallet_balance()
 ?>
@@ -153,7 +158,7 @@
 								//echo '<li><a href="#">'.$_SESSION['login_user'].'</a>';
 								//echo $_SESSION['login_user'] . ' Remain Credit: ';// . remain_credit($_SESSION['login_user_id']);
 								echo '<li style="font-size:10px;"><a href="/user/user_info_page.php">Credit:<span style="color:white;font-weight:bold; font-size:15px;">$'.remain_credit($_SESSION['login_user_id']).'</span>'.'
-																	<br>Bitcon:</br</a></li>';
+																	<br>Bitcon:'.$login_user_wallet_balance.' BTC </br</a></li>';
 								//echo '<li><a href="#">Bitcon:</a></li>';
 
 								echo '<li class="dropdown">';
