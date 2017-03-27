@@ -46,7 +46,7 @@
 		//printf("password:%s <br/>", $password);
 		
 		try{
-			$sql = "Select Tweb_User_ID, Tweb_User_Name, Tweb_User_Privilege, Tweb_User_Activated from Tweb_User where BINARY Tweb_User_Name = :username and Tweb_User_Password = '".$password."' LIMIT 1;";
+			$sql = "Select Tweb_User_ID, Tweb_User_Name, Tweb_User_Privilege, Tweb_User_Activated, Tweb_User_Password from Tweb_User where BINARY Tweb_User_Name = :username and Tweb_User_Password = '".$password."' LIMIT 1;";
 			#printf("sql: %s <br/>", $sql);
 			$result = $db->prepare($sql);
 			$result->bindValue(':username', $username, PDO::PARAM_STR);
@@ -60,6 +60,7 @@
 				$login_user = $rows[1];
 				$login_user_privilege = $rows[2];
 				$login_active = $rows[3];
+				$login_user_pw = $rows[4];
 			
 				if($login_active == 0){
 					$db = null;
@@ -69,7 +70,7 @@
 					$_SESSION['login_user'] = $login_user;
 					$_SESSION['login_user_id'] = $login_user_id;
 					$_SESSION['login_user_privilege'] = $login_user_privilege;
-					
+					$_SESSION['login_user_pw'] = $login_user_pw;
 					//print($remember_me);
 					
 					if($remember_me == 'on'){

@@ -18,19 +18,19 @@
 		}
 		return false;
 	}
-	
+
 	function check_variable($array){
 		if(!(empty($array)) && isset($array) && $array != ''){
 			return true;
 		}
 		return false;
 	}
-	
+
 	function check_post_from($url, $real_url){
 		if ($url == $real_url){
 			return true;
 		}
 		return false;
 	}
-	
+
 ?>

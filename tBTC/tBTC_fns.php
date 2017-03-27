@@ -29,7 +29,7 @@
 	}
 
 	function receive_tran($wallet){
-		//return receive address address
+		//return receive address
 		try {
     		$address = $wallet->getNewAddress();
 			return $address;
@@ -46,6 +46,8 @@
 		//return Confirmed Balance and Unconfirmed Balance
 		try {
     		list($confirmedBalance, $unconfirmedBalance) = $wallet->getBalance();
+    		$confirmedBalance = sprintf("%2.2f",$confirmedBalance/100000000);
+			$unconfirmedBalance = sprintf("%2.2f",$unconfirmedBalance/100000000);
 			return [$confirmedBalance, $unconfirmedBalance];
 		} catch (Exception $e) {
     		if ($e instanceof InvalidCredentials) {
@@ -87,7 +89,7 @@
 
 	#$w = create_wallet('ac111', 'pw111', $client);
 	#var_dump($w);
-	
+	/*
 	$wallet = init_wallet('ac111', 'pw111', $client);
 	#var_dump($wallet);
 
@@ -105,5 +107,5 @@
 	echo "history:";
 	print_r($his);
 	echo "<br/>";
-
+	*/
 ?>

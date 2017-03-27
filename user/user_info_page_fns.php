@@ -1,5 +1,5 @@
 <?php
-	include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
+	include_once($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
 	$uid = $_POST['uid'];
 	$cid = "222";
@@ -30,28 +30,9 @@
 			  <strong>Success!</strong> Indicates a successful or positive action.
 				</div>';
 		
-		
 	}
 
 
 	#addValue($value,$uid,$cid);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ?>
