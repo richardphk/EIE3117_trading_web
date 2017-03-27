@@ -29,7 +29,9 @@
 	$host_uri = $_SERVER['HTTP_HOST'];
 	$self = explode('/', dirname($_SERVER['PHP_SELF']));
 	$folder_eie = $self[0];
-	$folder_link = sprintf('http://%s/', $host_uri, $folder_eie);
+	
+	$protocol = ($_SERVER['HTTPS'] == 'on' ? 'https://%s/' : 'http://%s/');
+	$folder_link = sprintf($protocol, $host_uri, $folder_eie);
 	//print($folder_link);
 	printf('<base href="%s" target="_self">', $folder_link);
 ?>
