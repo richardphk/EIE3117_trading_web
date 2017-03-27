@@ -61,7 +61,8 @@
 			</td>
 			<td id="<?php echo $id; ?>_price" '>
 				<input type="hidden" name="product_price[]" value="<?php echo get_result($id, 'Price'); ?>">
-				$<?php echo get_result($id, 'Price'); ?>
+				<?php echo '<p>Credit: ' . '<b style="color:#ff0808">$' . get_result($id, 'Price') . '</b></p>'; ?>
+                                <?php echo '<p>Bitcoin: ' . '<b style="color:#ff0808">$' . get_result($id, 'Price')/1000000 . '</b></p>'; ?>
 					
 			</td>
 			<td>
@@ -79,7 +80,8 @@
 				</select>
 			</td>
 			<td>
-				<p id="<?php echo $id;?>_total" ">$0</p>
+                            <p>Credit: $<b id="<?php echo $id;?>_total_credit" style="color:#ff0808"></b></p>
+                            <p>Bitcoin: $<b id="<?php echo $id;?>_total_bitcoin" style="color:#ff0808"></b></p>
 			</td>	
 		</tr>
 		<script>calculator('<?php echo $id; ?>', <?php echo get_result($id, 'Price'); ?>);</script>
@@ -91,16 +93,29 @@
 	function cart_footer() {
 		?>
 					<tr>
+                                                <td />
+                                                <td />
+                                                <td />
 						<td>
-							Total Amount:
-						</td>
+                                                    Total Amount<br />
+                                                </td>
 						<td rowspan="2">
-							<p id="total_amount"><script>total_amount();</script></p>
+                                                    <p>Credit: $<b id="total_amount_credit" style="color:#ff0808"><script>total_amount();</script></b></p>
+                                                    <p>Bitcoin: $<b id="total_amount_bitcoin" style="color:#ff0808"><script>total_amount();</script></b></p>
 						</td>
-					</tr>
+                                        </tr>
+                                        <tr>
+                                            <td />
+                                            <td />
+                                            <td />
+                                            <td>
+                                                <input type="submit" class="btn btn-primary btn-lg" value="Purchase" />
+                                            </td>
+                                        </tr>
 					</tbody>
 				</table>
-				<input type="submit" class="btn btn-primary btn-lg" value="Purchase" />
+                                
+				
 			</form>
 		<?php
 	}

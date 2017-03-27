@@ -15,15 +15,18 @@
 				function calculator(id, price) {
 					
 					var id_quantity = id + '_quantity';
-					var id_total = id + '_total';
+					var id_total_credit = id + '_total_credit';
+                                        var id_total_bitcoin = id + '_total_bitcoin';
 
 					
 					var quantity = document.getElementById(id_quantity).value;
 					var total_price = price * quantity;
 
 					
-					document.getElementById(id_total).innerHTML = '$' + total_price;
+					document.getElementById(id_total_credit).innerHTML = total_price;
+                                        document.getElementById(id_total_bitcoin).innerHTML = (total_price/1000000);
 					total_amount();
+                                        total_amount();
 					
 					
 				}
@@ -43,7 +46,8 @@
 						var quantity = document.getElementById(id_quantity).selectedIndex + 1;
 						total_price = total_price + (quantity * item_price[i]);
 					}
-					document.getElementById('total_amount').innerHTML = '$' + total_price;
+					document.getElementById('total_amount_credit').innerHTML = total_price;
+                                        document.getElementById('total_amount_bitcoin').innerHTML = (total_price/1000000);
 				}
 			</script>
 		<?php
