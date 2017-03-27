@@ -20,10 +20,13 @@
 
                     order_table_header();
                     $amount = 0;
+                    
+                    
 
 
                     //Add order
                     for ($i=0; $i < count($_POST['product_id']); $i++) {
+                            
                             $order_id = gen_id('Tweb_Order');
 
                             add_order($order_id, $_POST['product_id'][$i], $_POST['product_quantity'][$i], $purchase_id);
@@ -53,6 +56,7 @@
 
                     <?php
             } else {
+                //Further development for bitcoin transaction
                 echo "You don't have enough credit";
             } 
 	} else {

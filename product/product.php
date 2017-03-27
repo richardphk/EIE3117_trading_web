@@ -17,12 +17,40 @@
 					<p>'. $des .'</p>
 					<p align="right">Credit: <b style="color:#ff0808;">$'. $price .'</b></p>
 					<p align="right">Bitcon: <b style="color:#ff0808;">$'. $price_bitcon .'</b></p>
-					<form action= "order/cart_add.php" method="GET">
-					<p align="right"><button onClick="this.form.submit();" class="btn btn-primary" role="button">Buy</button>
-					<input type="hidden" name="product_id" value="'.$PID.'"></input>
-					<button class="btn btn-default" role="button" onClick="this.form.submit();">add Cart<span class="glyphicon glyphicon-shopping-cart"></span></button>
-					</form>
+                                        
+
+                                        <p align="right">
+                                            <button class="btn btn-primary" data-toggle="modal" data-target="#' . $PID . '">Buy</button>
+                                                
+                                            <form action= "order/cart_add.php" method="GET">
+                                                <input type="hidden" name="product_id" value="'.$PID.'"></input>
+                                                <button class="btn btn-default" role="button" onClick="this.form.submit();">Add Cart<span class="glyphicon glyphicon-shopping-cart"></span></button>
+                                            </form>
+                                            
 					</p>
+                                        
+                                        <div class="modal fade" id="' . $PID . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                        <div class="modal-header">
+                                                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                                                            <h4 class="modal-title" id="myModalLabel">Warning</h4>
+                                                        </div>
+                                                        <div class="modal-body">Are you sure to buy a ' . $name . ' ?</div>
+                                                        <div class="modal-footer">
+                                                            <form action="order/order.php" method="post">
+                                                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <input type="hidden" name="product_id[]" value="' . $PID . '" />
+                                                                <input type="hidden" name="product_name[]" value="' . $name . '" />
+                                                                <input type="hidden" name="product_price[]" value="' . $price . '" />
+                                                                <input type="hidden" name="product_quantity[]" value="1" />
+                                                                <input type="submit" class="btn btn-primary" value="OK" />
+                                                            </form>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
 				  </div>
 				
 				</div>

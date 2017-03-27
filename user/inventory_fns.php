@@ -107,7 +107,7 @@
 		$div = 0;
 		foreach ($products as $product) {
 			?>
-				<div class="col-sm-6 col-md-3">
+				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
 						<img width="140" height="140" src="<?php echo $product['Tweb_Product_Image_Path']; ?>"></img>
 						<div class="caption">
