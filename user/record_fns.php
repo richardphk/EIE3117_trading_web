@@ -63,8 +63,15 @@
                                                                             <td />
                                                                             <td />
                                                                             <td />
-                                                                            <td>Total amount: </td>
-                                                                            <td>$<?php echo get_amount($rec['Tweb_Sale_Record_ID']); ?></td>
+                                                                            <td>
+                                                                            <p>Total amount: </p>
+                                                                            <p>Payment type: </p>
+                                                                            </td>
+                                                                            <td><p>$<?php echo get_sale($rec['Tweb_Sale_Record_ID'], 'Amount'); ?></p>
+                                                                            <p>
+                                                                            	<?php echo get_sale($rec['Tweb_Sale_Record_ID'], 'Payment_Type'); ?>
+                                                                            </p>
+                                                                            </td>
                                                                                 
                                                                         </tr>
 							</tbody>
@@ -89,13 +96,13 @@
             }
 	}
         
-        function get_amount($id) {
+        function get_sale($id, $field) {
             $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_Sale_Record WHERE Tweb_Sale_Record_ID = "' . $id . '";');
             $result->execute();
             $rec = $result->fetchAll(PDO::FETCH_ASSOC);
             foreach($rec as $r) {
-                return $r['Tweb_Sale_Record_Amount'];
+                return $r['Tweb_Sale_Record_' . $field];
             }
         }
 	

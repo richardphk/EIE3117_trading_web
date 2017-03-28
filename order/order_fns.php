@@ -1,6 +1,8 @@
 <?php
 
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/tBTC/BlockTrail_API.php');
+	include_once($_SERVER['DOCUMENT_ROOT'] . '/tBTC/tBTC_fns.php');
         
 	function get_result($id, $type) {
 		$db_conn = db_connect('root','root');
@@ -45,29 +47,27 @@
 		}
 	}
 	
-	function add_sale_record($purchase_id, $user_id, $purchase_date) {
+	function add_sale_record($purchase_id, $user_id, $purchase_date, $payment_type) {
 		$db_conn = db_connect('root','root');
-		$stmt = $db_conn->prepare('INSERT INTO Tweb_Sale_Record (Tweb_Sale_Record_ID, Tweb_Sale_Record_Customer_ID, Tweb_Sale_Record_Order_Date) VALUES (:purchase_id, :user_id, :purchase_date)');
+		$stmt = $db_conn->prepare('INSERT INTO Tweb_Sale_Record (Tweb_Sale_Record_ID, Tweb_Sale_Record_Customer_ID, Tweb_Sale_Record_Order_Date, Tweb_Sale_Record_Payment_Type) VALUES (:purchase_id, :user_id, :purchase_date, :payment_type)');
 		$stmt->bindparam(':purchase_id', $purchase_id);
 		$stmt->bindparam(':user_id', $user_id);
 		$stmt->bindparam(':purchase_date', $purchase_date);
+		$stmt->bindparam(':payment_type', $payment_type);
 		$stmt->execute();
-		//Statement for chick record echo 'Sale record of ' . $purchase_id . ' is updated <br />';
 	
 	}
 
-	function add_order($order_id, $product_id, $quantity, $sales_id) {
-		$db_conn = db_connect('root','root');
-		$stmt = $db_conn->prepare('INSERT INTO Tweb_Order (Tweb_Order_ID, Tweb_Order_Product_ID, Tweb_Order_Quantity, Tweb_Order_Sale_Record_ID) VALUES (:order_id, :product_id, :quantity, :sales_id)');
-                $price = $quantity * get_result($product_id, 'Price');
+	function add_order($order_id, $product_id, $quantity, $sales_id, $total_price, $payment_type) {
                 
 		$db_conn = db_connect('root', 'root');
-		$stmt = $db_conn->prepare('INSERT INTO Tweb_Order (Tweb_Order_ID, Tweb_Order_Product_ID, Tweb_Order_Quantity, Tweb_Order_Price, Tweb_Order_Sale_Record_ID) VALUES (:order_id, :product_id, :quantity, :price, :sales_id)');
+		$stmt = $db_conn->prepare('INSERT INTO Tweb_Order (Tweb_Order_ID, Tweb_Order_Product_ID, Tweb_Order_Quantity, Tweb_Order_Price, Tweb_Order_Sale_Record_ID, Tweb_Order_Payment_Type) VALUES (:order_id, :product_id, :quantity, :total_price, :sales_id, :payment_type)');
 		$stmt->bindparam(':order_id', $order_id);
 		$stmt->bindparam(':product_id', $product_id);
 		$stmt->bindparam(':quantity', $quantity);
-                $stmt->bindparam(':price', $price);
+        $stmt->bindparam(':total_price', $total_price);
 		$stmt->bindparam(':sales_id', $sales_id);
+		$stmt->bindparam(':payment_type', $payment_type);
 		$stmt->execute();
 
 		//Statement for chick order echo 'Order of ' . $product_id . ' with ' . $quantity . ' is added <br />';
@@ -90,14 +90,14 @@
 
 	}
 
-	function order_table_header($sid) {
+	function order_table_header($sid, $type) {
             $result = get_sale_record($sid);
 		?>
 			<table class="table">
 			    <thead>
                                 <tr>
                                     <th>Date: <?php echo $result['Tweb_Sale_Record_Order_Date']; ?></th>
-                                    <th />
+                                    <th>Payment type: <?php echo $type; ?></th>
                                     <th />
                                     <td>Receipt number: <?php echo $result['Tweb_Sale_Record_ID']; ?></th>
                                 </tr>
@@ -134,7 +134,7 @@
                         <td />
                         <td />
                         <td>
-                            <p align="right">Total</p>
+                            <p align="right">Total:</p>
                         </td>
                         <td>$<?php echo $amount; ?></td>
                     </tr>
@@ -179,7 +179,7 @@
             }
         }
         
-        function transaction($sid, $uid, $price) {
+        function transaction_credit($sid, $uid, $price) {
             try {
                 
 		$db_conn = db_connect('root','root');
@@ -197,20 +197,21 @@
             }
         }
         
-        function add_payment_record($pid, $sid, $amount, $date, $uid) {
+        function add_payment_record($pid, $sid, $amount, $date, $uid, $payment_type) {
             try {
                 $refund = 0;
                 $upid = get_user_credit($uid, 'Tweb_User_Credit_id');
                 
                 $db_conn = db_connect('root','root');
                 
-                $stmt = $db_conn->prepare('INSERT INTO Tweb_Payment (Tweb_Payment_ID, Tweb_Payment_Sale_Record_ID, Tweb_Payment_Payment_Amount, Tweb_Payment_Payment_Date, Tweb_Payment_Refund, Tweb_Payment_Buyer_Credit_ID) VALUES (:pid, :sid, :amount, :date, :refund, :upid)');
+                $stmt = $db_conn->prepare('INSERT INTO Tweb_Payment (Tweb_Payment_ID, Tweb_Payment_Sale_Record_ID, Tweb_Payment_Payment_Amount, Tweb_Payment_Payment_Date, Tweb_Payment_Refund, Tweb_Payment_Buyer_Credit_ID, Tweb_Payment_Payment_Type) VALUES (:pid, :sid, :amount, :date, :refund, :upid, :payment_type)');
                 $stmt->bindparam(':pid', $pid);
                 $stmt->bindparam(':sid', $sid);
                 $stmt->bindparam(':amount', $amount);
                 $stmt->bindparam(':date', $date);
                 $stmt->bindparam(':refund', $refund);
                 $stmt->bindparam(':upid', $upid);
+                $stmt->bindparam(':payment_type', $payment_type);
 		$stmt->execute();
                 
             } catch (Exception $ex) {
@@ -260,5 +261,35 @@
             foreach ($rec as $r) {
                 return $r;
             }
+        }
+
+        function check_bitcoin_amount($uid, $upw, $pid, $price, $qty) {
+
+        	global $client;
+
+        	$wallet = init_wallet($uid, $upw, $client);
+			$balance = wallet_balance($wallet);
+
+        	$total_price = 0;
+            $user_credit = get_user_credit($uid, 'Tweb_User_Credit_Cash');
+            
+            for ($i=0; $i < count($_POST['product_id']); $i++) {
+                $total_price += $price[$i] * $qty[$i];
+            }
+
+            
+
+            if ($balance[0] >= ($total_price/1000000))
+                return true;
+            else
+                return false;
+
+        }
+
+        function transaction_bitcoin($uid, $upw, $price, $pid) {
+        	global $client;
+        	$seller_address = get_user_credit(get_result($pid, 'Creator_ID'), 'Tweb_User_Bitcon_RevAddress');
+        	$wallet = init_wallet($uid, $upw, $client);
+        	send_tran($wallet, $seller_address, $price);
         }
 ?>

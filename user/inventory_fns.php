@@ -24,7 +24,7 @@
                                     <th>Request User</th>
                                     <th>Request Product</th>
                                     <th>Request Quantity</th>
-                                    <th></th>
+                                    <th>Payment</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -38,6 +38,8 @@
                                     <td><?php echo $record['Tweb_Product_Name'] . '<br /> <img src="' . $record['Tweb_Product_Image_Path'] . '" width="140" height ="140" /> <br />' . $record['Tweb_Product_Desc'] ; ?></td>
                                     <td><?php echo $record['Tweb_Order_Quantity']; ?></td>
                                     <td>
+                                        <p>Type: <?php echo $record['Tweb_Order_Payment_Type']; ?></p>
+                                        <p>Price: $<?php echo $record['Tweb_Order_Price']; ?></p>
                                         <button class="btn btn-success" data-toggle="modal" data-target="#<?php echo $record['Tweb_Refund_ID'] . '_approve'; ?>">Approve</button>
                                         <div class="modal fade" id="<?php echo $record['Tweb_Refund_ID'] . '_approve'; ?>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                             <div class="modal-dialog">
@@ -58,6 +60,7 @@
                                                             <input type="hidden" name="pid" value="<?php echo $record['Tweb_Product_ID']; ?>" />
                                                             <input type="hidden" name="oid" value="<?php echo $record['Tweb_Refund_Order_ID']; ?>" />
                                                             <input type="hidden" name="quantity" value="<?php echo $record['Tweb_Order_Quantity']; ?>" />
+                                                            <input type="hidden" name="payment_type" value="<?php echo $record['Tweb_Order_Payment_Type']; ?>" />
 
                                                             <input type="submit" class="btn btn-danger" value="Yes" />
                                                         </form>
@@ -209,7 +212,7 @@
             $check_refund_sql = 'SELECT Tweb_Refund_ID, Tweb_Refund_Sale_Record_ID, Tweb_Refund_Payment_ID, Tweb_Refund_Order_ID, Tweb_Refund_Approve, 
                     Tweb_User_ID, Tweb_User_Name,
                     Tweb_Product_ID, Tweb_Product_Name, Tweb_Product_Image_Path, Tweb_Product_Desc,
-                    Tweb_Order_Quantity, 
+                    Tweb_Order_Quantity, Tweb_Order_Price, Tweb_Order_Payment_Type,
                     Tweb_Sale_Record_Order_Date
              FROM Tweb_Refund, Tweb_User, Tweb_Product, Tweb_Order, Tweb_Sale_Record
              WHERE Tweb_Refund.Tweb_Refund_Sale_Record_ID = Tweb_Sale_Record.Tweb_Sale_Record_ID

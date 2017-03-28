@@ -2,6 +2,8 @@
     include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
     include_once($_SERVER['DOCUMENT_ROOT'] . '/includes/gen_id.php');
     include_once($_SERVER['DOCUMENT_ROOT'] . '/order/order_fns.php');
+    include_once($_SERVER['DOCUMENT_ROOT'] . '/tBTC/tBTC_fns.php');
+
     
     function add_refund($sid, $pid, $oid) {
         try {
@@ -61,15 +63,49 @@
             echo $ex->getMessage();
         }
     }
+
+    function refund_process_bitcoin($uid, $upw, $cid, $pid, $oid, $quantity){
+        try {
+            $price = get_price($oid);
+
+            $db_conn = db_connect('root','root');
+            $stmt = $db_conn->prepare('UPDATE Tweb_Product SET Tweb_Product_Inventory = ' . (get_result($pid, 'Inventory') + $quantity) .' WHERE Tweb_Product_ID = :pid');
+            $stmt->bindparam(':pid', $pid);
+            $stmt->execute();
+            
+            $stmt = $db_conn->prepare('UPDATE Tweb_Product SET Tweb_Product_Sale = ' . (get_result($pid, 'Sale') - $quantity) .' WHERE Tweb_Product_ID = :pid');
+            $stmt->bindparam(':pid', $pid);
+            $stmt->execute();
+
+            global $client;
+            $wallet = init_wallet($uid, $upw, $client);
+            send_tran($wallet, get_receiver_bitcoin($cid), $price);
+
+        } catch (Exception $ex) {
+            echo $ex->getMessage();
+        }
+
+    }
     
     function get_price($oid) {
         $db_conn = db_connect('root','root');
-	$result = $db_conn->prepare('SELECT * FROM Tweb_Order WHERE Tweb_Order_ID = "' . $oid . '";');
-		
-	$result->execute();
-	$rec = $result->fetchAll(PDO::FETCH_ASSOC);
+    	$result = $db_conn->prepare('SELECT * FROM Tweb_Order WHERE Tweb_Order_ID = "' . $oid . '";');
+    		
+    	$result->execute();
+    	$rec = $result->fetchAll(PDO::FETCH_ASSOC);
         foreach ($rec as $r) {
             return $r['Tweb_Order_Price'];
+        }
+    }
+
+    function get_receiver_bitcoin($cid) {
+        $db_conn = db_connect('root','root');
+        $result = $db_conn->prepare('SELECT * FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $cid . '";');
+            
+        $result->execute();
+        $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+        foreach ($rec as $r) {
+            return $r['Tweb_User_Bitcon_RevAddress'];
         }
     }
 
