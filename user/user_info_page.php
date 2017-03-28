@@ -4,7 +4,7 @@
 	require_once($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/session/redirect_page.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
-	require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
+	require_once($_SERVER['DOCUMENT_ROOT'].'/user/user_info_page_fns.php');
 
 	#print $wallet;
 	page_header('User Info');
@@ -34,10 +34,31 @@
 	$result_credit->bindValue(':id', $id);
 	$result_credit->execute();
 	$rec_credit =  $result_credit->fetchAll(PDO::FETCH_ASSOC);
-
+	if(!empty($rec_credit)){
+		$rec_ac_cash = $rec_credit[0]['Tweb_User_Credit_Cash'];
+		$receive_address = $rec_credit[0]['Tweb_User_Bitcon_RevAddress'];
+	}
 	#print($uid);
 	#print_r($rec_credit);
 	#print('hi'.check_variable($rec_credit).'hi');
+
+	if($_SERVER['REQUEST_METHOD'] == 'POST'){
+		if(isset($_POST['Credit']) && !empty($_POST['Credit'])){
+			addValue($_POST['Credit'],$uid);
+			unset($_POST['Credit']);
+		}else if(isset($_POST['createWallet'])){
+			create_wallet_account($uid, $upw, $client);
+
+		}else if(isset($_POST['Get_new_receive_address'])){
+			$receive_address = get_new_receive_address($uid, $upw, $client);
+
+		}else if(isset($_POST['bit2cash_bitcoin'])){
+			client_bitcoin_to_cash($uid, $upw, $client, $_POST['bit2cash_bitcoin'], $rec_ac_cash);
+
+		}else if(isset($_POST['cash2bit_cash'])){
+			client_cash_to_bitcoin($uid, $receive_address, $client, $_POST['cash2bit_cash'], $rec_ac_cash);
+		}
+	}
 
 ?>
 
@@ -55,56 +76,86 @@
 			<td><?php echo $rec[0]['Tweb_User_Email']?></td>
 		</tr>
 		<tr>
-			<td>Credit Account:</td>
-			<td>
-				<?php
-					 if(!empty($rec_credit)){
-						echo $rec_credit[0]['Tweb_User_Credit_Cash'];
+			<?php
+				if(!empty($rec_credit)){
+					echo "<td>Credit Account:</td>";
+					echo "<td>";
+						echo '$'.$rec_ac_cash;
 						echo '<form method="POST" name="addcredit" style="margin-bottom: 0px;" action="">';
 						echo '<div class="input-group" style="width:180px;">
-					  	<input type="text" name="Credit" class="form-control" placeholder="value" pattern="\d*" />';
+					  	<input type="text" name="Credit" class="form-control" placeholder="Add Cash" pattern="\d*" />';
 						echo '<span class="input-group-btn">
 							<button  class="btn btn-default" type="submit" >Enter</button>';
 						echo '</span>';
+						echo "</div>";
 						echo '</form>';
-					 }
-				?>
-
-				</div>
-			</td>
+					echo "</td>";
+				}
+			?>
 		</tr>
 
 		<tr>
-			<td>Bitcon: Account</td>
+			<td>Bitcon Account: </td>
 			<td>
 				<?php
-						if(empty($rec_credit)){
-							echo '<form name="BITCON_create" method="POST" action="/user/user_info_page_fns.php">';
-							echo '<button type="submit" name="createWallet" class="btn btn-primary">Create Wallet</button></form>';
-						} else{
-							$wallet = init_wallet($uid, $upw, $client);
-							$balance = wallet_balance($wallet);
-							#print_r($balance);
-							printf("%s: %f BTC <br/>", "Comfirmed Balance", $balance[0]);
-							printf("%s: %f BTC <br/>", "Uncomfirmed Balance", $balance[1]);
-								echo '</td>';
-							echo '</tr>';
-							echo '<form name="BITCON_get_new_address" method="POST" action="">';
-							echo '<td>Bitcon: New address</td>';
-							echo '<td>';
-								echo '<button type="submit" name="Get_new_receive_address" class="btn btn-primary">Get New Receive Address</button>';
-							echo "</form>";
+					if(empty($rec_credit)){
+						echo '<form name="BITCON_create" method="POST" action="">';
+						echo '<button type="submit" name="createWallet" class="btn btn-primary">Create Wallet</button></form>';
+					} else{
+						$wallet = init_wallet($uid, $upw, $client);
+						$balance = wallet_balance($wallet);
+						#print_r($balance);
+						printf("%s: %f BTC <br/>", "Comfirmed Balance", $balance[0]);
+						printf("%s: %f BTC <br/>", "Uncomfirmed Balance", $balance[1]);
+						echo '</td>';
+						echo '</tr>';
+						echo '<form name="BITCON_get_new_address" method="POST" action="">';
+						echo '<td>Bitcon Address: </td>';
+						echo '<td>';
+						echo 'Now receive address: '.$receive_address.'<br/>';
+						echo '<button type="submit" name="Get_new_receive_address" class="btn btn-primary">Get New Receive Address</button>';
+						echo "</form>";
 
-						}
+					}
 				?>
 			</td>
-
 		</tr>
+		<?php
+			if(!empty($rec_credit)){
+				echo "<tr>";
+					echo "<td>Bitcoin -> Cash</td>";
+					echo "<td>";
+						echo '<form method="POST" name="bit2cash" style="margin-bottom: 0px;" action="">';
+							echo '<div class="input-group" style="width:180px;">';
+						  	echo '<input type="number" name="bit2cash_bitcoin" class="form-control" placeholder="Bitcoin (BTC)" step="any" />';
+							echo '<span class="input-group-btn">';
+							echo '<button  class="btn btn-default" type="submit" >Enter</button>';
+							echo '</span>';
+							echo "</div>";
+						echo "</form>";
+					echo "</td>";
+				echo "</tr>";
+
+				echo "<tr>";
+					echo "<td>Cash -> Bitcoin</td>";
+					echo "<td>";
+						echo '<form method="POST" name="cash2bit" style="margin-bottom: 0px;" action="">';
+							echo '<div class="input-group" style="width:180px;">';
+						  	echo '<input type="text" name="cash2bit_cash" class="form-control" placeholder="Cash ($)" pattern="\d*" />';
+							echo '<span class="input-group-btn">';
+							echo '<button  class="btn btn-default" type="submit" >Enter</button>';
+							echo '</span>';
+							echo "</div>";
+						echo "</form>";
+					echo "</td>";
+				echo "</tr>";
+			}
+		?>
 		<tr>
-			<td>Bitcon: Account Transactions History</td>
-			<td>
 			<?php
 				if(isset($wallet)){
+					echo "<td>Bitcon: Account Transactions History</td>";
+					echo "<td>";
 					$history = list_tran_history($wallet);
 					if(!(empty($history))){
 						foreach ($history as $key => $row) {
@@ -122,7 +173,7 @@
 												} else if($col_name == 'time'){
 													print 'Time : '.$element.'<br/>';
 												} else if($col_name == 'wallet_value_change'){
-													$balance_record = sprintf("%2.2f",($element/100000000));
+													$balance_record = sprintf("%2.8f",($element/100000000));
 													print 'Wallet Value Change : '.$balance_record.' BTC <br/>';
 												}
 											}
@@ -136,52 +187,13 @@
 						print "No Record.<br/>";
 					}
 				}
+				echo "</td>";
 			?>
-			</td>
+
 		</tr>
 	</table>
 
 
 <?PHP
-
-	function addValue($value,$uid){
-
-			$db_conn = db_connect('root','root');
-			$result = $db_conn->prepare("UPDATE Tweb_User_Credit
-										SET Tweb_User_Credit_Cash = :val
-										WHERE Tweb_User_ID = :uid ;");
-			
-
-			$result->bindValue(':val', $value);
-			$result->bindValue(':uid', $uid);
-			$result->execute();
-
-			echo '<meta http-equiv="refresh" content="1"/>';
-
-			#header("Refresh:0; url=page2.php");
-			echo '<div class="alert alert-success alert-dismissable">
-			  <a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a>
-			  <strong>Success!</strong> credit changed.
-				</div>';
-	}
-
-	function get_new_receive_address($wallet){
-		$receive_address = receive_tran($wallet);
-		response_message2rediect('Receive address: '.$receive_address, './user/user_info_page.php');
-	}
-
-	#print($wallet);
-
-	if($_SERVER['REQUEST_METHOD'] == 'POST'){
-		if(isset($_POST['Credit']) && !empty($_POST['Credit'])){
-			addValue($_POST['Credit'],$uid);
-			unset($_POST['Credit']);
-
-		}
-		elseif(isset($wallet)){
-			get_new_receive_address($wallet);
-		}
-	}
-
 	page_footer();
 ?>

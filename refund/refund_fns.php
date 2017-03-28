@@ -44,8 +44,7 @@
             $stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid, 'Tweb_User_Credit_Cash')-$price) .' WHERE Tweb_User_ID = :uid');
             $stmt->bindparam(':uid', $uid);
             $stmt->execute();
-                
-                
+
             $stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($cid, 'Tweb_User_Credit_Cash')+$price) .' WHERE Tweb_User_ID = :cid');
             $stmt->bindparam(':cid', $cid);
             $stmt->execute();

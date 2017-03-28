@@ -48,7 +48,6 @@ CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Sale_Record` (
     REFERENCES `trading_web`.`Tweb_User` (`Tweb_User_ID`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION);
-
 	
 CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Order` (
   `Tweb_Order_ID` VARCHAR(6) NOT NULL,

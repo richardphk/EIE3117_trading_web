@@ -1,16 +1,20 @@
 <?php
-	require_once('BlockTrail_API.php');
+	include('BlockTrail_API.php');
+	use Blocktrail\SDK\BlocktrailSDK;
+	use Blocktrail\SDK\Connection\Exceptions\InvalidCredentials;
 
 	function create_wallet($wallet_ac, $wallet_pw, $client){
 		//return wallet
 		try {
-    		$li = list($wallet, $primaryMnemonic, $backupMnemonic, $blocktrailPublicKeys) = $client->createNewWallet($wallet_ac, $wallet_pw);
-    		return $li;
+    		list($wallet, $primaryMnemonic, $backupMnemonic, $blocktrailPublicKeys) = $client->createNewWallet($wallet_ac, $wallet_pw);
+    		return 'ok';
 		} catch (Exception $e) {
     		if ($e instanceof InvalidCredentials) {
-        		var_dump((string)$e);
+    			print '';
+        		#var_dump((string)$e);
     		} else {
-    			print $e;
+    			print '';
+    			//$e
     		}
 		}
 	}
@@ -47,8 +51,8 @@
 		//return Confirmed Balance and Unconfirmed Balance
 		try {
     		list($confirmedBalance, $unconfirmedBalance) = $wallet->getBalance();
-    		$confirmedBalance = sprintf("%2.2f",$confirmedBalance/100000000);
-			$unconfirmedBalance = sprintf("%2.2f",$unconfirmedBalance/100000000);
+    		$confirmedBalance = sprintf("%2.8f",$confirmedBalance/100000000);
+			$unconfirmedBalance = sprintf("%2.8f",$unconfirmedBalance/100000000);
 			return [$confirmedBalance, $unconfirmedBalance];
 		} catch (Exception $e) {
     		if ($e instanceof InvalidCredentials) {
@@ -59,11 +63,11 @@
 		}
 	}
 
-	function send_tran($tran_wallet, $receive_address, $value){
+	function send_tran($wallet, $receive_address, $value){
 		try {
-    		$value = BlocktrailSDK::toSatoshi(1.1);
-			$wallet->pay(array($receive_address => $value), null, false, true, Wallet::FEE_STRATEGY_BASE_FEE);
-			$wallet->pay(array($receive_address => $value), null, false, true, Wallet::FEE_STRATEGY_LOW_PRIORITY);
+    		$value = BlocktrailSDK::toSatoshi($value);
+    		#print_r($value);
+			$wallet->pay(array($receive_address => $value), null, false, true);
 		} catch (Exception $e) {
     		if ($e instanceof InvalidCredentials) {
         		var_dump((string)$e);

@@ -15,7 +15,7 @@
 		$rec_credit = $result_credit->fetchAll(PDO::FETCH_ASSOC);
 
 		if(empty($rec_credit)){
-			$login_user_wallet_balance = 'Unknown: need refresh';
+			$login_user_wallet_balance = 'Unknown: need refresh or need to create wallet first';
 		} else{
 			$wallet = init_wallet($login_user_id, $login_user_pw, $client);
 			$balance = wallet_balance($wallet);
@@ -45,23 +45,22 @@
 			font-size:25px;
 			color:#555;
 		}
+
 		</style>
 		<div class="col-lg" id="content">
 			<main id="main">
 				<center style="font-family: 'Lora', serif;color:#333;">Search Your Product
-				<form class="navbar-form check" name="home_search_form" action="./product/product_page.php" style="margin: 0px; height:50px;">
-					<div class="input-group" style="width:100px;">
-					  <input id="search" type="text" class="form-control" name="search" placeholder="Search for..." required>
-					  <span class="input-group-btn">
-						  <button type="submit" class="btn btn-default"  style="height:45px;" action="this.form.submit()" >
-							<span class="glyphicon glyphicon-search"></span>
-						  </button>
-					  </span>
-					</div>
-					
-				</form></center>
-
-				
+					<form class="navbar-form check" name="home_search_form" action="./product/product_page.php" style="margin: 0px; height:50px;">
+						<div class="input-group" style="width:100px;">
+						  <input id="search" type="text" class="form-control" name="search" placeholder="Search for..." required>
+						  <span class="input-group-btn">
+							  <button type="submit" class="btn btn-default"  style="height:45px;" action="this.form.submit()" >
+								<span class="glyphicon glyphicon-search"></span>
+							  </button>
+						  </span>
+						</div>
+					</form>
+				</center>
 			</main>
 		</div>
 
