@@ -3,7 +3,7 @@
 	use Blocktrail\SDK\BlocktrailSDK;
 	use Blocktrail\SDK\Connection\Exceptions\InvalidCredentials;
 
-
+	$client = new BlocktrailSDK("d1ab7a1d30951adee018ee341e1969f1af020372", "c9a9d1a2ed36a4be41b08c2f8497c3c50fdb9381", "BTC", true/* testnet */);
 
 	#var_dump($client);
 	/*
