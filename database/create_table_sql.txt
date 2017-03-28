@@ -76,6 +76,7 @@ CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_User_Credit` (
   `Tweb_User_ID` VARCHAR(6) NULL,
   `Tweb_User_Credit_Cash` DOUBLE NULL,
   `Tweb_User_Credi_Bitcon_Pin` VARCHAR(255) NULL,
+  `Tweb_User_Bitcon_RevAddress` VARCHAR(255) NULL,
   PRIMARY KEY (`Tweb_User_Credit_id`),
   INDEX `Tweb_User_Credit_User_ID_fk_idx` (`Tweb_User_ID` ASC),
   CONSTRAINT `Tweb_User_Credit_User_ID_fk`
