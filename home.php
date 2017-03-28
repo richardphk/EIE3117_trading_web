@@ -12,7 +12,7 @@
 
 		$result_credit->bindValue(':id', $login_user_id);
 		$result_credit->execute();
-		$rec_credit =  $result_credit->fetchAll(PDO::FETCH_ASSOC);
+		$rec_credit = $result_credit->fetchAll(PDO::FETCH_ASSOC);
 
 		if(empty($rec_credit)){
 			$login_user_wallet_balance = 'Unknown: need refresh';

@@ -1,5 +1,6 @@
 <?php
-	require('BlockTrail_API.php');
+	require_once('BlockTrail_API.php');
+
 	function create_wallet($wallet_ac, $wallet_pw, $client){
 		//return wallet
 		try {
