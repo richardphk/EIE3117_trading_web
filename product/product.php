@@ -19,15 +19,15 @@
 					<p align="right">Bitcon: <b style="color:#ff0808;">$'. $price_bitcon .'</b></p>
                                         
 
-                                        <p align="right">
+                                        <div style="" align="right">
                                             <button class="btn btn-primary" data-toggle="modal" data-target="#' . $PID . '">Buy</button>
-                                                
-                                            <form action= "order/cart_add.php" method="GET">
+                                            
+                                            <form action= "order/cart_add.php" method="GET" style="display:inline;">
                                                 <input type="hidden" name="product_id" value="'.$PID.'"></input>
                                                 <button class="btn btn-default" role="button" onClick="this.form.submit();">Add Cart<span class="glyphicon glyphicon-shopping-cart"></span></button>
                                             </form>
                                             
-					</p>
+										</div>
                                         
                                         <div class="modal fade" id="' . $PID . '" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
