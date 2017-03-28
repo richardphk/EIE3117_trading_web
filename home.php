@@ -1,6 +1,6 @@
 <?php
-	include_once('page_gen.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
+	include_once('page_gen.php');
 	page_header('Home');
 
 	/*find bitcoin record*/
@@ -15,7 +15,7 @@
 		$rec_credit =  $result_credit->fetchAll(PDO::FETCH_ASSOC);
 
 		if(empty($rec_credit)){
-			$login_user_wallet_balance = 'Unknown';
+			$login_user_wallet_balance = 'Unknown: need refresh';
 		} else{
 			$wallet = init_wallet($login_user_id, $login_user_pw, $client);
 			$balance = wallet_balance($wallet);
@@ -23,7 +23,6 @@
 			#print 'wallet_balance:'.$login_user_wallet_balance;
 		}
 		$_SESSION['login_user_wallet_balance'] = $login_user_wallet_balance;
-
 	}
 
 ?>

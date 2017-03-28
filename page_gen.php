@@ -18,10 +18,11 @@
 
 		if(isset($_SESSION['login_user_wallet_balance'])){
 			$login_user_wallet_balance = $_SESSION['login_user_wallet_balance'];
+		} else {
+			$login_user_wallet_balance = 'Unknown: need refresh';
 		}
+		#print '$login_user_wallet_balance:'.$login_user_wallet_balance;
 
-	//$testwallet = 2N1tUzMDqx9fjukxv7ShH73tLQpuiFSbLra
-	//wallet_balance()
 ?>
 
 
