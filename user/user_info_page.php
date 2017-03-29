@@ -44,7 +44,7 @@
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		if(isset($_POST['Credit']) && !empty($_POST['Credit'])){
-			addValue($_POST['Credit'], $uid);
+			addValue($_POST['Credit'],$uid);
 			unset($_POST['Credit']);
 		}else if(isset($_POST['createWallet'])){
 			create_wallet_account($uid, $upw, $client);
@@ -57,6 +57,9 @@
 
 		}else if(isset($_POST['cash2bit_cash'])){
 			client_cash_to_bitcoin($uid, $receive_address, $client, $_POST['cash2bit_cash'], $rec_ac_cash);
+		}else if (isset($_POST['C2C'])){
+			C2C_bitcoin_transfer($uid, $upw, $client, $_POST['C2C_bitcoin'], $POST['revaddr']);
+			
 		}
 	}
 
@@ -142,6 +145,21 @@
 						echo '<form method="POST" name="cash2bit" style="margin-bottom: 0px;" action="">';
 							echo '<div class="input-group" style="width:180px;">';
 						  	echo '<input type="text" name="cash2bit_cash" class="form-control" placeholder="Cash ($)" pattern="\d*" />';
+							echo '<span class="input-group-btn">';
+							echo '<button  class="btn btn-default" type="submit" >Enter</button>';
+							echo '</span>';
+							echo "</div>";
+						echo "</form>";
+					echo "</td>";
+				echo "</tr>";
+				
+				echo "<tr>";
+					echo "<td>C2C Bitcon</td>";
+					echo "<td>";
+						echo '<form method="POST" name="C2C" style="margin-bottom: 0px;" action="">';
+							echo '<div class="input-group" style="width:180px;">';
+						  	echo '<input type="number" name="C2C_bitcoin" class="form-control" placeholder="Bitcoin (BTC)" step="any" />';
+							echo 'Receiver Address: <input type="text" name="revaddr" class="form-control" placeholder="address" />';
 							echo '<span class="input-group-btn">';
 							echo '<button  class="btn btn-default" type="submit" >Enter</button>';
 							echo '</span>';

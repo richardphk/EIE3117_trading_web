@@ -48,11 +48,11 @@
 			//refresh
 			echo '<meta http-equiv="refresh" content="1"/>';
 
-			header("Refresh:0; url=page2.php");
+			#header("Refresh:0; url=page2.php");
 			echo '<div class="alert alert-success alert-dismissable">
-			  		#<a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a>
-			  		#<strong>Success!</strong> Credit Changed!
-					#</div>';
+			  		<a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a>
+			  		<strong>Success!</strong> Credit Changed!
+					</div>';
 	}
 
 	function get_new_receive_address($uid, $upw, $client){
@@ -78,17 +78,63 @@
 				</div>';
 		return $receive_address;
 	}
+	function C2C_bitcoin_transfer($uid, $upw, $client, $value, $revaddr){
+		$result_getid = $db_conn->prepare('SELECT * FROM Tweb_User_Credit WHERE Tweb_User_Bitcon_RevAddress = :addr;');
+		$result_getid->bindValue(':addr', $revaddr);
+		$result_getid->execute();
+		$rec_getid =  $result_credit->fetchAll(PDO::FETCH_ASSOC);
+		
+		if(!empty($rec_getid)){
+			$rec_rev_id = $rec_rev_id[0]['Tweb_User_ID'];
+			$result_get_rev_uid_upw = $db_conn->prepare('SELECT Tweb_User_Name, Tweb_User_Password FROM Tweb_User 
+														WHERE Tweb_User_ID = :id;');
+			$result_get_rev_uid_upw->bindValue(':id', $rec_rev_id);
+			$result_get_rev_uid_upw->execute();
+			$rec_get_rev_uid_upw =  $result_get_rev_uid_upw->fetchAll(PDO::FETCH_ASSOC);
+			
+			// connect to receiver wallet
+			$receiver_wallet = init_wallet($rec_get_rev_uid_upw[0]['Tweb_User_Name'],$rec_get_rev_uid_upw[0]['Tweb_User_Password'], $client);
+			
+			// sender wallet and addr
+			$sender_wallet = init_wallet($uid, $upw, $client);
+			$sender_balance = wallet_balance($sender_wallet);
+			$sender_com_balance = $sender_balance[0];
+			$sender_uncom_balance = $sender_balance[1];
+			$sender_total_balance = $sender_com_balance + $sender_uncom_balance;
+			
+			if($client_total_balance < $value){
+				response_message2rediect('Sorry! You dont have enough bitcoin!', '/user/user_info_page.php');
+			} 
+			else{
+				
+				//BlockTrail
+				send_tran($sender_wallet, $revaddr, $value);
+				//refresh
+				echo '<meta http-equiv="refresh" content="1"/>';
 
+				#header("Refresh:0; url=page2.php");
+				echo '<div class="alert alert-success alert-dismissable">
+						<a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a>
+						<strong>Success!</strong> Bitcoin to '.$revaddr .' Success!
+						</div>';
+			}
+			#send_tran($tran_wallet, $receive_address, $value);
+	
+			
+		}
+		else{
+			response_message2rediect('receiver address not found!','/user/user_info_page.php');
+		}
+			
+	}
+	
 	function client_bitcoin_to_cash($uid, $upw, $client, $value, $rec_ac_cash){
 		//client wallet , server rececive address, $value
-		//1. get server wallet + receive address
 		$server_wallet = init_wallet('Zonetwo', 'Zonetwo2', $client);
 		$receive_address = receive_tran($server_wallet);
 
-		//2. get server wallet + receive address
 		$client_wallet = init_wallet($uid, $upw, $client);
 		$client_balance = wallet_balance($client_wallet);
-		//balance
 		$client_com_balance = $client_balance[0];
 		$client_uncom_balance = $client_balance[1];
 		$client_total_balance = $client_com_balance + $client_uncom_balance;
@@ -96,7 +142,7 @@
 		if($client_total_balance < $value){
 			response_message2rediect('Sorry! You dont have enough bitcoin!', '/user/user_info_page.php');
 		} else{
-			//update db
+			//db
 			$db_conn = db_connect('root','root');
 			$new_cash = $rec_ac_cash + $value * 100000000;
 			$result = $db_conn->prepare("UPDATE Tweb_User_Credit
@@ -106,7 +152,7 @@
 			$result->bindValue(':uid', $uid);
 			$result->execute();
 
-			//BlockTrail pay
+			//BlockTrail
 			send_tran($client_wallet, $receive_address, $value);
 			//refresh
 			echo '<meta http-equiv="refresh" content="1"/>';
@@ -155,13 +201,6 @@
 					</div>';
 		}
 	}
-
-	function transaction_bitcoin($uid, $upw, $price, $pid) {
-        global $client;
-        $seller_address = get_user_credit(get_result($pid, 'Creator_ID'), 'Tweb_User_Bitcon_RevAddress');
-        $wallet = init_wallet($uid, $upw, $client);
-        send_tran($wallet, $seller_address, $price);
-   	}
 
 
 ?>
