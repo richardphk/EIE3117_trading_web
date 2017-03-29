@@ -46,7 +46,7 @@
                     add_payment_record($payment_id, $purchase_id, $amount, $purchase_date, $_SESSION['login_user_id'], $payment_type);
 
                     //email_to_buyer($_SESSION['login_user_id']);
-                    echo '<meta http-equiv="refresh" content="0; url=./order_result.php?sid=' . $purchase_id . '&type=' . $payment_type . '" />';
+                    echo '<meta http-equiv="refresh" content="0; url=/order/order_result.php?sid=' . $purchase_id . '&type=' . $payment_type . '" />';
             } elseif (check_bitcoin_amount($_SESSION['login_user_id'], $_SESSION['login_user_pw'], $_POST['product_id'], $_POST['product_price'], $_POST['product_quantity'])){
                 unset($_SESSION['cart']);
 
@@ -73,19 +73,15 @@
 
                             $seller_id = get_result($_POST['product_id'][$i], 'Creator_ID');
                             //email_to_seller($seller_id, $_SESSION['login_user_id'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
-                            
-                            
                     }
-                    
-                    
+
                     add_amount($purchase_id, $amount);
                     $payment_id = gen_id('Tweb_Payment');
                     add_payment_record($payment_id, $purchase_id, $amount, $purchase_date, $_SESSION['login_user_id'], $payment_type);
 
-                    
                     //email_to_buyer($_SESSION['login_user_id']);
-                    echo '<meta http-equiv="refresh" content="0; url=./order_result.php?sid=' . $purchase_id . '&type=' . $payment_type . '" />';
-            } 
+                    echo '<meta http-equiv="refresh" content="0; url=/order/order_result.php?sid=' . $purchase_id . '&type=' . $payment_type . '" />';
+            }
 	} else {
 		not_loggedin();
 	}

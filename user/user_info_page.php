@@ -44,7 +44,7 @@
 
 	if($_SERVER['REQUEST_METHOD'] == 'POST'){
 		if(isset($_POST['Credit']) && !empty($_POST['Credit'])){
-			addValue($_POST['Credit'],$uid);
+			addValue($_POST['Credit'], $uid);
 			unset($_POST['Credit']);
 		}else if(isset($_POST['createWallet'])){
 			create_wallet_account($uid, $upw, $client);

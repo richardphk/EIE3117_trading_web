@@ -19,7 +19,7 @@
 		if(isset($_SESSION['login_user_wallet_balance'])){
 			$login_user_wallet_balance = $_SESSION['login_user_wallet_balance'];
 		} else {
-			$login_user_wallet_balance = 'Unknown: need refresh';
+			$login_user_wallet_balance = 'Unknown: click here to sync';
 		}
 		#print '$login_user_wallet_balance:'.$login_user_wallet_balance;
 
@@ -190,18 +190,23 @@
 
 <?php
 	}
-		function remain_credit($id) {
-            include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
-            $db_conn = db_connect('root','root');
-            $result = $db_conn->prepare('SELECT Tweb_User_Credit_Cash FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '"');
 
-            $result->execute();
-            $rec = $result->fetchAll(PDO::FETCH_ASSOC);
-            
-            foreach ($rec as $r) {
-                return $r['Tweb_User_Credit_Cash'];
+	function remain_credit($id) {
+        include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
+        $db_conn = db_connect('root','root');
+        $result = $db_conn->prepare('SELECT Tweb_User_Credit_Cash FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $id . '"');
+
+        $result->execute();
+        $rec = $result->fetchAll(PDO::FETCH_ASSOC);
+
+        foreach ($rec as $r) {
+            if(empty($r['Tweb_User_Credit_Cash']) || !(isset($r['Tweb_User_Credit_Cash']))){
+            		return 0;
             }
+			return $r['Tweb_User_Credit_Cash'];
         }
+    }
+
 	function not_loggedin() {
 		?>
 

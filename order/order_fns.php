@@ -3,7 +3,7 @@
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/tBTC/BlockTrail_API.php');
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/tBTC/tBTC_fns.php');
-        
+
 	function get_result($id, $type) {
 		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_ID = "' . $id . '";');
@@ -14,7 +14,7 @@
 		}
 	}
 	
-	function get_user_info($id, $attribute) { 
+	function get_user_info($id, $attribute) {
 		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_User WHERE Tweb_User_ID = "' . $id . '";');
 		$result->execute();
@@ -24,14 +24,14 @@
 		}
 	}
 	
-	function email_to_buyer($id) { 
+	function email_to_buyer($id) {
 			$email = get_user_info($id, 'Tweb_User_Email');
 			$from = "From: support@phpbookmark \r\n";
 			$mesg = "Thanks for buying";
 			if (mail($email, 'Online Trading Website', $mesg, $from)) {
 				return true;
-		} else { 
-			throw new Exception('Could not send email.'); 
+		} else {
+			throw new Exception('Could not send email.');
 		}
 	}
 	
@@ -42,8 +42,8 @@
 			$mesg = "This is to notify that user " . $buyer_name . " has bought " . $product_quantity . ' ' . $product_name . '(' . $product_id . ')' . "from you";
 			if (mail($email, 'Online Trading Website', $mesg, $from)) {
 				return true;
-		} else { 
-			throw new Exception('Could not send email.'); 
+		} else {
+			throw new Exception('Could not send email.');
 		}
 	}
 	
@@ -59,7 +59,6 @@
 	}
 
 	function add_order($order_id, $product_id, $quantity, $sales_id, $total_price, $payment_type) {
-                
 		$db_conn = db_connect('root', 'root');
 		$stmt = $db_conn->prepare('INSERT INTO Tweb_Order (Tweb_Order_ID, Tweb_Order_Product_ID, Tweb_Order_Quantity, Tweb_Order_Price, Tweb_Order_Sale_Record_ID, Tweb_Order_Payment_Type) VALUES (:order_id, :product_id, :quantity, :total_price, :sales_id, :payment_type)');
 		$stmt->bindparam(':order_id', $order_id);
@@ -95,13 +94,12 @@
 		?>
 			<table class="table">
 			    <thead>
-                                <tr>
-                                    <th>Date: <?php echo $result['Tweb_Sale_Record_Order_Date']; ?></th>
-                                    <th>Payment type: <?php echo $type; ?></th>
-                                    <th />
-                                    <td>Receipt number: <?php echo $result['Tweb_Sale_Record_ID']; ?></th>
-                                </tr>
-                                      
+                        <tr>
+                            <th>Date: <?php echo $result['Tweb_Sale_Record_Order_Date']; ?></th>
+                            <th>Payment type: <?php echo $type; ?></th>
+                            <th />
+                            <td>Receipt number: <?php echo $result['Tweb_Sale_Record_ID']; ?></th>
+                        </tr>
 			    		<tr>
 			      		 	<th>Quantity</th>
 			       			<th>Details</th>
@@ -116,7 +114,6 @@
 	function order_table_body($sid) {
             $result = get_order_result($sid);
             $amount = 0;
-            
             foreach ($result as $row) {
                 $amount += $row['Tweb_Order_Price'];
 		?>
@@ -128,7 +125,7 @@
                     </tr>
 		<?php
             }
-            
+
             ?>
                     <tr>
                         <td />
@@ -138,7 +135,7 @@
                         </td>
                         <td>$<?php echo $amount; ?></td>
                     </tr>
-                    
+
             <?php
 	}
 
@@ -181,17 +178,15 @@
         
         function transaction_credit($sid, $uid, $price) {
             try {
-                
-		$db_conn = db_connect('root','root');
-		$stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid, 'Tweb_User_Credit_Cash')-$price) .' WHERE Tweb_User_ID = :uid');
-		$stmt->bindparam(':uid', $uid);
-		$stmt->execute();
-                
-                
+        		$db_conn = db_connect('root','root');
+        		$stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($uid, 'Tweb_User_Credit_Cash')-$price) .' WHERE Tweb_User_ID = :uid');
+        		$stmt->bindparam(':uid', $uid);
+        		$stmt->execute();
+
                 $stmt = $db_conn->prepare('UPDATE Tweb_User_Credit SET Tweb_User_Credit_Cash = ' . (get_user_credit($sid, 'Tweb_User_Credit_Cash')+$price) .' WHERE Tweb_User_ID = :sid');
-		$stmt->bindparam(':sid', $sid);
-		$stmt->execute();
-                
+        		$stmt->bindparam(':sid', $sid);
+        		$stmt->execute();
+
             } catch (PDOException $e) {
                 echo $e->getMessage();
             }

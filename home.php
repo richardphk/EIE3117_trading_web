@@ -15,7 +15,7 @@
 		$rec_credit = $result_credit->fetchAll(PDO::FETCH_ASSOC);
 
 		if(empty($rec_credit)){
-			$login_user_wallet_balance = 'Unknown: need refresh or need to create wallet first';
+			$login_user_wallet_balance = 'Unknown: need to create wallet first';
 		} else{
 			$wallet = init_wallet($login_user_id, $login_user_pw, $client);
 			$balance = wallet_balance($wallet);
