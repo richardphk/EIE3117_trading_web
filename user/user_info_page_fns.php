@@ -78,14 +78,16 @@
 				</div>';
 		return $receive_address;
 	}
+
 	function C2C_bitcoin_transfer($uid, $upw, $client, $value, $revaddr){
+		$db_conn = db_connect('root','root');
 		$result_getid = $db_conn->prepare('SELECT * FROM Tweb_User_Credit WHERE Tweb_User_Bitcon_RevAddress = :addr;');
 		$result_getid->bindValue(':addr', $revaddr);
 		$result_getid->execute();
-		$rec_getid =  $result_credit->fetchAll(PDO::FETCH_ASSOC);
+		$rec_getid =  $result_getid->fetchAll(PDO::FETCH_ASSOC);
 		
 		if(!empty($rec_getid)){
-			$rec_rev_id = $rec_rev_id[0]['Tweb_User_ID'];
+			$rec_rev_id = $rec_getid [0]['Tweb_User_ID'];
 			$result_get_rev_uid_upw = $db_conn->prepare('SELECT Tweb_User_Name, Tweb_User_Password FROM Tweb_User 
 														WHERE Tweb_User_ID = :id;');
 			$result_get_rev_uid_upw->bindValue(':id', $rec_rev_id);
@@ -93,30 +95,33 @@
 			$rec_get_rev_uid_upw =  $result_get_rev_uid_upw->fetchAll(PDO::FETCH_ASSOC);
 			
 			// connect to receiver wallet
-			$receiver_wallet = init_wallet($rec_get_rev_uid_upw[0]['Tweb_User_Name'],$rec_get_rev_uid_upw[0]['Tweb_User_Password'], $client);
+			#$receiver_wallet = init_wallet($rec_get_rev_uid_upw[0]['Tweb_User_Name'],$rec_get_rev_uid_upw[0]['Tweb_User_Password'], $client);
 			
 			// sender wallet and addr
+			#print '111111111111111111111111111111111111111111111111111111111111111111111111';
 			$sender_wallet = init_wallet($uid, $upw, $client);
 			$sender_balance = wallet_balance($sender_wallet);
 			$sender_com_balance = $sender_balance[0];
 			$sender_uncom_balance = $sender_balance[1];
 			$sender_total_balance = $sender_com_balance + $sender_uncom_balance;
-			
-			if($client_total_balance < $value){
+			#print $sender_total_balance;
+
+
+			if($sender_total_balance < $value){
+				#print($sender_total_balance);
 				response_message2rediect('Sorry! You dont have enough bitcoin!', '/user/user_info_page.php');
-			} 
-			else{
+			}else{
 				
 				//BlockTrail
 				send_tran($sender_wallet, $revaddr, $value);
 				//refresh
-				echo '<meta http-equiv="refresh" content="1"/>';
+				#echo '<meta http-equiv="refresh" content="1"/>';
 
 				#header("Refresh:0; url=page2.php");
 				echo '<div class="alert alert-success alert-dismissable">
-						<a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a>
-						<strong>Success!</strong> Bitcoin to '.$revaddr .' Success!
-						</div>';
+						#<a href="#" class="close" data-dismiss="alert" aria-label="close" >&times;</a>
+						#<strong>Success!</strong> Bitcoin to '.$revaddr .' Success!
+						#</div>';
 			}
 			#send_tran($tran_wallet, $receive_address, $value);
 	

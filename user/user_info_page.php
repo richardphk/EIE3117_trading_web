@@ -57,8 +57,8 @@
 
 		}else if(isset($_POST['cash2bit_cash'])){
 			client_cash_to_bitcoin($uid, $receive_address, $client, $_POST['cash2bit_cash'], $rec_ac_cash);
-		}else if (isset($_POST['C2C'])){
-			C2C_bitcoin_transfer($uid, $upw, $client, $_POST['C2C_bitcoin'], $POST['revaddr']);
+		}else if (isset($_POST['C2C_bitcoin'])){
+			C2C_bitcoin_transfer($uid, $upw, $client, $_POST['C2C_bitcoin'], $_POST['revaddr']);
 			
 		}
 	}
@@ -69,7 +69,7 @@
 <h2>User Information</h2>
 	<input type="hidden" name= 'uid' value='<?php echo $uid;?>' ></input>
 
-	<table class="table table-hover" style="width:51%;">
+	<table class="table table-hover" style="width:70%;">
 		<tr>
 			<td>User Name:</td>
 			<td><?php echo $rec[0]['Tweb_User_Name']?></td>
@@ -143,7 +143,7 @@
 					echo "<td>Cash -> Bitcoin</td>";
 					echo "<td>";
 						echo '<form method="POST" name="cash2bit" style="margin-bottom: 0px;" action="">';
-							echo '<div class="input-group" style="width:180px;">';
+							echo '<div class="input-group" style="width:200px;">';
 						  	echo '<input type="text" name="cash2bit_cash" class="form-control" placeholder="Cash ($)" pattern="\d*" />';
 							echo '<span class="input-group-btn">';
 							echo '<button  class="btn btn-default" type="submit" >Enter</button>';
@@ -152,17 +152,17 @@
 						echo "</form>";
 					echo "</td>";
 				echo "</tr>";
-				
+
 				echo "<tr>";
 					echo "<td>C2C Bitcon</td>";
 					echo "<td>";
 						echo '<form method="POST" name="C2C" style="margin-bottom: 0px;" action="">';
-							echo '<div class="input-group" style="width:180px;">';
-						  	echo '<input type="number" name="C2C_bitcoin" class="form-control" placeholder="Bitcoin (BTC)" step="any" />';
-							echo 'Receiver Address: <input type="text" name="revaddr" class="form-control" placeholder="address" />';
-							echo '<span class="input-group-btn">';
-							echo '<button  class="btn btn-default" type="submit" >Enter</button>';
-							echo '</span>';
+							echo '<div class="input-group" style="width:300px; display:grid;">';
+						  	echo 'Value: <input type="number" name="C2C_bitcoin" class="form-control" placeholder="Bitcoin (BTC)" step="any" /><br>';
+							echo ' Receiver Address: <input type="text" name="revaddr" class="form-control" placeholder="address" />';
+							echo '<p align="right"><span align="right" class="input-group-btn">';
+							echo '<button  class="btn btn-default" type="submit"  >Enter</button>';
+							echo '</span></p>';
 							echo "</div>";
 						echo "</form>";
 					echo "</td>";
@@ -185,16 +185,21 @@
 										echo "<li>";
 										foreach ($col as $col_name => $element) {
 											if(in_array($col_name, ['hash', 'time', 'address', 'fee', 'wallet_value_change'])){
-
-												if($col_name == 'hash'){
-													print 'Transactions HASH : '.$element.'<br/>';
-												} else if($col_name == 'time'){
-													print 'Time : '.$element.'<br/>';
+												if($col_name == 'time'){
+													$date = date("Y/m/d", strtotime($element));
+													$time = date("H:i:s a", strtotime($element));
+													print 'Date : '.$date.'<br/>';
+													print 'Time : '.$time.'<br/>';
+												} else  if($col_name == 'hash'){
+													$hash = $element;
+													print 'Transactions HASH : '.$hash.'<br/>';
 												} else if($col_name == 'wallet_value_change'){
 													$balance_record = sprintf("%2.8f",($element/100000000));
 													print 'Wallet Value Change : '.$balance_record.' BTC <br/>';
 												}
+
 											}
+
 										}
 										echo "</li>";
 								}
