@@ -1,4 +1,5 @@
 <?php
+	header("X-Frame-Options:DENY");
 	function page_header($title){
 		require_once($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 		require_once($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
@@ -126,9 +127,9 @@
 						<li class="dropdown">
 						  <a id="product" onclick="this.color='red';" href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Product <span class="caret"></span></a>
 						  <ul class="dropdown-menu" style="background-color:#6d8cb1;">
-							<li><a href="product/product_page.php?type%5B%5D=Printer&price=100%2C5000&name=&sort=" class="dp_item">Printer</a></li>
-							<li><a href="product/product_page.php?type%5B%5D=Router&price=100%2C5000&name=&sort=" class="dp_item">Router</a></li>
-							<li><a href="product/product_page.php?type%5B%5D=Notebook&price=100%2C5000&name=&sort=" class="dp_item">Notebook</a></li>
+							<li><a href="product/product_page.php?type%5B%5D=Printer&price=100%2C500000&name=&sort=" class="dp_item">Printer</a></li>
+							<li><a href="product/product_page.php?type%5B%5D=Router&price=100%2C500000&name=&sort=" class="dp_item">Router</a></li>
+							<li><a href="product/product_page.php?type%5B%5D=Notebook&price=100%2C500000&name=&sort=" class="dp_item">Notebook</a></li>
 							<li role="separator" class="divider"></li>
 							<li><a href="product/product_page.php" class="dp_item">All Products</a></li>
 							<li role="separator" class="divider"></li>

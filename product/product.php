@@ -59,10 +59,17 @@
 	}
 
 	function product_frame_end(){
+		/**
+		 * return end of product page
+		 */
 		echo'</div>';
 	}
 
 	function get_price(){
+		/**
+		 * return the min price and max price from the existing product in the database
+		 * for setting up the price bar 
+		*/
 		$stat = 'SELECT MIN(`Tweb_Product_Price`) as min_price, Max(`Tweb_Product_Price`) as max_price FROM `Tweb_Product`';
 		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare($stat);
@@ -73,6 +80,10 @@
 	}
 
 	function get_type(){
+		/**
+		 * return the existing product type from the product in the database
+		 * for setting up the type choice box
+		*/
 		$stat = 'select distinct(Tweb_Product_Type) FROM `Tweb_Product`;';
 		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare($stat);
@@ -95,33 +106,68 @@
 	}
 
 	function get_result($key,$key_type){
+		/**
+		 * return whole result from product searching function
+		 * it accept 2 param, 1. entire GET array,  2. search type: whether the search is filled all search param
+		*/
+	
 		//print_r($key);
 		//print $key_type;
 		if($key_type == 'all'){
-			//echo"type-search";
+
+
+			// ------------------check whether the product type value from GET is empty------------------.
+
 			if(empty($key['type'])){
 
 				$key['type'] = null;
 				//print($key['type']);
 			}
+			else{
+				$inspect_array = array();
+				foreach ($key['type'] as $key => $value) {
+					$value[$key] = htmlspecialchars($value[$key], ENT_QUOTES);
+					array_push($inspect_array,$value[$key]);
+				}
+				$key['type'] = array_replace($key['type'],$inspect_array);
+			}
+
+
+
+			// ------------------check whether the product price from GET is empty------------------
+
 			if(empty($key['price'])){
 				$stat_price = "(select * FROM `Tweb_Product` where Tweb_Product_Price between ? and ?) as a";
 				$key_price = array(100,5550000);
 			}
 			else{
 				$key_price = explode(",", $key['price']);
-				
+				$key_price[0] = htmlspecialchars($key_price[0], ENT_QUOTES);
+				$key_price[1] = htmlspecialchars($key_price[1], ENT_QUOTES);
 				$stat_price = "(select * FROM `Tweb_Product` where Tweb_Product_Price between ? and ?) as a";
 			}
-			
+
+
+
+			// ------------------check whether the product name from GET is empty------------------
+
 			if(empty($key['name'])){
 				if(!empty($key['search'])){
+					$key['search'] = htmlspecialchars($key['search'], ENT_QUOTES);
 					$key['name'] = $key['search'];
 				}else{
 					$key['name'] = '';
 				}
-				
 			}
+			else{
+				$key['name'] = htmlspecialchars($key['name'], ENT_QUOTES);
+
+			}
+
+
+
+			// ------------------construct a searching sQL query------------------
+
 			$key_where_stat = 'Tweb_Product_Type = ?';
 			$search_key_num = count($key['type']);
 			$stat_type = 'SELECT * FROM `Tweb_Product` as c where c.Tweb_Product_Type = ?;';
@@ -150,16 +196,17 @@
 
 			//echo $stat_form;
 			$stat_form .= 'where a.Tweb_Product_ID = b.Tweb_Product_ID and a.Tweb_Product_ID = c.Tweb_Product_ID and b.Tweb_Product_ID = c.Tweb_Product_ID ';
-			
-			
-			
-			
+
+
 			$stat_keyword = "(select * from Tweb_Product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?) as b";
 			$key_keyword = '%'.$key['name'].'%';
-			
+
 			$total_stat = $stat_select . $stat_price . ',' . $stat_keyword . ',' . $stat_form;
-			
-			//------------------------------------check_sort-------------------------------
+
+
+
+			//------------------check whether the 'sort' param is empty------------------
+
 			//print_r($key['sort']);
 			if(!empty($key['sort'])){
 				//print_r($key['sort']);
@@ -169,13 +216,14 @@
 					//echo $total_stat;
 				}
 				elseif($sort == 'Hightest_Price'){
-					
+		
 					$total_stat .= "ORDER BY `a`.`Tweb_Product_Price` DESC";
 					//echo $total_stat;
 				}
-				
+		
 			}
-			//------------------------------------check_sort-------------------------------
+			//------------------connect DB & bind param to SQL query------------------
+
 			//print($total_stat);
 			//echo $total_stat;
 			$db_conn = db_connect('root','root');
@@ -187,7 +235,7 @@
 								4 => $key_keyword,
 								);
 			//print_r($type_array_bind);
-			
+		
 			for($n=1; $n<=$search_key_num; $n++){
 				if($search_key_num == 0 or empty($key['type'])){
 					array_push($type_array_bind,'Laptop');
@@ -200,38 +248,17 @@
 			for($r=1;$r<=count($type_array_bind); $r++){
 				//print($r);
 				$result->bindParam($r,$type_array_bind[$r]);
-				
 			}
 			$result->execute();
+		}
 
-			
-		}
-		/*elseif($key_type == "keyword"){
-			$db_conn = db_connect('root','root');
-			$stat_keyword = "(select * from tweb_product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?) as b";
-			$result = $db_conn->prepare($stat);
-			$key_2 = '%'.$key.'%';
-			$result->bindParam(1,$key_2);
-			$result->bindParam(2,$key_2);
-			//var_dump($result);
-		}
-		else{
-			
-			$db_conn = db_connect('root','root');
-			$stat = "(select * FROM `Tweb_Product` where Tweb_Product_Price between ? and ?)";
-			$result = $db_conn->prepare($stat);
-			//print_r("price:". $key);
-			$key = explode(",", $key['price']);
-			
-			$result->bindParam(1,$key[0]);
-			$result->bindParam(2,$key[1]);
-		}*/
-		
+
+		//------------------separate the SQL query result------------------
+
 		//$result->execute();
 		$rec = $result->fetchAll(PDO::FETCH_ASSOC);
 		//print_r($rec);
 		if(count($rec)==0){
-			
 			//$price_check = explode(",", $key['price']);
 			if(is_array($key['price'])){
 				//print_r($key['price']);
@@ -248,11 +275,10 @@
 				echo "<h2 align=\"center\" style=\"font-family: 'Lora', serif;\">No matches for '". $key_2 . "'</h2>";
 			}
 			else{
-				//echo "<h2 align=\"center\" style=\"font-family: 'Lora', serif;\">No matches for '". $key['search'] . "'</h2>";
 				echo "<h2 align=\"center\" style=\"font-family: 'Lora', serif;\">No Result. </h2>";
 			}
-			
 		}
+
 		$num = 0;
 		product_frame_header();
 		//print_r($rec);
@@ -263,7 +289,7 @@
 			$check = $num/3;
 			//print($check);
 			if(is_int($check)){
-				
+	
 				product_frame_end();
 				product_frame_header();
 			}
@@ -271,11 +297,7 @@
 			//echo '<p/>';
 		}
 		product_frame_end();
-		
-	
 	}
 	//print_r($rec);
-	
-
 
 ?>

@@ -9,24 +9,25 @@
 
 <script>
 	
-  $( function() {
-	  var price = new Slider("#slider", {
-		  range: true,
-		
+  	$(function() {
+	  	var price = new Slider("#slider", {
+		  	range: true,
 		});
-	var check_price_setted = "<?php if(!empty($_GET['price'])){echo $_GET['price'];}else echo''; ?>";
-	//document.write(check_price_setted);
-	  if(check_price_setted.length != 0){
-		  var price_new = check_price_setted;
-		  //alert(typeof(price_new),price_new);
-		  price_new_2 = price_new.split(',');
-		  //document.write(price_new_2[0],typeof(price_new_2));
-		 //$("#slider").attr('data-slider-min', 200);
-		 var price_new_2 = [parseInt(price_new_2[0],10),parseInt(price_new_2[1],10)];
-		 //document.write(arr,typeof(arr[0]));
-		  //$("#slider").attr('range', arr);
-		 price.setValue([price_new_2[0],price_new_2[1]],true,false);
-	  }
+
+		var check_price_setted = "<?php if(!empty($_GET['price'])){echo $_GET['price'];}else echo''; ?>";
+		//document.write(check_price_setted);
+
+	  	if(check_price_setted.length != 0){
+		  	var price_new = check_price_setted;
+		  	//alert(typeof(price_new),price_new);
+		 	price_new_2 = price_new.split(',');
+		  	//document.write(price_new_2[0],typeof(price_new_2));
+		 	//$("#slider").attr('data-slider-min', 200);
+		 	var price_new_2 = [parseInt(price_new_2[0],10),parseInt(price_new_2[1],10)];
+		 	//document.write(arr,typeof(arr[0]));
+		  	//$("#slider").attr('range', arr);
+		 	price.setValue([price_new_2[0],price_new_2[1]],true,false);
+	  	}
 
 		
 		//price.setValue(500);
@@ -96,6 +97,7 @@
 		<div class="col-md-10" style="padding:5px;">
 			<main>
 				<?php
+
 							//print_r($_GET);
 
 							//var_dump($_GET);
@@ -108,7 +110,7 @@
 							if($_SERVER['REQUEST_METHOD'] == 'GET'){
 								$value = $_GET;
 								get_result($value,"all");
-
+								
 								//var_dump(!empty($_GET['sort']));
 								if(!empty($_GET['sort'])){
 
@@ -117,9 +119,8 @@
 								if(empty($_GET['type'])){
 									exit;
 								}
-								
 								set_checked_butt($value['type']);
-								
+
 							}
 							/*if(!empty($_GET['price'])){
 								$value = $_GET;
