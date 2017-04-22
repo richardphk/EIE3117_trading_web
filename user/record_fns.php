@@ -1,6 +1,7 @@
 <?php
 	include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
 	
+        //Functions for displaying all the purchase record.
 	function table_header() {
 		?>
 			<h2>Purchase Record</h2>
@@ -84,7 +85,7 @@
 	}
 	
 	
-	
+	//Function for getting product information
 	function get_product($id, $type) {
 		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_id = "' . $id . '";');
@@ -96,6 +97,7 @@
             }
 	}
         
+        //Function for getting sale record.
         function get_sale($id, $field) {
             $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_Sale_Record WHERE Tweb_Sale_Record_ID = "' . $id . '";');
@@ -106,6 +108,7 @@
             }
         }
 	
+        //Function for getting order information.
 	function get_details($id){
 		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Order WHERE Tweb_Order_Sale_Record_ID = "' . $id . '";');
@@ -114,6 +117,7 @@
 		return $rec;
 	}
 	
+        //Function for getting sale record
 	function get_record($user_id, $field1, $field2) {
 		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT Tweb_Sale_Record_' . $field1 . ', Tweb_Sale_Record_' . $field2 . ' FROM Tweb_Sale_Record WHERE Tweb_Sale_Record_Customer_ID = "' . $user_id . '";');
@@ -123,6 +127,7 @@
 		return $rec;
 	}
         
+        //Function for getting payment ID.
         function get_payment_id($sid) {
             $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_Payment WHERE Tweb_Payment_Sale_Record_ID = "' . $sid . '";');
@@ -134,6 +139,7 @@
             }
         }
         
+        //Function for getting all the refund status.
         function get_refund_status($oid, $sid) {
             $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_Refund WHERE Tweb_Refund_Order_ID = "' . $oid . '";');

@@ -2,6 +2,7 @@
 
     include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
 	
+    //Function for checking and displaying the refund requests.
     function product_refund($uid) {
         $result = check_refund($uid, '0');
         if ($result) {
@@ -29,6 +30,7 @@
                             </thead>
                             <tbody>
             <?php
+            //Display all the refund requests.
             foreach ($result as $record) {
             ?>
                                 <tr>
@@ -104,11 +106,12 @@
         }
     }
 
-	function product_body($id) {
-		$products = get_result($id);
-		$button = 0;
-		$div = 0;
-		foreach ($products as $product) {
+    //Function for displaying the seller's products.
+    function product_body($id) {
+        $products = get_result($id);
+        $button = 0;
+        $div = 0;
+        foreach ($products as $product) {
 			?>
 				<div class="col-sm-6 col-md-4">
 					<div class="thumbnail">
@@ -151,13 +154,8 @@
 			<?php
 		}
 	}
-        
-        function product_refunded_list($uid) {
-            $result = check_refund($uid, '1');
-            //Further development  
-            
-        }
 	
+        //Function for getting product information
 	function get_result($id) {
 		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Product WHERE Tweb_Product_Creator_ID = "' . $id . '";');
@@ -166,6 +164,7 @@
 		return $rec;
 	}
 	
+        //Function for getting sale record
 	function get_sales($id) {
 		$db_conn = db_connect('root','root');
 		$result = $db_conn->prepare('SELECT * FROM Tweb_Order, Tweb_Sale_Record WHERE Tweb_Order.Tweb_Order_Sale_Record_ID = Tweb_Sale_Record.Tweb_Sale_Record_ID AND Tweb_Order.Tweb_Order_Product_ID = "' . $id . '";');
@@ -174,6 +173,7 @@
 		return $rec;
 	}
 
+        //Function for getting refund status
         function get_refund_status($oid, $uid, $cid, $pid, $quantity) {
             $db_conn = db_connect('root','root');
             $result = $db_conn->prepare('SELECT * FROM Tweb_Refund WHERE Tweb_Refund_Order_ID = "' . $oid . '";');
@@ -202,6 +202,7 @@
             }
         }
 
+        //Function for checking whether there are any refund requests.
         function check_refund($uid, $status) {
             $db_conn = db_connect('root','root');
             /*$check_refund_sql = 'SELECT * FROM Tweb_Refund WHERE Tweb_Refund_Order_ID IN

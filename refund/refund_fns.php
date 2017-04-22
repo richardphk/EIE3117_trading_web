@@ -4,7 +4,7 @@
     include_once($_SERVER['DOCUMENT_ROOT'] . '/order/order_fns.php');
     include_once($_SERVER['DOCUMENT_ROOT'] . '/tBTC/tBTC_fns.php');
 
-    
+    //Function for adding a refund record with requesting status to database.
     function add_refund($sid, $pid, $oid) {
         try {
             $rid = gen_id('Tweb_Refund');
@@ -24,6 +24,7 @@
         }
     }
     
+    //Function for getting the refund status of a purchase record.
     function change_refund_status($rid, $approve) {
         try {
             $db_conn = db_connect('root','root');
@@ -38,6 +39,7 @@
         }
     }
     
+    //Function for website credit refund process
     function refund_process($uid, $cid, $pid, $oid, $quantity) {
         try {
             $price = get_price($oid);
@@ -63,7 +65,8 @@
             echo $ex->getMessage();
         }
     }
-
+    
+    //Function for bitcoin refund process
     function refund_process_bitcoin($uid, $upw, $cid, $pid, $oid, $quantity){
         try {
             $price = get_price($oid);
@@ -87,6 +90,7 @@
 
     }
     
+    //Function for getting the amount of a puchased product
     function get_price($oid) {
         $db_conn = db_connect('root','root');
     	$result = $db_conn->prepare('SELECT * FROM Tweb_Order WHERE Tweb_Order_ID = "' . $oid . '";');
@@ -98,6 +102,7 @@
         }
     }
 
+    //Function for getting the buyer's bitcoin receive address
     function get_receiver_bitcoin($cid) {
         $db_conn = db_connect('root','root');
         $result = $db_conn->prepare('SELECT * FROM Tweb_User_Credit WHERE Tweb_User_ID = "' . $cid . '";');

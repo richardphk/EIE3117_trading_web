@@ -5,12 +5,14 @@
 
 	page_header('Purchase Record');
 
+        //Check whether the user has logged in.
 	if (check_login()) {
-		table_header();
-		table($_SESSION['login_user_id']);
-		table_footer();
+            //Call the functions for displaying all the purchase history.
+            table_header();
+            table($_SESSION['login_user_id']);
+            table_footer();
 	} else {
-		not_loggedin();
+            not_loggedin();
 	}
 
 	page_footer();

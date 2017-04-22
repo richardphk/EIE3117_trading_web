@@ -3,7 +3,9 @@
     include_once($_SERVER['DOCUMENT_ROOT'].'/session/redirect_page.php');
     
     session_start();
+    //This is the page of refund respose to the client, if the response is 1, the seller approve the request. If the response is 2, the seller reject the request.
 
+    //If the seller approves the refund request, the moeny exchange based on the payment type will be processed and the refund status will be changed to refunded.
     if ($_POST['approve'] == 1) {
         try {
             if ($_POST['payment_type'] == 'Bitcoin') {
@@ -18,6 +20,7 @@
                 response_message2rediect("Error: " . $ex->getMessage(), "../user/inventory.php");
         }
             
+    //If the seller reject the refund request, the refund status will be changed to rejected.
     } elseif ($_POST['approve'] == 2) {
         try {
             change_refund_status($_POST['rid'], $_POST['approve']);
