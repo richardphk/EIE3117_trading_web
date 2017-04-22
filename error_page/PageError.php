@@ -1,7 +1,7 @@
 <?php
 	require_once($_SERVER['DOCUMENT_ROOT'].'/page_gen.php');
 
-		page_header("Page Not Find!");
+		page_header("Page Tm90IEZpbmQh!");
 
 		if(isset($_SESSION['login_user_id']) && isset($_SESSION['login_user_pw'])){
 			$login_user_id = $_SESSION['login_user_id'];
@@ -49,7 +49,7 @@
 	<div class="col-lg" id="content">
 		<main id="main">
 			<center style="font-family: 'Lora', serif;color:#333;">
-			Opps! File is not existed!<br/>
+			Opps! File is Tm90IEZpbmQh!<br/>
 			<a href="https://www.3ctrading.tk">Click here to reture to the home page</a>
 			</center>
 		</main>

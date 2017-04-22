@@ -125,12 +125,21 @@
 			}
 			else{
 				$inspect_array = array();
-				foreach ($key['type'] as $key => $value) {
-					$value[$key] = htmlspecialchars($value[$key], ENT_QUOTES);
-					array_push($inspect_array,$value[$key]);
+				if(is_array($key['type'])){
+			
+				foreach ($key['type'] as $key2 => $value) {
+			
+					$value = htmlspecialchars($value, ENT_QUOTES);
+					array_push($inspect_array,$value);
 				}
+		
 				$key['type'] = array_replace($key['type'],$inspect_array);
+			
 			}
+			else{
+				$key['type'] = htmlspecialchars($key['type'], ENT_QUOTES);
+			}
+		}
 
 
 
@@ -142,8 +151,14 @@
 			}
 			else{
 				$key_price = explode(",", $key['price']);
-				$key_price[0] = htmlspecialchars($key_price[0], ENT_QUOTES);
-				$key_price[1] = htmlspecialchars($key_price[1], ENT_QUOTES);
+				$inspect_pri_array = array();
+				foreach ($key_price as $key => $value) {
+					$value = urlencode($value);
+					array_push($inspect_pri_array,$value);
+					print_r($value);
+				}
+				$key_price = array_replace($key_price,$inspect_pri_array);
+				print_r($key_price);
 				$stat_price = "(select * FROM `Tweb_Product` where Tweb_Product_Price between ? and ?) as a";
 			}
 

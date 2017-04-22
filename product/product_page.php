@@ -108,9 +108,25 @@
 									</script>";
 							}*/
 							if($_SERVER['REQUEST_METHOD'] == 'GET'){
-								$value = $_GET;
-								get_result($value,"all");
-								
+								//print_r($_GET);
+								$inspect_pri_array = array();
+								$i = 0;
+								foreach ($_GET as $field => $in_arry) {
+									//print($field);
+									foreach ($in_arry[$field] as $num => $value) {
+										print($num);
+										$value = urldecode($value);
+									}
+									//print_r($value);
+									//$value[$field] = urlencode($value[$field]);
+									//array_push($inspect_pri_array,$value[$key]);
+									//print_r($in_arry[$field]);
+									
+							}
+							$value2 = array_replace($key_price,$inspect_pri_array);
+							
+								get_result($value2,"all");
+							
 								//var_dump(!empty($_GET['sort']));
 								if(!empty($_GET['sort'])){
 
