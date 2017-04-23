@@ -5,7 +5,7 @@
 		echo'<div class="row" >';
 	}
 
-	function product_sale_form($img,$name,$des,$price,$PID, $token){
+	function product_sale_form($img,$name,$des,$price,$PID){
 		$price_bitcon = $price / 1000000;
 		echo'
 			  <div class="col-sm-5 col-md-4" style="padding-right:0px; margin-right:0px;">
@@ -40,7 +40,6 @@
                                                         <div class="modal-footer">
                                                             <form action="order/order.php" method="post">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                                                <input type="hidden" name="token" value="' . $token . '"/>
                                                                 <input type="hidden" name="product_id[]" value="' . $PID . '" />
                                                                 <input type="hidden" name="product_name[]" value="' . $name . '" />
                                                                 <input type="hidden" name="product_price[]" value="' . $price . '" />
@@ -98,7 +97,7 @@
 			//print($type['Tweb_Product_Type']);
 			echo'
 			  <label>
-				<input type="checkbox" value="'.$type['Tweb_Product_Type'].'" id="'.$type_id.'"  name="type[]" onChange="this.form.submit()">
+				<input type="checkbox" value="'.str_replace(' ','', $type['Tweb_Product_Type']).'" id="'.$type_id.'"  name="type[]" onChange="this.form.submit()">
 				'.$type['Tweb_Product_Type'].'
 				</input>
 			  </label>';
@@ -106,7 +105,7 @@
 		echo'</div>';
 	}
 
-	function get_result($key,$key_type, $token){
+	function get_result($key,$key_type){
 		/**
 		 * return whole result from product searching function
 		 * it accept 2 param, 1. entire GET array,  2. search type: whether the search is filled all search param
@@ -147,19 +146,28 @@
 			// ------------------check whether the product price from GET is empty------------------
 
 			if(empty($key['price'])){
+				
 				$stat_price = "(select * FROM `Tweb_Product` where Tweb_Product_Price between ? and ?) as a";
 				$key_price = array(100,5550000);
 			}
 			else{
-				$key_price = explode(",", $key['price']);
-				$inspect_pri_array = array();
+				//print($key['price']);
+				$regex = '^[0-9],[0-9]^';
+				if(preg_match($regex, $key['price'])){
+					$key_price = explode("%2C", $key['price']);
+				} else {
+					$key_price = array(100,5550000);
+				}
+				
+				//print_r($key_price);
+				/*$inspect_pri_array = array();
 				foreach ($key_price as $key => $value) {
 					$value = urlencode($value);
 					array_push($inspect_pri_array,$value);
-					print_r($value);
+					//print_r($value);
 				}
 				$key_price = array_replace($key_price,$inspect_pri_array);
-				print_r($key_price);
+				//print_r($key_price);*/
 				$stat_price = "(select * FROM `Tweb_Product` where Tweb_Product_Price between ? and ?) as a";
 			}
 
@@ -169,6 +177,7 @@
 
 			if(empty($key['name'])){
 				if(!empty($key['search'])){
+
 					$key['search'] = htmlspecialchars($key['search'], ENT_QUOTES);
 					$key['name'] = $key['search'];
 				}else{
@@ -191,7 +200,27 @@
 			$stat_form = '(SELECT * FROM Tweb_Product';
 			$stat_add = ' or ';
 			//print_r($key['type']);
-			switch ($search_key_num) {
+			//
+			$stat_form .= ' where ';
+
+			if($search_key_num == 0){
+					$stat_form = '(SELECT * FROM Tweb_Product' . ') as c ';
+					
+			}elseif($search_key_num == 1){
+					$stat_form .= $key_where_stat . ') as c ';
+			}else{
+				for ($i=0; $i < $search_key_num; $i++) {
+						$stat_form .= $key_where_stat . $stat_add;
+						if($i = $search_key_num-1){
+							$stat_form .=  $key_where_stat .') as c ';
+						}
+
+				}
+				//echo $stat_form;
+			}
+
+			
+			/*switch ($search_key_num) {
 				case 0:
 					$stat_form = $stat_form .') as c ';
 					break;
@@ -206,9 +235,9 @@
 					break;
 				case 4:
 					$stat_form = $stat_form . ' where ' . $key_where_stat . $stat_add . $key_where_stat
-								. $stat_add . $key_where_stat . $stat_add . $key_where_stat . ') as c  ';
+								. $stat_add . $key_where_stat . $stat_add . $key_where_stat . ') as c ';
 					break;
-			}
+			}*/
 
 			//echo $stat_form;
 			$stat_form .= 'where a.Tweb_Product_ID = b.Tweb_Product_ID and a.Tweb_Product_ID = c.Tweb_Product_ID and b.Tweb_Product_ID = c.Tweb_Product_ID ';
@@ -276,15 +305,18 @@
 		//print_r($rec);
 		if(count($rec)==0){
 			//$price_check = explode(",", $key['price']);
-			if(is_array($key['price'])){
+			//print_r($key_price);
+			if(is_array($key_price)){
 				//print_r($key['price']);
 				$key_2 = "price $";
 				$n = 0;
-				foreach($key as $r){
+				foreach($key_price as $r){
+					//print_r($r);
 					if($n >=1){
 						$key_2 .= $r;
 						break;
 					}
+
 					$key_2 .= $r . " - $" ;
 					$n++;
 				}
@@ -300,7 +332,7 @@
 		//print_r($rec);
 		foreach($rec as $item){
 			//print_r($item);
-			product_sale_form($item['Tweb_Product_Image_Path'],$item['Tweb_Product_Name'],$item['Tweb_Product_Desc'],$item['Tweb_Product_Price'],$item['Tweb_Product_ID'], $token);
+			product_sale_form($item['Tweb_Product_Image_Path'],$item['Tweb_Product_Name'],$item['Tweb_Product_Desc'],$item['Tweb_Product_Price'],$item['Tweb_Product_ID']);
 			$num +=1;
 			$check = $num/3;
 			//print($check);

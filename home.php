@@ -64,6 +64,6 @@
 			</main>
 		</div>
 
-<?
+<?php
 	page_footer();
 ?>

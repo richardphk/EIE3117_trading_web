@@ -4,11 +4,16 @@
 	include_once('product.php');
 	page_header("product");
 
-        $token = md5(uniqid());
-        $_SESSION['purchase_token'] = $token;
-        session_write_close();
+	function price_check($format,$input){
+		$input = htmlspecialchars($input);
+		$regex = $format;
+		if(preg_match($regex, $input)){
+			return $input;
+		} else {
+			return "1,500000";
+		}
 
-	
+	}
 ?>
 
 <script>
@@ -18,7 +23,11 @@
 		  	range: true,
 		});
 
-		var check_price_setted = "<?php if(!empty($_GET['price'])){echo $_GET['price'];}else echo''; ?>";
+		var check_price_setted = "<?php if(!empty(htmlspecialchars($_GET['price'])))
+										{
+											echo price_check('^[0-9],[0-9]^',$_GET['price']);
+
+										}else echo''; ?>";
 		//document.write(check_price_setted);
 
 	  	if(check_price_setted.length != 0){
@@ -47,7 +56,11 @@
 			$("#amount").val( "$" + slideEvt[0] + " - $" + slideEvt[1]);
 			
 			$("#adv_search_form").submit();
-			var php = "<?php if(!empty($_GET['price'])){echo $_GET['price'];} ?>";
+			var php = "<?php if(!empty(htmlspecialchars($_GET['price'])))
+										{
+											echo price_check('^[0-9],[0-9]^',$_GET['price']);
+
+										}else echo''; ?>";
 			
 			//document.write(php);
 			//document.write(php);
@@ -101,79 +114,58 @@
 		<div class="col-md-10" style="padding:5px;">
 			<main>
 				<?php
-
-							//print_r($_GET);
-
-							//var_dump($_GET);
-							/*if(empty($_GET['price'])){
-								echo"in";
-								echo $_GET['price'] . "<script>
-									price.setValue([200,400]);
-									</script>";
-							}*/
 							if($_SERVER['REQUEST_METHOD'] == 'GET'){
+								//echo "Orig";
 								//print_r($_GET);
+								//echo "<p>INARRY<p>";
+								
 								$inspect_pri_array = array();
 								$i = 0;
+								//print_r($_GET['type']);
 								foreach ($_GET as $field => $in_arry) {
-									//print($field);
-									foreach ($in_arry[$field] as $num => $value) {
-										print($num);
-										$value = urldecode($value);
+									if(empty($_GET[$field])){
+										//print("HI");
+									}else{
+										if(is_array($_GET[$field])){
+											foreach ($_GET[$field] as $n => $V) {
+												//print_r($n);
+												$_GET[$field][$n] = urlencode($_GET[$field][$n]);
+											//print($in_arry);
+											}
+										}else{
+											if($field == 'price'){
+												$price_set = explode(",", $_GET[$field]);
+												foreach($price_set as $n =>$val){
+													$price_set[$n] = htmlspecialchars($price_set[$n]);
+
+												}
+
+												$_GET[$field] = implode(",", $price_set);
+												//echo $_GET[$field];
+												
+											}
+					
+											$_GET[$field] = urlencode($_GET[$field]);
+										}
 									}
-									//print_r($value);
-									//$value[$field] = urlencode($value[$field]);
-									//array_push($inspect_pri_array,$value[$key]);
-									//print_r($in_arry[$field]);
-									
 							}
-							$value2 = array_replace($key_price,$inspect_pri_array);
-							
-								get_result($value2,"all", $token);
-							
-								//var_dump(!empty($_GET['sort']));
-								if(!empty($_GET['sort'])){
+							//echo"<p>result";
+							//print_r($_GET);
+							$value2 = $_GET;
+							//$value2 = array_replace($key_price,$inspect_pri_array);
+			
+							get_result($value2,"all");
+							//var_dump(!empty($_GET['sort']));
+							if(!empty($_GET['sort'])){
+								set_selected_sort($_GET['sort']);
+							}
+							if(empty($_GET['type'])){
+								exit;
+							}
+							set_checked_butt($value2['type']);
 
-									set_selected_sort($_GET['sort']);
-								}
-								if(empty($_GET['type'])){
-									exit;
-								}
-								set_checked_butt($value['type']);
-
-							}
-							/*if(!empty($_GET['price'])){
-								$value = $_GET;
-								print_r($value);
-								get_result($value,'price');
-								
-							}
-							if(!empty($_GET['search'])){
-								$value = $_GET['search'];
-								$_GET['name'] = $value;
-								//var_dump($_GET);
-								
-								get_result($value,'keyword');
-								
-							}
-							elseif(!empty($_GET['name'])){
-								$keyword = $_GET['name'];
-								//echo $keyword;
-								get_result($keyword,'keyword');
-								
-							}
-							elseif(!empty($_GET['type'])){
-								$value = $_GET['type'];
-								get_result($value,'type');
-								set_checked_butt($value);
-							}
-							elseif(!empty($_GET['search'])){
-								$value =$_GET['search'];
-								get_result($value,'keyword');
-							}
-							else{
-								$value = 0;
-							}*/
+						}
+					
 							function set_checked_butt($value){
 								//print_r($value);
 								//echo 'HI';
@@ -194,7 +186,7 @@
 
 											</script>';
 							}
-							
+					
 
 				?>
 			</main>
