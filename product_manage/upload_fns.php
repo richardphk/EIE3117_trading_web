@@ -4,8 +4,13 @@
 
     //Function for displaying the upload form for the user.
     function upload_form() {
+        
+        $token = md5(uniqid());
+        $_SESSION['upload_token'] = $token;
+        session_write_close();
 ?>
         <form action="product_manage/upload.php" method="post" enctype="multipart/form-data" class="form-horizontal" role="form">
+            <input type="hidden" name="token" value="<?php echo $token; ?>" />
             <div class="form-group">
                 <label class="col-sm-2 control-label">Product name:</label>
                 <div class="col-sm-10">
