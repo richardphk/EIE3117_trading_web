@@ -27,11 +27,12 @@
 		  	range: true,
 		});
 
-		var check_price_setted = "<?php if(!empty(htmlspecialchars($_GET['price'])))
+		var check_price_setted = "<?php if(!empty($_GET['price']) ||
+												isset($_GET['price']))
 										{
 											echo price_check('^[0-9],[0-9]^',$_GET['price']);
 
-										}else echo''; ?>";
+										}else {echo '';} ?>";
 		//document.write(check_price_setted);
 
 	  	if(check_price_setted.length != 0){
@@ -44,7 +45,7 @@
 		 	//document.write(arr,typeof(arr[0]));
 		  	//$("#slider").attr('range', arr);
 		 	price.setValue([price_new_2[0],price_new_2[1]],true,false);
-	  	}
+	  	}else {price.setValue([0,500000],true,false);}
 
 		
 		//price.setValue(500);
@@ -60,16 +61,16 @@
 			$("#amount").val( "$" + slideEvt[0] + " - $" + slideEvt[1]);
 			
 			$("#adv_search_form").submit();
-			var php = "<?php if(!empty(htmlspecialchars($_GET['price'])))
+			/*var php = "<?php if(!empty(htmlspecialchars($_GET['price'])))
 										{
 											echo price_check('^[0-9],[0-9]^',$_GET['price']);
 
-										}else echo''; ?>";
+										}else{echo '100,500000';} ?>";
 			
 			//document.write(php);
 			//document.write(php);
 
-			var new_val = php.split(",");
+			var new_val = php.split(",");*/
 			
 		})
 		

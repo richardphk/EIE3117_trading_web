@@ -152,10 +152,11 @@
 				$key_price = array(100,5550000);
 			}
 			else{
+				$key['price'] = urldecode($key['price']);
 				//print($key['price']);
 				$regex = '^[0-9],[0-9]^';
 				if(preg_match($regex, $key['price'])){
-					$key_price = explode("%2C", $key['price']);
+					$key_price = explode(",", $key['price']);
 				} else {
 					$key_price = array(100,5550000);
 				}
@@ -244,8 +245,16 @@
 			$stat_form .= 'where a.Tweb_Product_ID = b.Tweb_Product_ID and a.Tweb_Product_ID = c.Tweb_Product_ID and b.Tweb_Product_ID = c.Tweb_Product_ID ';
 
 
-			$stat_keyword = "(select * from Tweb_Product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?) as b";
+			$stat_keyword = "(select * from Tweb_Product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?
+							union
+								select * from Tweb_Product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?
+							union
+								select * from Tweb_Product where Tweb_Product_Name like ? or Tweb_Product_Desc like ?
+								) as b";
+
 			$key_keyword = '%'.$key['name'].'%';
+			$key_keyword_2 = $key['name'].'%';
+			$key_keyword_3 = '%'.$key['name'];
 
 			$total_stat = $stat_select . $stat_price . ',' . $stat_keyword . ',' . $stat_form;
 
@@ -279,6 +288,10 @@
 								2 => $key_price[1],
 								3 => $key_keyword,
 								4 => $key_keyword,
+								5 => $key_keyword_2,
+								6 => $key_keyword_2,
+								7 => $key_keyword_3,
+								8 => $key_keyword_3,
 								);
 			//print_r($type_array_bind);
 		
@@ -307,24 +320,29 @@
 		if(count($rec)==0){
 			//$price_check = explode(",", $key['price']);
 			//print_r($key_price);
-			if(is_array($key_price)){
-				//print_r($key['price']);
-				$key_2 = "price $";
-				$n = 0;
-				foreach($key_price as $r){
-					//print_r($r);
-					if($n >=1){
-						$key_2 .= $r;
-						break;
-					}
+			if(!empty($key['name'])){
+					echo "<h2 align=\"center\" style=\"font-family: 'Lora', serif;\">No matches for name '". $key['name'] . "'</h2>";
+			}else {
+				if(is_array($key_price)){
+		
+					//print_r($key['price']);
+					$key_2 = "price $";
+					$n = 0;
+					foreach($key_price as $r){
+						//print_r($r);
+						if($n >=1){
+							$key_2 .= $r;
+							break;
+						}
 
-					$key_2 .= $r . " - $" ;
-					$n++;
+						$key_2 .= $r . " - $" ;
+						$n++;
+					}
+					echo "<h2 align=\"center\" style=\"font-family: 'Lora', serif;\">No matches for '". $key_2 . "'</h2>";
 				}
-				echo "<h2 align=\"center\" style=\"font-family: 'Lora', serif;\">No matches for '". $key_2 . "'</h2>";
-			}
-			else{
-				echo "<h2 align=\"center\" style=\"font-family: 'Lora', serif;\">No Result. </h2>";
+				else{
+					echo "<h2 align=\"center\" style=\"font-family: 'Lora', serif;\">No Result. </h2>";
+				}
 			}
 		}
 
