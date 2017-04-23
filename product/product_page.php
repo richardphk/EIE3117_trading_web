@@ -3,7 +3,11 @@
 	include_once('../page_gen.php');
 	include_once('product.php');
 	page_header("product");
-
+        
+        $token = md5(uniqid());
+        $_SESSION['purchase_token'] = $token;
+        session_write_close();
+        
 	function price_check($format,$input){
 		$input = htmlspecialchars($input);
 		$regex = $format;
@@ -154,7 +158,7 @@
 							$value2 = $_GET;
 							//$value2 = array_replace($key_price,$inspect_pri_array);
 			
-							get_result($value2,"all");
+							get_result($value2,"all", $token);
 							//var_dump(!empty($_GET['sort']));
 							if(!empty($_GET['sort'])){
 								set_selected_sort($_GET['sort']);
