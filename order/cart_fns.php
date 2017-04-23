@@ -32,9 +32,14 @@
 	
     //Function for displaying the Cart
     function cart_header() {
+        $token = md5(uniqid());
+        $_SESSION['purchase_token'] = $token;
+        session_write_close();
+        
 ?>
         <h2>Cart</h2>
             <form id="order_list" action='order/order.php' method="post">
+                <input type="hidden" name="token" value="<?php echo $token ?>" />
 		<table class="table table-striped">
                     <thead>
                         <tr>

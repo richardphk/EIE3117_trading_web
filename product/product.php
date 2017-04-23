@@ -5,7 +5,7 @@
 		echo'<div class="row" >';
 	}
 
-	function product_sale_form($img,$name,$des,$price,$PID){
+	function product_sale_form($img,$name,$des,$price,$PID, $token){
 		$price_bitcon = $price / 1000000;
 		echo'
 			  <div class="col-sm-5 col-md-4" style="padding-right:0px; margin-right:0px;">
@@ -40,6 +40,7 @@
                                                         <div class="modal-footer">
                                                             <form action="order/order.php" method="post">
                                                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                                                <input type="hidden" name="token" value="' . $token . '"/>
                                                                 <input type="hidden" name="product_id[]" value="' . $PID . '" />
                                                                 <input type="hidden" name="product_name[]" value="' . $name . '" />
                                                                 <input type="hidden" name="product_price[]" value="' . $price . '" />
@@ -105,7 +106,7 @@
 		echo'</div>';
 	}
 
-	function get_result($key,$key_type){
+	function get_result($key,$key_type, $token){
 		/**
 		 * return whole result from product searching function
 		 * it accept 2 param, 1. entire GET array,  2. search type: whether the search is filled all search param
@@ -299,7 +300,7 @@
 		//print_r($rec);
 		foreach($rec as $item){
 			//print_r($item);
-			product_sale_form($item['Tweb_Product_Image_Path'],$item['Tweb_Product_Name'],$item['Tweb_Product_Desc'],$item['Tweb_Product_Price'],$item['Tweb_Product_ID']);
+			product_sale_form($item['Tweb_Product_Image_Path'],$item['Tweb_Product_Name'],$item['Tweb_Product_Desc'],$item['Tweb_Product_Price'],$item['Tweb_Product_ID'], $token);
 			$num +=1;
 			$check = $num/3;
 			//print($check);

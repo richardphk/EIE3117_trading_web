@@ -4,6 +4,10 @@
 	include_once('product.php');
 	page_header("product");
 
+        $token = md5(uniqid());
+        $_SESSION['purchase_token'] = $token;
+        session_write_close();
+
 	
 ?>
 
@@ -125,7 +129,7 @@
 							}
 							$value2 = array_replace($key_price,$inspect_pri_array);
 							
-								get_result($value2,"all");
+								get_result($value2,"all", $token);
 							
 								//var_dump(!empty($_GET['sort']));
 								if(!empty($_GET['sort'])){
