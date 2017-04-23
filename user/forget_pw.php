@@ -37,6 +37,11 @@
 			die();
 		}
 		
+		if(!isset($_SESSION['flag']) || $_SESSION['flag'] !== $_POST['token']){
+			response_message2rediect("Please check the captcha form, too!", "./login.php");
+			die();
+		}
+		
 		if (!(valid_email($email_address))){
 			response_message2rediect("Email address is not valid!", "./forget_pw_page.php");
 			die();

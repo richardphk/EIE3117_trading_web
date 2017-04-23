@@ -11,6 +11,10 @@
 	require($_SERVER['DOCUMENT_ROOT'].'/page_gen.php');
 	page_header('Forget Password Page');
 
+	$key = hash('sha256', microtime());
+	$_SESSION['flag'] = $key;
+
+
 ?>
 	<link rel="stylesheet" text="text/css" href="user/form.css" >
 	<script src="https://www.google.com/recaptcha/api.js" async defer></script>
@@ -34,6 +38,8 @@
 							autocomplete="off"
 							required />
 				</div>
+				
+				<input type="hidden" name="token" value="<?php echo $key; ?>" />
 				
 				<div class="form-group">
 					<div class="g-recaptcha" data-sitekey="6LePghUUAAAAAFNjJdhM3cpSbcv_EzaODhXZOLtg"></div>

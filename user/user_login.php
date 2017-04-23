@@ -38,6 +38,13 @@
 			response_message2rediect("Please check the captcha form!", "./login.php");
 			die();
 		}
+
+		if(!isset($_SESSION['flag']) || $_SESSION['flag'] !== $_POST['token']){
+			response_message2rediect("Please check the captcha form, too!", "./login.php");
+			die();
+		}
+  
+
 		
 		$username = input_replace($username);
 		$password = input_replace($password);

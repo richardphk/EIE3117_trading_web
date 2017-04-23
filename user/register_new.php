@@ -51,6 +51,11 @@
 			die();
 		}
 
+		if(!isset($_SESSION['flag']) || $_SESSION['flag'] !== $_POST['token']){
+			response_message2rediect("Please check the captcha form, too!", "./login.php");
+			die();
+		}
+
 		
 		if($password != $retype_password){
 			response_message2rediect("Password and retype password are not same!", "./register.php");

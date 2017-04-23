@@ -5,6 +5,9 @@
 	require($_SERVER['DOCUMENT_ROOT'].'/session/redirect_page.php');
 	page_header('Login Page');
 	
+	$key = hash('sha256', microtime());
+	$_SESSION['flag'] = $key;
+
 	if(check_login()){
 		response_message2rediect("You are already login", "./home.php");
 	}
@@ -32,7 +35,7 @@
 				<div class="form-group">
 					<label><input name="Remember" type="checkbox" value="on"> Remember me</label>
 				</div>
-				
+				<input type="hidden" name="token" value="<?php echo $key; ?>" />
 				<div class="form-group">
 					<div class="g-recaptcha" data-sitekey="6LePghUUAAAAAFNjJdhM3cpSbcv_EzaODhXZOLtg"></div>
 				</div>
