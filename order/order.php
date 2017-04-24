@@ -11,6 +11,7 @@
 	
     //Check whether the user has logged in
     if (check_login()) {
+        
         $token = $_SESSION['purchase_token'];
         unset($_SESSION['purchase_token']);
         if($token && $_POST['token'] == $token) {
@@ -38,7 +39,7 @@
                     $amount += $total_price;
 
                     $seller_id = get_result($_POST['product_id'][$i], 'Creator_ID');
-                    //email_to_seller($seller_id, $_SESSION['login_user_id'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
+                    email_to_seller($seller_id, $_SESSION['login_user_id'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
 
                     transaction_credit($seller_id, $_SESSION['login_user_id'], $_POST['product_price'][$i] * $_POST['product_quantity'][$i]);
                 }
@@ -48,7 +49,7 @@
 
                     add_payment_record($payment_id, $purchase_id, $amount, $purchase_date, $_SESSION['login_user_id'], $payment_type);
 
-                    //email_to_buyer($_SESSION['login_user_id']);
+                    email_to_buyer($_SESSION['login_user_id']);
                     echo '<meta http-equiv="refresh" content="0; url=/order/order_result.php?sid=' . $purchase_id . '&type=' . $payment_type . '" />';
 
                   //If the user's credit is not enough, the user's payment for paying the total amount will be automatically changed to bitcoin
@@ -78,15 +79,21 @@
                         $amount += $total_price;
 
                         $seller_id = get_result($_POST['product_id'][$i], 'Creator_ID');
-                        //email_to_seller($seller_id, $_SESSION['login_user_id'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
+                        email_to_seller($seller_id, $_SESSION['login_user_id'], $_POST['product_id'][$i], $_POST['product_name'][$i], $_POST['product_quantity'][$i]);
                     }
 
                     add_amount($purchase_id, $amount);
                     $payment_id = gen_id('Tweb_Payment');
                     add_payment_record($payment_id, $purchase_id, $amount, $purchase_date, $_SESSION['login_user_id'], $payment_type);
 
-                    //email_to_buyer($_SESSION['login_user_id']);
+                    email_to_buyer($_SESSION['login_user_id']);
                     echo '<meta http-equiv="refresh" content="0; url=/order/order_result.php?sid=' . $purchase_id . '&type=' . $payment_type . '" />';
+                } else {
+                    ?>
+                    <div class="jumbotron">
+                        <h1>Sorry, you don't have enough money.</h1>
+                    </div>
+                    <?php
                 }
         } else {
             ?>
