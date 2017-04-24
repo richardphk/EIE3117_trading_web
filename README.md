@@ -1,18 +1,16 @@
 # EIE3117_trading_web
-project
+EIE3117 Project
 
-resource:
-mysql workbench
-Xampp
+Platform : Ubuntu Linux 16.04LTE, Apache, MySQL (LAMP)
+PHP : 5.6
+Domain: www.3ctrading.tk
 
-Remarks:
-Please change the root password
-root ac: root
-root pw: root
+Database structure : database folder -> ERD using mysql workbench
 
-Also, the config.inc.php is needed to edit
-$cfg['Servers'][$i]['password'] = ''; => $cfg['Servers'][$i]['password'] = 'root';
+Reference resources:
+BlockTrail API function : tBTC folder
+Recaptcha (Google) : includes/Recaptcha/ folder
+Bootstrap : css , js & fonts folder
 
-
-reference:
+Bootstrap reference:
 http://seiyria.com/bootstrap-slider/
