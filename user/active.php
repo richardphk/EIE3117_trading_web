@@ -1,11 +1,16 @@
 <?PHP
+	/**
+	 * this php used for activation in register
+	 */
 	require($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
 	require($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
 	require($_SERVER['DOCUMENT_ROOT'].'/session/redirect_page.php');
 	
+	/* connect db & get now time */
 	$now_time = time();
 	$db = db_connect('root','root');
 	
+	/* get link with token , checking vaildation & active user*/
 	if(check_request_method() == 'GET' && check_variable($_GET['verify'])){
 		$verify = stripslashes(trim($_GET['verify']));
 		$sql = "Select Tweb_User_ID, Tweb_User_Activation_token_exptime from Tweb_User where Tweb_User_Activation_token = :verify and Tweb_User_Activated = 0  LIMIT 1;";
@@ -61,6 +66,6 @@
 		response_message2rediect("Bye!", "../home.php");
 		$db = null;
 		die();
-	}	
+	}
 
 ?>

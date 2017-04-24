@@ -1,8 +1,19 @@
 <?php
+	/**
+	 * all functions of the API
+	 */
 	include('BlockTrail_API.php');
 	use Blocktrail\SDK\BlocktrailSDK;
 	use Blocktrail\SDK\Connection\Exceptions\InvalidCredentials;
 
+
+	/**
+	 * create wallet
+	 * @param  [String] $wallet_ac [Usernaem]
+	 * @param  [String] $wallet_pw [Password]
+	 * @param  [Object] $client    [API Object]
+	 * @return [String] ok message or exception
+	 */
 	function create_wallet($wallet_ac, $wallet_pw, $client){
 		//return wallet
 		try {
@@ -19,6 +30,13 @@
 		}
 	}
 
+	/**
+	 * init wallet
+	 * @param  [String] $wallet_ac [Usernaem]
+	 * @param  [String] $wallet_pw [Password]
+	 * @param  [Object] $client    [API Object]
+	 * @return [Object] wallet object
+	 */
 	function init_wallet($wallet_ac, $wallet_pw, $client){
 		//return wallet object
 		try {
@@ -33,6 +51,11 @@
 		}
 	}
 
+	/**
+	 * receive bitcon address
+	 * @param  [Object] $client    [API Object]
+	 * @return [String] wallet receive address
+	 */
 	function receive_tran($wallet){
 		//return receive address
 		try {
@@ -47,6 +70,11 @@
 		}
 	}
 
+	/**
+	 * wallet balance
+	 * @param  [Object] wallet object
+	 * @return Confirmed Balance, Unconfirmed Balance in bitcon
+	 */
 	function wallet_balance($wallet){
 		//return Confirmed Balance and Unconfirmed Balance
 		try {
@@ -63,6 +91,13 @@
 		}
 	}
 
+	/**
+	 * send bitcon
+	 * @param  [Object] wallet object
+	 * @param  [String] receive address
+	 * @param  [Double] $value -> bitcon value
+	 * @return output API exception if the API caused problems
+	 */
 	function send_tran($wallet, $receive_address, $value){
 		try {
     		$value = BlocktrailSDK::toSatoshi($value);
@@ -77,7 +112,11 @@
 		}
 
 	}
-
+	/**
+	 * list transaction history
+	 * @param  [type] $wallet [description]
+	 * @return [type]         [description]
+	 */
 	function list_tran_history($wallet){
 		try {
     		$transactions = $wallet->transactions();

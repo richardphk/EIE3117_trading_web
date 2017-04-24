@@ -1,4 +1,7 @@
 <?php
+	/**
+	 * get user informatoin page
+	 */
 	require_once($_SERVER['DOCUMENT_ROOT'].'/page_gen.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');

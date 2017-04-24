@@ -1,7 +1,9 @@
 <?php
-
+    /**
+     * this is the page of purchasing record
+     */
     include_once($_SERVER['DOCUMENT_ROOT'] . '/config_db/config_db.php');
-	
+
     //Function for checking and displaying the refund requests.
     function product_refund($uid) {
         $result = check_refund($uid, '0');

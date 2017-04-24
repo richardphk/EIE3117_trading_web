@@ -1,4 +1,7 @@
 <?php
+	/**
+ 	* the interface php in loading API
+ 	*/
 	require('vendor/autoload.php');
 	use Blocktrail\SDK\BlocktrailSDK;
 	use Blocktrail\SDK\Connection\Exceptions\InvalidCredentials;

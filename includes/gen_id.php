@@ -1,4 +1,9 @@
 <?PHP
+	/**
+	 * generate database table id
+	 * @param  [String] $args [Table name]
+	 * @return [String] table ID
+	 */
 	function gen_id($args){
 		//args = table name
 		//args : Tweb_User_ID->U, Tweb_Product_ID->P, Tweb_Sale_Record_ID->S, Tweb_Order_ID->O, Tweb_Payment_ID->A

@@ -1,4 +1,7 @@
 <?PHP
+	/**
+	 * this php used for forget pw function
+	 */
 	require($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
 	require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 	require($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');
@@ -63,6 +66,7 @@
 			
 			//print_r($rows_user);
 			
+			/* if authentication ok, add the new token & send email */
 			if(!($rows_user)){
 				response_message2rediect("Username or Email is wrong", "./login.php");
 				$db = null;

@@ -1,4 +1,7 @@
 <?PHP
+	/**
+	 * reset pw function
+	 */
 	require($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
 	require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 	require($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');

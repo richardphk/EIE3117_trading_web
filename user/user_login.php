@@ -1,4 +1,7 @@
 <?PHP
+	/**
+	 * checking login function
+	 */
 	require_once($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');

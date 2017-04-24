@@ -1,4 +1,8 @@
 <?PHP
+	/**
+	 * this the page of forget password
+	 */
+
 	/* inital functions */
 	require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 	require($_SERVER['DOCUMENT_ROOT'].'/session/checking.php');

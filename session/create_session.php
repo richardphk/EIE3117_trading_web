@@ -1,4 +1,7 @@
 <?php
+	/**
+	 * start session
+	 */
 	function start_session(){
 		$expire = 10000;
 		if ($expire == 0){

@@ -1,4 +1,7 @@
 <?PHP
+	/**
+	 * this is the page of login
+	 */
 	/* inital functions */
 	require($_SERVER['DOCUMENT_ROOT'].'/session/create_session.php');
 	require($_SERVER['DOCUMENT_ROOT'].'/page_gen.php');

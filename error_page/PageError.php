@@ -1,4 +1,7 @@
 <?php
+	/**
+	 * page of erro code 404, Tm90IEZpbmQh is a magic word [hints:base64+reverse string]
+	 */
 	require_once($_SERVER['DOCUMENT_ROOT'].'/page_gen.php');
 
 		page_header("Page Tm90IEZpbmQh!");

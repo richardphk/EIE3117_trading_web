@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_User` (
   `Tweb_User_Activation_token` VARCHAR(300) NULL,
   `Tweb_User_Activation_token_exptime` INT(12) NULL,
   PRIMARY KEY (`Tweb_User_ID`));
-  
+
 CREATE TABLE IF NOT EXISTS `trading_web`.`Tweb_Product` (
   `Tweb_Product_ID` VARCHAR(6) NOT NULL,
   `Tweb_Product_Name` VARCHAR(50) NULL,

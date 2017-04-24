@@ -1,4 +1,7 @@
 <?php
+	/**
+	 * get user information function
+	 */
 	include_once($_SERVER['DOCUMENT_ROOT'].'/config_db/config_db.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/tBTC/tBTC_fns.php');
 	require_once($_SERVER['DOCUMENT_ROOT'].'/includes/gen_id.php');

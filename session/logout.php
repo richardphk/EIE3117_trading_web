@@ -1,4 +1,7 @@
 <?php
+   /**
+    * logout function -> kill session
+    */
    session_start();
    if(session_destroy()) {
    		if(isset($_SERVER['HTTPS'])){

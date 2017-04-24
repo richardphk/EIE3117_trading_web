@@ -1,4 +1,10 @@
 <?PHP
+	/**
+	 * [send_active_mail description]
+	 * @param  [String] $username
+	 * @param  [String] $token
+	 * @param  [String] $email_address
+	 */
 	function send_active_mail($username, $token, $email_address){
 		$host_uri = $_SERVER['HTTP_HOST'];
 		$self = explode('/', dirname($_SERVER['PHP_SELF']));
@@ -28,6 +34,12 @@
 
 	}
 
+	/**
+	 * [send_forget_pw_email description]
+	 * @param  [String] $token
+	 * @param  [String] $email_address
+	 * @return  True if sendmail function sucess else return exception
+	 */
 	function send_forget_pw_email($token, $email_address){
 		$host_uri = $_SERVER['HTTP_HOST'];
 		$self = explode('/', dirname($_SERVER['PHP_SELF']));

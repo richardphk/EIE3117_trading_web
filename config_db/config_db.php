@@ -1,4 +1,11 @@
 <?php
+	/**
+	 * database connection function
+	 * PDO function
+	 * @param  [String] $username [databse username]
+	 * @param  [String] $password [databse user password]
+	 * @return [Object] PDO databse Object
+	 */
 	function db_connect($username, $password){
 		$DB_server = 'localhost';
 		$DB_username = $username;

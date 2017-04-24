@@ -5,7 +5,7 @@
 
 	page_header('Purchase Record');
 
-        //Check whether the user has logged in.
+    //Check whether the user has logged in.
 	if (check_login()) {
             //Call the functions for displaying all the purchase history.
             table_header();

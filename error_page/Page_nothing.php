@@ -1,4 +1,7 @@
 <?php
+	/**
+	 * page of other http error code 403,405,100 -> 88183b946cc5f0e8c96b2e66e1c74a7e md5 of nothing
+	 */
 	require_once($_SERVER['DOCUMENT_ROOT'].'/page_gen.php');
 
 		page_header("Page 88183b946cc5f0e8c96b2e66e1c74a7e");
